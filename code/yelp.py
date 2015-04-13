@@ -1,21 +1,62 @@
-# -*- coding: utf-8 -*-
-"""
-Yelp API v2.0 code sample.
+'''
+This is the full data we get back from Yelp location search:
 
-This program demonstrates the capability of the Yelp API version 2.0
-by using the Search API to query for businesses by a search term and location,
-and the Business API to query additional information about the top result
-from the search query.
+{
+    u'is_claimed': True,
+    u'distance': 194.98740085724452,
+    u'mobile_url': u'http://m.yelp.com/biz/grendels-den-restaurant-and-bar-cambridge',
+    u'rating_img_url': u'http://s3-media1.fl.yelpassets.com/assets/2/www/img/5ef3eb3cb162/ico/stars/v1/stars_3_half.png',
+    u'review_count': 683,
+    u'name': u"Grendel's Den Restaurant & Bar",
+    u'rating': 3.5,
+    u'url': u'http://www.yelp.com/biz/grendels-den-restaurant-and-bar-cambridge',
+    u'categories': [[u'Bars', u'bars'], [u'American (New)', u'newamerican']],
+    u'id': u'grendels-den-restaurant-and-bar-cambridge',
+    u'is_closed': False,
+    u'phone': u'6174911160',
+    u'snippet_text': u'In the summer of 2014 I made a lofty list of places I must go to before the year ends. Obviously that did not go as planned, BUT I finally made my way over...',
+    u'image_url': u'http://s3-media1.fl.yelpassets.com/bphoto/u7bcLv9F-0ZHNarFbWFI_Q/ms.jpg',
+    u'location': 
+    {
+        u'city': u'Cambridge',
+        u'display_address': [u'89 Winthrop St', u'Harvard Square', u'Cambridge, MA 02138'],
+        u'geo_accuracy': 8.0,
+        u'neighborhoods': [u'Harvard Square'],
+        u'postal_code': u'02138',
+        u'country_code': u'US',
+        u'address': [u'89 Winthrop St'],
+        u'coordinate': 
+        {
+            u'latitude': 42.3725014,
+            u'longitude': -71.1209641
+        },
+        u'state_code': u'MA'
+    },
+    u'display_phone': u'+1-617-491-1160',
+    u'rating_img_url_large': u'http://s3-media3.fl.yelpassets.com/assets/2/www/img/bd9b7a815d1b/ico/stars/v1/stars_large_3_half.png',
+    u'menu_provider': u'single_platform',
+    u'menu_date_updated': 1387605897,
+    u'snippet_image_url': u'http://s3-media2.fl.yelpassets.com/photo/4zoVe9OzCYH7qCfaSTTJmg/ms.jpg',
+    u'rating_img_url_small': u'http://s3-media1.fl.yelpassets.com/assets/2/www/img/2e909d5d3536/ico/stars/v1/stars_small_3_half.png'
+}
 
-Please refer to http://www.yelp.com/developers/documentation for the API documentation.
+And here's what we care about for this application:
 
-This program requires the Python oauth2 library, which you can install via:
-`pip install -r requirements.txt`.
+{
+    u'name': u"Grendel's Den Restaurant & Bar",
+    u'rating': 3.5,
+    u'categories': [[u'Bars', u'bars'], [u'American (New)', u'newamerican']],
+    u'location': 
+    {
+        u'coordinate': 
+        {
+            u'latitude': 42.3725014,
+            u'longitude': -71.1209641
+        },
+    },
+}
 
-Sample usage of the program:
-`python sample.py --term="bars" --location="San Francisco, CA"`
-"""
-import argparse
+'''
 import json
 import pprint
 import sys
@@ -24,19 +65,72 @@ import urllib2
 
 import oauth2
 
-
 API_HOST         = 'api.yelp.com'
-DEFAULT_TERM     = 'indian'
+DEFAULT_TERM     = 'restaurants'
 DEFAULT_LOCATION = 'harvard square, ma'
-SEARCH_LIMIT     = 10
+SEARCH_LIMIT     = 20
 SEARCH_PATH      = '/v2/search/'
 BUSINESS_PATH    = '/v2/business/'
+SEARCH_RADIUS    = 1600
+CATEGORIES = [  'Restaurants', 'Pizza', 'Burgers', 'Mexican', 'Sandwiches', 'Japanese', 'Cafes', 'Fast Food', 'Italian', 'American (Traditional)', 'Sushi Bars', 'American (New)', 'Bars', 'Breakfast & Brunch', 'Indian', 'Nightlife', 'Seafood' ]
 
-# OAuth credential placeholders that must be filled in by users.
+# OAuth credentials
 CONSUMER_KEY    = "srjoLIpsGQzbuL8olqs60g"
 CONSUMER_SECRET = "xfs7njXxIn6gMkT-z73oNGbFcJQ"
 TOKEN           = "firuNF-NSRdkW8UNOCbRX3oEPnxnQDTI"
 TOKEN_SECRET    = "8729C5E15fqQ1CqQIYsZIBMo4mw"
+
+def main():
+    category = 'Restaurants'
+    location = 'harvard square, MA'
+
+    try:
+        query_api(location,category)
+    except urllib2.HTTPError as error:
+        sys.exit('Encountered HTTP error {0}. Abort program.'.format(error.code))
+
+
+def query_api(location, category):
+    url_params = {
+        'term': 'restaurants',
+        'location': location.replace(' ', '+'),
+        'radius_filter' : 1600,
+#        'category_filter' : category,
+        'sort': '1',
+        'offset': '1'
+ #       'limit': 40
+    }
+
+    response = request(API_HOST, SEARCH_PATH, url_params=url_params)
+
+    for item in response['businesses'] :
+
+
+        print item['name']
+        print item['rating']
+        print item['categories']
+        print item['location']['coordinate']
+        print "\n"
+    print response['total']
+
+    businesses = response.get('businesses')
+
+    if not businesses:
+        print u'No businesses for {0} in {1} found.'.format(term, location)
+        return
+
+    business_id = businesses[0]['id']
+
+    print u'{0} businesses found'.format(
+        len(businesses)
+    )
+
+    # response = get_business(business_id)
+
+    # print u'Result for business "{0}" found:'.format(business_id)
+    #pprint.pprint(response, indent=2)
+
+
 
 def request(host, path, url_params=None):
     """Prepares OAuth authentication and sends the request to the API.
@@ -80,25 +174,6 @@ def request(host, path, url_params=None):
 
     return response
 
-def search(term, location):
-    """Query the Search API by a search term and location.
-
-    Args:
-        term (str): The search term passed to the API.
-        location (str): The search location passed to the API.
-
-    Returns:
-        dict: The JSON response from the request.
-    """
-    
-    url_params = {
-        'term': term.replace(' ', '+'),
-        'location': location.replace(' ', '+'),
-        'sort': '1',
-        'offset': '1'
- #       'limit': 40
-    }
-    return request(API_HOST, SEARCH_PATH, url_params=url_params)
 
 def get_business(business_id):
     """Query the Business API by a business ID.
@@ -113,46 +188,6 @@ def get_business(business_id):
 
     return request(API_HOST, business_path)
 
-def query_api(term, location):
-    """Queries the API by the input values from the user.
-
-    Args:
-        term (str): The search term to query.
-        location (str): The location of the business to query.
-    """
-    response = search(term, location)
-
-    businesses = response.get('businesses')
-
-    if not businesses:
-        print u'No businesses for {0} in {1} found.'.format(term, location)
-        return
-
-    business_id = businesses[0]['id']
-
-    print u'{0} businesses found, querying business info for the top result "{1}" ...'.format(
-        len(businesses),
-        business_id
-    )
-
-    response = get_business(business_id)
-
-    print u'Result for business "{0}" found:'.format(business_id)
-    #pprint.pprint(response, indent=2)
-
-
-def main():
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument('-q', '--term', dest='term', default=DEFAULT_TERM, type=str, help='Search term (default: %(default)s)')
-    parser.add_argument('-l', '--location', dest='location', default=DEFAULT_LOCATION, type=str, help='Search location (default: %(default)s)')
-
-    input_values = parser.parse_args()
-
-    try:
-        query_api(input_values.term, input_values.location)
-    except urllib2.HTTPError as error:
-        sys.exit('Encountered HTTP error {0}. Abort program.'.format(error.code))
 
 
 if __name__ == '__main__':
