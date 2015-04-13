@@ -1,0 +1,135 @@
+id:"Alewife Station", line:"red", x:644.2000122070312, y: 194.39999389648438
+id:"Davis Station", line:"red", x:719.0999755859375, y: 269.6000061035156
+id:"Porter Square Station", line:"red", x:781.4000244140625, y:344
+id:"Harvard Square Station", line:"red", x:868, y:418.3999938964844
+id:"Central Square Station", line:"red", x:938, y:501.20001220703125
+id:"Kendall Station", line:"red", x:1006.7000122070312, y:570.5
+id:"Charles/MGH Station", line:"red", x:1070, y:634.7000122070312
+id:"Park Street Station", line:"red",line:"green", x:1159.300048828125, y:709.9000244140625
+id:"Downtown Crossing Station", line:"red", line:"orange", x:1250, y:810
+id:"South Station", line:"red", x:1318.5, y:882.2000122070312
+id:"Broadway Station", line:"red", x:1398.5, y:1059
+id:"Andrew Station", line:"red", x:1398.300048828125, y:1124.199951171875
+id:"JFK/UMass Station", line:"red" x:1404.5, y:1225.199951171875
+id:"North Quincy Station", line:"red", x:1534.300048828125, y:1501
+id:"Wollaston Station", line:"red", x:1604.0999755859375, y:1556.4000244140625
+id:"Qunicy Center Station", line:"red", x:1657.4000244140625, y:1621.300048828125
+id:"Quincy Adams Station", line:"red", x:1698.300048828125, y:1681.9000244140625
+id:"Braintree Station", line:"red", x:1699, y:1759.5
+id:"Savin Hill Station", line:"red", x:1317.4000244140625, y:1448.9000244140625
+id:"Fields Corner", line:"red", x:1315.0999755859375, y:1503.300048828125
+id:"Shawmut Station", line:"red", x:1321, y:1537.0999755859375
+id:"Ashmont Station", line:"red", x:1315.0999755859375, y:1569.5
+id:"Cedar Grove Station", line:"red", x:1321, y:1643.5
+id:"Butler Station", line:"red", x:1301.0999755859375, y:1685.800048828125
+id:"Milton Station", line:"red", x:1243.0999755859375, y::1685.699951171875
+id:"Central Avenue Station", line:"red", x:1203.4000244140625, y:1679.5999755859375
+id:"Valley Road Station", line:"red", x:1157.300048828125, y:1679.5999755859375
+id:"Capen Street Station", line:"red", x:1105.5999755859375, y:1685.699951171875
+id:"Mattapan Station", line:"red", x:1059.699951171875, y:1685.4000244140625
+
+id:"Oak Grove Station", line:"orange", x:1301.300048828125, y:53.5
+id:"Malden Center Station", line:"orange", x:1295.199951171875, y:105.5999984741211
+id:"Wellington Station", line:"orange", x:1295.199951171875, y:175.5
+id:"Assembly Station", line:"orange", x:1295, y:220.89999389648438
+id:"Sullivan Square Station", line:"orange", x:1301.199951171875, y:285
+id:"Community College Station", line:"orange", x:1288.699951171875, y:342.70001220703125
+id:"North Station", line:"orange", line:"green", x:1301.800048828125, y:483
+id:"Haymarket Station", line:"orange", line:"green", x:1302.0999755859375, y:588.0999755859375
+id:"State Station", line:"orange", line:"blue", x:1294.9000244140625, y:717.2000122070312
+id:"Downtown Crossing Station", line:"orange", line:"red"
+id:"Chinatown Station", line:"orange", x:1141.199951171875, y:926.5999755859375
+id:"Tufts Medical Center Station", line:"orange", x:1065.5999755859375, y:1065.5999755859375
+id:"Back Bay Station", line:"orange", x:1013.7999877929688, y:1053.4000244140625
+id:"Massachusetts Avenue Station", line:"orange", x:949.5, y:1105.199951171875
+id:"Ruggles Station", line:"orange", x:910, y:1158
+id:"Roxbury Crossing Station", line:"orange", x:848.9000244140625, y:1206.9000244140625
+id:"Jackson Square Station", line:"orange", x:787.9000244140625, y:1279.800048828125
+id:"Stony Brook Station", line:"orange", x:721, y:1346.5
+id:"Green Street Station", line:"orange", x:647, y:1408.199951171875
+id:"Forest Hills Station", line:"orange", x:579.5999755859375, y:1488.0999755859375
+
+id:"Lechmere Station", line:"green", x:1227.300048828125, y:408.20001220703125
+id:"Science Park Station", line:"green", x:1260.199951171875, y:441.20001220703125
+id:"North Station", line:"orange", line:"green", x:1301.800048828125, y:483
+id:"Haymarket Station", line:"orange", line:"green", x:1302.0999755859375, y:588.0999755859375
+id:"Government Center Station", line:"blue", line:"green", x:1225, y:650
+id:"Park Street Station", line:"red",line:"green", x:1159.300048828125, y:709.9000244140625
+id:"Boylston Street Station", line:"green", x:1088.800048828125, y:801
+id:"Arlington Staion", line:"green", x:983, y:812.0999755859375
+id:"Copley Station", line:"green", x:887.2999877929688, y:806.0999755859375
+id:"Hynes Convention Center", line:"green", x:804.0999755859375, y:812.5999755859375
+id:"Kenmore Station", line:"green", x:709.5, y:812.5999755859375
+id:"Prudential Station", line:"green", x:830.0999755859375, y:874.5
+id:"Symphony Station", line:"green", x:820.9000244140625, y:972.4000244140625
+id:"Northeastern University Station", line:"green", x:805.2000122070312, y:1009
+id:"Museum of Fine Arts Station", line:"green", x:777.5999755859375, y:1023.2999877929688
+id:"Longwood Medical Area Station", line:"green", x:750.7000122070312, y:1063.800048828125
+id:"Brigham Cricle Station", line:"green", x:728.9000244140625, y:1085.0999755859375
+id:"Fenwood Road Station", line:"green", x:694.5, y:1119.199951171875
+id:"Mission Park Station", line:"green", x:674, y:1140
+id:"Riverway Station", line:"green", x:647.0999755859375, y:1166.800048828125
+id:"Back of the Hill Station", line:"green", x:619.0999755859375, y:1195
+id:"Heath Street Station", line:"green", x:592.2999877929688, y:1222.300048828125
+
+id:"Fenway Station", line:"green", x:631.2999877929688, y:856.0999755859375
+id:"Longwood Station", line:"green", x:592.4000244140625, y:895
+id:"Brookline Village Station", line:"green", x:558.5999755859375, y:915
+id:"Brookline Hills Station", line:"green", x:533.5999755859375, y:953.4000244140625
+id:"Beaconsfield Station", line:"green", x:494.70001220703125, y:979.0999755859375
+id:"Reservoir Station", line:"green", x:463, y:1010.9000244140625
+id:"Chestnut Hill Station", line:"green", x:430.79998779296875, y:1042.9000244140625
+id:"Newton Centre Station", line:"green", x:398.3999938964844, y:1088
+id:"Newton Highlands Station", line:"green", x:371.70001220703125, y:1114.5
+id:"Eliot Station", line:"green",x:333, y:1153.0999755859375
+id:"Waban Station", line:"green", x:307.20001220703125, y:1178.5999755859375
+id:"Woodlan Station", line:"green", x:274.8999938964844, y:1211
+id:"Riverside Station", line:"green", x:217.1999969482422, y:1231.699951171875
+
+id:"St. Mary's Street Station", line:"green", x:592, y:798.9000244140625
+id:"Hawes Street Station", line:"green", x:563.4000244140625, y:770.0999755859375
+id:"Kent Street Station", line:"green", x:531.7000122070312, y:738.2999877929688
+id:"St. Paul Street", line:"green", x:429.20001220703125, y:719.0999755859375
+id:"Coolidge Corner Station", line:"green", x:402.8999938964844, y:759.2000122070312
+id:"Summit Avenue Station", line:"green", x:370.1000061035156, y:778.2999877929688
+id:"Brandon Hall Station", line:"green", x:337.8999938964844, y:810.2999877929688
+id:"Fairbanks Station", line:"green", x:305.5, y:855.7000122070312
+id:"Washington Square Station", line:"green", x:267, y:881.2000122070312
+id:"Tappan Street Station", line:"green", x:247.8000030517578, y:913.4000244140625
+id:"Dean Road Station", line:"green", x:307.20001220703125, y:1178.5999755859375
+id:"Englewood Avenue Station", line:"green", x:176.3000030517578, y:984.0999755859375
+id:"Cleveland Circle Station", line:"green", x:125.80000305175781, y:1012.0999755859375
+
+id:"Blandford Street Station", line:"green", x:653.0999755859375, y:778.2000122070312
+id:"Boston University East Station", line:"green", x:624.5, y:750
+id:"Boston University Central Station", line:"green", x:599, y:723.9000244140625
+id:"Boston University West Station", line:"green", x:571.0999755859375, y:696.5999755859375
+id:"St. Paul Street_02", line:"green", x:539, y:664.0999755859375
+id:"Pleasant Street Station", line:"green", x:504.1000061035156, y:642.5
+id:"Babcock Street Station", line:"green", x:471.79998779296875, y:597.2000122070312
+id:"Packards Corner Station", line:"green", x:446.5, y:572.2999877929688
+id:"Harvard Avenue Station", line:"green", x:395.29998779296875, y:561.5
+id:"Griggs Street/Long Avenue Station", line:"green", x:341.70001220703125, y:572.2999877929688
+id:"Allston Street Station", line:"green", x:323.3999938964844, y:602.7999877929688
+id:"Warren Street Station", line:"green", x:292.8999938964844, y:633
+id:"Washington Street Station", line:"green", x:256.1000061035156, y:670
+id:"Sutherland Road Station", line:"green", x:232.3000030517578, y:694.0999755859375
+id:"Chiswick Road Station", line:"green", x:195.5, y:730.7999877929688
+id:"Chestnut Hill Avenue Station", line:"green", x:158.60000610351562, y:754.2000122070312
+id:"South Street Station", line:"green", x:134.60000610351562, y:791.4000244140625
+id:"Boston College Station", line:"green", x:76.80000305175781, y:813
+
+
+id:"Wonderland Station", line:"blue", x:1878.300048828125, y:143.3000030517578
+id:"Revere Beach Station", line:"blue", x:1819.300048828125, y:203.1999969482422
+id:"Beachmont Station", line:"blue", x:1757.800048828125, y:264.29998779296875
+id:"Suffolk Downs Station", line:"blue", x:1708, y:314.1000061035156
+id:"Orient Heights Station", line:"blue", x:1639, y:368.6000061035156
+id:"Wood Island Station", line:"blue", x:1584, y:422.3999938964844
+id:"Airport Station", line:"blue", x:1537.800048828125, y:469.3999938964844
+id:"Maverick Station", line:"blue", x:1487.300048828125, y:535.2999877929688
+id:"Aquarium", line:"blue", x:1376, y:633.2999877929688
+id:"State Station", line:"blue", line:"orange" x:1294.9000244140625, y:717.2000122070312
+id:"Government Center Station", line:"blue", line:"green", x:1225, y:650
+id:"Bowdoin Station", line:"blue", x:1174, y:593.9000244140625
+
