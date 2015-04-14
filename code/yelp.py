@@ -62,12 +62,10 @@ import pprint
 import sys
 import urllib
 import urllib2
-
+import math
 import oauth2
 
 API_HOST         = 'api.yelp.com'
-DEFAULT_TERM     = 'restaurants'
-DEFAULT_LOCATION = 'harvard square, ma'
 SEARCH_LIMIT     = 20
 SEARCH_PATH      = '/v2/search/'
 BUSINESS_PATH    = '/v2/business/'
@@ -79,58 +77,65 @@ CONSUMER_KEY    = "srjoLIpsGQzbuL8olqs60g"
 CONSUMER_SECRET = "xfs7njXxIn6gMkT-z73oNGbFcJQ"
 TOKEN           = "firuNF-NSRdkW8UNOCbRX3oEPnxnQDTI"
 TOKEN_SECRET    = "8729C5E15fqQ1CqQIYsZIBMo4mw"
+data = []
+stops = [
+            { 'location': 'alewife station, cambrige, ma', 'line': 'red', 'stop_id': 1 },
+            { 'location': 'davis square, cambrige, ma',    'line': 'red', 'stop_id': 2 },
+            { 'location': 'porter square, cambrige, ma',   'line': 'red', 'stop_id': 3 },
+            { 'location': 'harvard square, cambrige, ma',  'line': 'red', 'stop_id': 4 },
+            { 'location': 'central square, cambrige, ma',  'line': 'red', 'stop_id': 5 },
+            { 'location': 'kendall square, cambrige, ma',  'line': 'red', 'stop_id': 6 },
+        ]
 
 def main():
-    category = 'Restaurants'
-    location = 'harvard square, MA'
+    category  = 'Restaurants'
+    for stop in stops:
+        try:
+            query_api(category, stop)
+        except urllib2.HTTPError as error:
+            sys.exit('Encountered HTTP error {0}. Abort program.'.format(error.code))
 
-    try:
-        query_api(location,category)
-    except urllib2.HTTPError as error:
-        sys.exit('Encountered HTTP error {0}. Abort program.'.format(error.code))
 
+def query_api(category, stop):
 
-def query_api(location, category):
     url_params = {
         'term': 'restaurants',
-        'location': location.replace(' ', '+'),
+        'location': stop['location'].replace(' ', '+'),
         'radius_filter' : 1600,
-#        'category_filter' : category,
-        'sort': '1',
-        'offset': '1'
- #       'limit': 40
+        'sort': '0',
+        'offset': '0',
+        'limit': 20
     }
 
     response = request(API_HOST, SEARCH_PATH, url_params=url_params)
+    runs  = int(math.ceil(int(response['total'])/float(20)))
 
-    for item in response['businesses'] :
+    for i in range(runs):
 
+        url_params['offset'] = i*20
+        response = request(API_HOST, SEARCH_PATH, url_params=url_params)
+        for item in response['businesses'] :
+            cat = []
+            try:
+                for c in item['categories']:
+                    cat.append(c[0])
+            except:
+                continue
 
-        print item['name']
-        print item['rating']
-        print item['categories']
-        print item['location']['coordinate']
-        print "\n"
-    print response['total']
+            business = { 'name'       : item['name'], 
+                         'rating'     : item['rating'], 
+                         'categories' : cat, 
+                         'latitude'   : item['location']['coordinate']['latitude'],
+                         'longitude'  : item['location']['coordinate']['longitude'],
+                         'line'       : stop['line'],
+                         'stop_id'    : stop['stop_id']
+                       }
 
-    businesses = response.get('businesses')
+            data.append(business)
+            print business['name']
 
-    if not businesses:
-        print u'No businesses for {0} in {1} found.'.format(term, location)
-        return
-
-    business_id = businesses[0]['id']
-
-    print u'{0} businesses found'.format(
-        len(businesses)
-    )
-
-    # response = get_business(business_id)
-
-    # print u'Result for business "{0}" found:'.format(business_id)
-    #pprint.pprint(response, indent=2)
-
-
+    with open('data.json', 'w') as outfile:
+        json.dump(data, outfile)
 
 def request(host, path, url_params=None):
     """Prepares OAuth authentication and sends the request to the API.
