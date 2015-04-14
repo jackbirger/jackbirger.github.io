@@ -198,13 +198,14 @@ def query_api(category, stop):
             except:
                 continue
 
-            business = { 'name'       : item['name'], 
-                         'rating'     : item['rating'], 
-                         'categories' : cat, 
-                         'latitude'   : latitude,
-                         'longitude'  : longitude,
-                         'line'       : stop['line'],
-                         'stop_id'    : stop['stop_id']
+            business = { 'name'         : item['name'], 
+                         'rating'       : item['rating'], 
+                         'review_count' : item['review_count'], 
+                         'categories'   : cat, 
+                         'latitude'     : latitude,
+                         'longitude'    : longitude,
+                         'line'         : stop['line'],
+                         'stop_id'      : stop['stop_id']
                        }
 
             data.append(business)
