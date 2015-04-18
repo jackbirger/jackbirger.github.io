@@ -1357,8 +1357,8 @@
        // Hint: http://giscollective.org/d3-queue-js/
 
        queue()
-           .defer(d3.json, "data/mbta_metadata.json") // AllData
-           .defer(d3.json, 'data/data.json') // Contains meta-information about AllData. 
+           .defer(d3.json, "../data/mbta_metadata.json") // AllData
+           .defer(d3.json, '../data/data.json') // Contains meta-information about AllData. 
            .await(dataLoaded); // Call dataLoaded function
 
    }
