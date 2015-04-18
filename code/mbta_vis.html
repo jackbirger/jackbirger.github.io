@@ -26,6 +26,7 @@
     <option value="none"selected>Stop</option>
     <option value="count">Count</option>
     <option value="average_rating" >Avg. Rating</option>
+    <option value="total_reviews" >Tot. Reviews</option>
   </select>
 
   <label> Display Line: </label>
@@ -1303,6 +1304,25 @@
    var radius_scale = d3.scale.linear().range([10,60]);
    var circles = d3.selectAll('circle')
 
+     //List of all possible categories
+  var category_list = ["Afghan", "African", "American (New)", "American (Traditional)", "Arabian", "Argentine",
+  "Armenian", "Asian Fusion", "Australian", "Austrian", "Bangladeshi", "Barbeque", "Basque",
+  "Belgian", "Brasseries", "Brazilian", "Breakfast & Brunch", "British", "Buffets", "Burgers",
+  "Burmese", "Cafes", "Cafeteria", "Cajun/Creole", "Cambodian", "Cantonese", "Caribbean",
+  "Catalan", "Cheesesteaks", "Chicken Shop", "Chicken Wings", "Chinese", "Colombian","Comfort Food",
+  "Creperies", "Cuban", "Czech", "Delis", "Dim Sum", "Diners", "Dominican", "Egyptian", "Ethiopian",
+  "Falafel", "Fast Food", "Filipino", "Fish & Chips", "Fondue", "Food Court", "Food Stands", "French",
+  "Gastropubs", "German", "Gluten-Free", "Greek", "Haitian", "Halal", "Hawaiian","Himalayan/Nepalese",
+  "Hot Dogs", "Hot Pot", "Hungarian", "Iberian", "Indian", "Indonesian", "Irish", "Italian", "Japanese",
+  "Korean", "Kosher", "Laotian", "Latin American", "Lebanese", "Live/Raw Food", "Malaysian", "Mediterranean",
+  "Mexican", "Middle Eastern", "Modern European", "Mongolian", "Moroccan", "Pakistani", "Persian/Iranian",
+  "Peruvian", "Pizza", "Polish", "Portuguese", "Poutineries", "Puerto Rican", "Ramen", "Russian", "Salad",
+  "Salvadoran", "Sandwiches", "Scandinavian", "Scottish", "Seafood", "Senegalese", "Shanghainese", "Singaporean",
+  "Slovakian", "Soul Food", "Soup", "South African", "Southern", "Spanish", "Sri Lankan", "Steakhouses",
+  "Sushi Bars", "Szechuan", "Taiwanese", "Tapas Bars", "Tapas/Small Plates", "Teppanyaki", "Tex-Mex", "Thai",
+  "Trinidadian", "Turkish", "Ukrainian", "Uzbek", "Vegan", "Vegetarian", "Venezuelan","Vietnamese"]
+
+
    //Initialize circles using metadata
    var initVis = function(){
 
@@ -1355,63 +1375,76 @@
 
        // Load data here and call "dataLoaded" afterwards
        // Hint: http://giscollective.org/d3-queue-js/
-
        queue()
-           .defer(d3.json, "../data/mbta_metadata.json") // AllData
+           .defer(d3.json, '../data/mbta_metadata.json') // AllData
            .defer(d3.json, '../data/data.json') // Contains meta-information about AllData. 
            .await(dataLoaded); // Call dataLoaded function
 
    }
 
 
+
+
    //Aggregate the values for count and average ratings
    var aggregateTotals = function(){
 
-     var stops_number = 23
+      //object with categories initialized to 0
+      var initialized_cat= {}
+
+        category_list.forEach(function(category){
+          initialized_cat[category] = 0
+        })
+
+      console.log("initial", initialized_cat)
 
      //create blank array of objects containing agregate information for each t-stop
-     for (var i = 0; i < stops_number; i++) {
+      stop_list = metaData.map(function(d){
 
-      var temp = {}
-
-      temp = {  id: metaData[i].stop_id,
-                line: metaData[i].line[0],
+      temp = {  id: d.stop_id,
+                line: d.line[0],
                 count:0,
-                rating_average:0
-                //categories: []  //need to populate to make an array of objects containing category name:0
-             }
+                rating_average:0,
+                review_count:0,
+                category: initialized_cat
+             }  
 
-      stop_list.push(temp)
-      
-     };
-     console.log(stop_list)
+      return temp   
+
+     })
 
     //////////////////
 
 
       //loop through every restaurant and calculate the total numbers per stop
       allData.forEach(function(restaurant){
-
         stop_list.forEach(function(stop){
+
           if(restaurant.stop_id == stop.id){
-            stop.count += 1;
+            stop.count += 1;  //total count
             stop.rating_average += restaurant.rating  //total ratings
+            stop.review_count += restaurant.review_count
+            var temp_cat = restaurant.categories[0]
+            stop.category[temp_cat] += 1
+
+            // restaurant.categories.forEach(function(cat){
+            //   //console.log("cat", cat)
+            //   stop.category[cat]+= 1;
+            // })
+
           }
+
         })
-
       })
 
 
-      //divide by number of restaurants in the given stop to create averages
+
+      //divide by number of restaurants in the given stop to create averages when necessary
       stop_list.forEach(function(stop){
-        stop.rating_average = stop.rating_average / stop.count
+        stop.rating_average = stop.rating_average / stop.count;
 
       })
 
-
-      console.log(stop_list)
-
-
+      console.log("stop list", stop_list)
   }
 
 
@@ -1421,8 +1454,9 @@
    var e = document.getElementById("mySelectOption");
    var plot_variable = e.options[e.selectedIndex].value;
    console.log(plot_variable)
-   var max_count = d3.max(stop_list, function(d){ return d.count })
-   var max_avg = d3.max(stop_list, function(d){ return d.rating_average})
+   var max_count = d3.max(stop_list, function(d){ return d.count });
+   //var max_avg = d3.max(stop_list, function(d){ return d.rating_average });
+   //var max_comments = d3.max(stop_list, function(d){ return d.review_count });
    var plot = stop;
 
 
@@ -1431,9 +1465,12 @@
     radius_scale.domain([0, max_count]) 
     plot = "count"
    }else if(plot_variable == "average_rating"){
-    radius_scale.domain([0, max_avg])
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.rating_average}))
     plot = "rating_average"
-   }else {plot = "stop"}
+   }else if(plot_variable == "total_reviews"){
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.review_count}))
+    plot = "review_count"
+   } else {plot = "stop"}
 
 
     d3.selectAll('circle').attr("r", function(d){
@@ -1471,8 +1508,6 @@
 
    line.style("opacity", 1);
 
-
-
   }
 
 
@@ -1480,7 +1515,6 @@
 
 
    startHere()
-
 
 
 </script>
