@@ -71,7 +71,7 @@
       <label> Category Filter: </label>
       <select id="mySelectCat" onchange="select_cat()"> 
         <option value="none"selected>None</option>    
-        <option value="Afghan"selected>Afghan</option>
+        <option value="Afghan">Afghan</option>
         <option value="African">African</option>
         <option value="American (New)">American (New)</option>
         <option value="Arabian" >Arabian</option>
@@ -314,18 +314,24 @@
      //create blank array of objects containing agregate information for each t-stop
       stop_list = metaData.map(function(d){
 
-        var initialized_cat= {}
+        var initialized_cat_count = {}
+        var initialized_cat_rating = {}
+        var initialized_cat_review = {}
 
         category_list.forEach(function(category){
-          initialized_cat[category] = 0
+          initialized_cat_count[category] = 0
+          initialized_cat_rating[category] = 0
+          initialized_cat_review[category] = 0
         })
 
       temp = {  id: d.stop_id,
-                line: d.line[0],
+                line: d.line,
                 count:0,
                 rating_average:0,
                 review_count:0,
-                category: initialized_cat
+                category_count: initialized_cat_count,
+                category_avg_rating: initialized_cat_rating,
+                category_review_count: initialized_cat_review
              }  
 
       return temp   
@@ -347,7 +353,9 @@
 
             restaurant.categories.forEach(function(cat){
               if(category_list.indexOf(cat) >= 0){
-                  stop.category[cat]+= 1;               
+                  stop.category_count[cat] += 1;
+                  stop.category_avg_rating[cat] += restaurant.rating
+                  stop.category_review_count[cat] += restaurant.review_count              
               }
             })
 
@@ -359,7 +367,18 @@
 
       //divide by number of restaurants in the given stop to create averages when necessary
       stop_list.forEach(function(stop){
+
+        //find rating average of total count
         stop.rating_average = stop.rating_average / stop.count;
+
+        //find rating average of each category
+        for(var key in stop.category_avg_rating){
+          if(stop.category_avg_rating.hasOwnProperty(key)){
+            if(!isNaN(stop.category_avg_rating[key] / stop.category_count[key])){ //Ensure no 0/0
+              stop.category_avg_rating[key] = stop.category_avg_rating[key] / stop.category_count[key];              
+            }
+          }
+        }        
 
       })
 
@@ -439,7 +458,7 @@
    console.log(filter_category)
    var plot = "stop";
 
-   radius_scale.domain(d3.extent(stop_list, function(d){ return d.category[filter_category] }))
+   radius_scale.domain(d3.extent(stop_list, function(d){ return d.category_count[filter_category] }))
 
   
     d3.selectAll('circle').transition().duration(1000).attr("r", function(d){
@@ -453,7 +472,7 @@
       //Loop through stops and set radius value based on matching stop id's
       stop_list.forEach(function(stop){
         if(stop.id == d.stop_id){
-          plot_r = radius_scale(stop.category[filter_category]) 
+          plot_r = radius_scale(stop.category_count[filter_category]) 
         }
       })
 
