@@ -61,7 +61,7 @@
 	{"stop_id":158, "station":"Aquarium", "line":["blue"], "x":1376, "y":638},
 	{"stop_id":161, "station":"Bowdoin Station", "line":["blue"], "x":1168, "y":595},
 
-		{"stop_id":162, "station":"Lechmere Station", "line":["green"], "x":1222, "y":408},
+	{"stop_id":162, "station":"Lechmere Station", "line":["green"], "x":1222, "y":408},
 	{"stop_id":163, "station":"Science Park Station", "line":["green"], "x":1260, "y":445},
 	{"stop_id":166, "station":"Government Center Station", "line":["blue", "green"], "x":1225, "y":650},
 	{"stop_id":168, "station":"Boylston Street Station", "line":["green"], "x":1083, "y":801},
