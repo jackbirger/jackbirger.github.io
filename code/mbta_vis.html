@@ -36,10 +36,6 @@
     <script src="js/mbta-svg.js"></script>
   </head>
 
-
-
-
-
   <body>
 
     <div class="container">
@@ -55,7 +51,6 @@
       </div>
 
      <div class="row">
-
       <label>Scale Circles By: </label>
       <select id="mySelectOption" onchange="rank()"> 
         <option value="none"selected>Stop</option>
@@ -72,16 +67,18 @@
         <option value="orange" >Orange</option>
         <option value="blue" >Blue</option>
       </select>
-
     </div>
 
-
-<svg id="mbta_svg"
-   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1947 1825"
-   enable-background="new 0 0 1947 1825" xml:space="preserve">
-   <script>document.write(mbta_svg)</script>
-   <g id="circles"></g>
-</svg>
+    <div class="row">
+      <div class="col-lg-12">
+        <svg id="mbta_svg"
+           xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1947 1825"
+           enable-background="new 0 0 1947 1825" xml:space="preserve">
+           <script>document.write(mbta_svg)</script>
+           <g id="circles"></g>
+        </svg>
+      </div>
+    </div>
 
       <footer class="footer">
         <p>&copy; Company 2015</p>
@@ -296,7 +293,6 @@
 
   }
 
-
   //Function to control highlight of specific lines
   function line_display(){
 
@@ -312,7 +308,6 @@
   }
 
    startHere()
-
 
 </script>
 </body>
