@@ -1,4 +1,20 @@
-circle .red {
-	stroke: red;
+#circles {
 	stroke-width: 3;
+	stroke-opacity: 1;
+	fill-opacity: .1;
+}
+#circles .red {
+	stroke: red;
+}
+#circles .blue {
+	stroke: blue;
+}
+#circles .orange {
+	stroke: orange;
+}
+#circles .green {
+	stroke: green;
+}
+#mbta {
+	opacity: .1;
 }

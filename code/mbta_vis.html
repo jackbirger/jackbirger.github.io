@@ -45,11 +45,8 @@
    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1947 1825"
    enable-background="new 0 0 1947 1825" xml:space="preserve">
    <script>document.write(mbta_svg)</script>
-
-
+   <g id="circles"></g>
 </svg>
-
-
 
 
 <script type="text/javascript">
@@ -85,7 +82,7 @@
 
       metaData.forEach(function(stop){
 
-         d3.select("#mbta_svg").append('circle')
+         d3.select("#circles").append('circle')
             .attr("cx", stop['x'])
             .attr("cy", stop['y'])
             .attr("r", 25)
@@ -97,7 +94,6 @@
                }
             })
             .attr("id", stop["station"])
-            .style("opacity", .2)
             .datum(stop);
 
       })
@@ -262,7 +258,7 @@
    var e = document.getElementById("mySelectLine");
    var select_line = e.options[e.selectedIndex].value;
 
-   d3.selectAll('circle').style("opacity", .2)
+   d3.selectAll('circle').style("opacity", .5)
 
    var line = d3.selectAll('.' + select_line);
 
