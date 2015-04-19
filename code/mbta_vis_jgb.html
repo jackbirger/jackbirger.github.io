@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Exploration of Boston Food by MBTA</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script src="js/mbta-svg.js"></script>
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="#">Home</a></li>
+            <li role="presentation"><a href="#">About</a></li>
+            <li role="presentation"><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Exploring Boston Food by MBTA</h3>
+      </div>
+
+     <div class="row">
+      <label>Scale Circles By: </label>
+      <select id="mySelectOption" onchange="rank()"> 
+        <option value="none"selected>Stop</option>
+        <option value="count">Count</option>
+        <option value="average_rating" >Avg. Rating</option>
+        <option value="total_reviews" >Tot. Reviews</option>
+      </select>
+
+      <label> Display Line: </label>
+      <select id="mySelectLine" onchange="line_display()"> 
+        <option value="none"selected>None</option>
+        <option value="red">Red</option>
+        <option value="green">Green</option>
+        <option value="orange" >Orange</option>
+        <option value="blue" >Blue</option>
+      </select>
+
+      <label> Category Filter: </label>
+      <select id="mySelectCat" onchange="select_cat()"> 
+        <option value="none"selected>None</option>    
+        <option value="Afghan"selected>Afghan</option>
+        <option value="African">African</option>
+        <option value="American (New)">American (New)</option>
+        <option value="Arabian" >Arabian</option>
+        <option value="Argentine" >Argentine</option>
+        <option value="Armenian" >Armenian</option>
+        <option value="Asian Fusion" >Asian Fusion</option>
+        <option value="Australian" >Australian</option>
+        <option value="Bangladeshi" >Bangladeshi</option>
+        <option value="Barbeque" >Barbeque</option>    
+        <option value="Basque" >Basque</option> 
+        <option value="Belgian" >Belgian</option>     
+        <option value="Brasseries" >Brasseries</option> 
+        <option value="Brazilian" >Brazilian</option> 
+        <option value="Breakfast & Brunch" >Breakfast & Brunch</option> 
+        <option value="British" >British</option> 
+        <option value="Buffets" >Buffets</option> 
+        <option value="Burgers" >Burgers</option> 
+        <option value="Burmese" >Burmese</option> 
+        <option value="Cafes" >Cafes</option> 
+        <option value="Cajun/Creole" >Cajun/Creole</option>
+        <option value="Cambodian" >Cambodian</option> 
+        <option value="Cantonese" >Cantonese</option> 
+        <option value="Caribbean" >Caribbean</option> 
+        <option value="Catalan" >Catalan</option> 
+        <option value="Cheesesteaks" >Cheesesteaks</option> 
+        <option value="Chicken Shop" >Chicken Shop</option>
+        <option value="Chicken Wings" >Chicken Wings</option> 
+        <option value="Chinese" >Chinese</option> 
+        <option value="Colombian" >Colombian</option> 
+        <option value="Comfort Food" >Comfort Food</option> 
+        <option value="Creperies" >Creperies</option> 
+        <option value="Cuban" >Cuban</option> 
+        <option value="Czech" >Czech</option>   
+        <option value="Delis" >Delis</option>
+        <option value="Delis" >Delis</option>
+        <option value="Dim Sum" >Dim Sum</option>
+        <option value="Diners" >Diners</option>
+        <option value="Dominican" >Dominican</option>
+        <option value="Egyptian" >Egyptian</option>
+        <option value="Ethiopian" >Ethiopian</option> 
+        <option value="Falafel" >Falafel</option>
+        <option value="Fast Food" >Fast Food</option>
+        <option value="Filipino" >Filipino</option>
+        <option value="Fish & Chips" >Fish & Chips</option>
+        <option value="Fondue">Fondue</option>
+        <option value="Food Court">Food Court</option>
+        <option value="Food Stands">Food Stands</option>
+        <option value="French">French</option>
+        <option value="Gastropubs">Gastropubs</option>
+        <option value="German">German</option>
+        <option value="Gluten-Free">Gluten-Free</option>
+        <option value="Greek">Greek</option>
+        <option value="Haitian">Haitian</option>
+        <option value="Halal">Halal</option>
+        <option value="Hawaiian">Hawaiian</option>
+        <option value="Himalayan/Nepalese">Himalayan/Nepalese</option>
+        <option value="Hot Dogs">Hot Dogs"</option>
+        <option value="Hot Pot">Hot Pot</option>
+        <option value="Hungarian">Hungarian</option>
+        <option value="Iberian">Iberian</option>
+        <option value="Indian">Indian</option>
+        <option value="Indonesian">Indonesian</option>
+        <option value="Irish">Irish</option>
+        <option value="Italian">Italian</option>
+        <option value="Japanese">Japanese</option>
+        <option value="Korean">Korean</option>
+        <option value="Kosher">Kosher</option>
+        <option value="Laotian">Laotian</option>
+        <option value="Latin American">Latin American</option>
+        <option value="Lebanese">Lebanese</option>
+        <option value="Live/Raw Food">Live/Raw Food</option>
+        <option value="Malaysian">Malaysian</option>
+        <option value="Mediterranean">Mediterranean</option>
+        <option value="Mexican">Mexican</option>
+        <option value="Middle Eastern">Middle Eastern</option>
+        <option value="Modern European">Modern European</option>
+        <option value="Mongolian">Mongolian</option>
+        <option value="Moroccan">Moroccan</option>
+        <option value="Pakistani">Pakistani</option>
+        <option value="Persian/Iranian">Persian/Iranian</option>
+        <option value="Peruvian">Peruvian</option>
+        <option value="Pizza">Pizza</option>
+        <option value="Polish">Polish</option>
+        <option value="Portuguese">Portuguese</option>
+        <option value="Poutineries">Poutineries</option>
+        <option value="Puerto Rican">Puerto Rican</option>
+        <option value="Ramen">Ramen</option>
+        <option value="Russian">Russian</option>
+        <option value="Salad">Salad</option>
+        <option value="Salvadoran">Salvadoran</option>
+        <option value="Sandwiches">Sandwiches</option>
+        <option value="Scandinavian">Scandinavian</option>
+        <option value="Scottish">Scottish</option>
+        <option value="Seafood">Seafood</option>
+        <option value="Senegalese">Senegalese</option>
+        <option value="Shanghainese">Shanghainese</option>
+        <option value="Singaporean">Singaporean</option>
+        <option value="Slovakian">Slovakian</option>
+        <option value="Soul Food">Soul Food</option>
+        <option value="Soup">Soup</option>
+        <option value="South African">South African</option>
+        <option value="Southern">Southern</option>
+        <option value="Spanish">Spanish</option>
+        <option value="Sri Lankan">Sri Lankan</option>
+        <option value="Steakhouses">Steakhouses</option>
+        <option value="Sushi Bars">Sushi Bars</option>
+        <option value="Szechuan">Szechuan</option>
+        <option value="Taiwanese">Taiwanese</option>
+        <option value="Tapas Bars">Tapas Bars</option>
+        <option value="Tapas/Small Plates">Tapas/Small Plates</option>
+        <option value="Teppanyaki">Teppanyaki</option>
+        <option value="Tex-Mex">Tex-Mex</option>
+        <option value="Thai">Thai</option>
+        <option value="Trinidadian">Trinidadian</option>
+        <option value="Turkish">Turkish</option>
+        <option value="Ukrainian">Ukrainian</option>
+        <option value="Uzbek">Uzbek</option>
+        <option value="Vegan">Vegan</option>
+        <option value="Vegetarian">Vegetarian</option>
+        <option value="Venezuelan">Venezuelan</option>
+        <option value="Vietnamese">Vietnamese</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <svg id="mbta_svg"
+           xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1947 1825"
+           enable-background="new 0 0 1947 1825" xml:space="preserve">
+           <script>document.write(mbta_svg)</script>
+           <g id="circles"></g>
+        </svg>
+      </div>
+    </div>
+
+      <footer class="footer">
+        <p>&copy; Company 2015</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
+
+
+<script type="text/javascript">
+
+   //Global Variables
+   var metaData;
+   var allData;
+   var stop_list = [];  //Aggregate data list
+   var radius_scale = d3.scale.linear().range([10,60]);
+   var circles = d3.selectAll('circle')
+
+     //List of all possible categories
+  var category_list = ["Afghan", "African", "American (New)", "American (Traditional)", "Arabian", "Argentine",
+  "Armenian", "Asian Fusion", "Australian", "Austrian", "Bangladeshi", "Barbeque", "Basque",
+  "Belgian", "Brasseries", "Brazilian", "Breakfast & Brunch", "British", "Buffets", "Burgers",
+  "Burmese", "Cafes", "Cafeteria", "Cajun/Creole", "Cambodian", "Cantonese", "Caribbean",
+  "Catalan", "Cheesesteaks", "Chicken Shop", "Chicken Wings", "Chinese", "Colombian","Comfort Food",
+  "Creperies", "Cuban", "Czech", "Delis", "Dim Sum", "Diners", "Dominican", "Egyptian", "Ethiopian",
+  "Falafel", "Fast Food", "Filipino", "Fish & Chips", "Fondue", "Food Court", "Food Stands", "French",
+  "Gastropubs", "German", "Gluten-Free", "Greek", "Haitian", "Halal", "Hawaiian","Himalayan/Nepalese",
+  "Hot Dogs", "Hot Pot", "Hungarian", "Iberian", "Indian", "Indonesian", "Irish", "Italian", "Japanese",
+  "Korean", "Kosher", "Laotian", "Latin American", "Lebanese", "Live/Raw Food", "Malaysian", "Mediterranean",
+  "Mexican", "Middle Eastern", "Modern European", "Mongolian", "Moroccan", "Pakistani", "Persian/Iranian",
+  "Peruvian", "Pizza", "Polish", "Portuguese", "Poutineries", "Puerto Rican", "Ramen", "Russian", "Salad",
+  "Salvadoran", "Sandwiches", "Scandinavian", "Scottish", "Seafood", "Senegalese", "Shanghainese", "Singaporean",
+  "Slovakian", "Soul Food", "Soup", "South African", "Southern", "Spanish", "Sri Lankan", "Steakhouses",
+  "Sushi Bars", "Szechuan", "Taiwanese", "Tapas Bars", "Tapas/Small Plates", "Teppanyaki", "Tex-Mex", "Thai",
+  "Trinidadian", "Turkish", "Ukrainian", "Uzbek", "Vegan", "Vegetarian", "Venezuelan","Vietnamese"]
+
+
+   //Initialize circles using metadata
+   var initVis = function(){
+
+      metaData.forEach(function(stop){
+
+         d3.select("#circles").append('circle')
+            .attr("cx", stop['x'])
+            .attr("cy", stop['y'])
+            .attr("r", 25)
+            .attr("class", function(){
+               if(stop.line.length == 1){
+                  return stop.line[0];
+               } else{
+                  return stop.line[0] + ' ' + stop.line[1]
+               }
+            })
+            .attr("id", stop["station"])
+            .datum(stop);
+
+      })
+
+
+      //Call function to calculate totals
+      aggregateTotals()
+   }
+
+
+   //check if there is an error, store data in global variables
+   var dataLoaded = function (error, _metaData, _allData) {
+
+      if (!error) {
+
+         allData = _allData
+         metaData = _metaData
+
+         console.log("metaData", metaData);
+         console.log("allData", allData)
+
+
+         initVis();
+
+      }
+
+   }
+
+
+   //Start the dataload
+   var startHere = function(){
+
+       // Load data here and call "dataLoaded" afterwards
+       // Hint: http://giscollective.org/d3-queue-js/
+       queue()
+           .defer(d3.json, '../data/mbta_metadata.json') // AllData
+           .defer(d3.json, '../data/data.json') // Contains meta-information about AllData. 
+           .await(dataLoaded); // Call dataLoaded function
+
+   }
+
+
+   //Aggregate the values for count and average ratings
+   var aggregateTotals = function(){
+
+
+     //create blank array of objects containing agregate information for each t-stop
+      stop_list = metaData.map(function(d){
+
+        var initialized_cat= {}
+
+        category_list.forEach(function(category){
+          initialized_cat[category] = 0
+        })
+
+      temp = {  id: d.stop_id,
+                line: d.line[0],
+                count:0,
+                rating_average:0,
+                review_count:0,
+                category: initialized_cat
+             }  
+
+      return temp   
+
+     })
+
+
+    //////////////////
+
+
+      //loop through every restaurant and calculate the total numbers per stop
+      allData.forEach(function(restaurant){
+        stop_list.forEach(function(stop){
+
+          if(restaurant.stop_id == stop.id){
+            stop.count += 1;  //total count
+            stop.rating_average += restaurant.rating  //total ratings
+            stop.review_count += restaurant.review_count
+
+            restaurant.categories.forEach(function(cat){
+              if(category_list.indexOf(cat) >= 0){
+                  stop.category[cat]+= 1;               
+              }
+            })
+
+          }
+
+        })
+      })
+
+
+      //divide by number of restaurants in the given stop to create averages when necessary
+      stop_list.forEach(function(stop){
+        stop.rating_average = stop.rating_average / stop.count;
+
+      })
+
+      console.log("stop list aggregate", stop_list)
+  }
+
+
+  //Scale the circles based on the Count, Average Rating, etc.
+  function rank(){
+
+   var e = document.getElementById("mySelectOption");
+   var plot_variable = e.options[e.selectedIndex].value;
+   console.log(plot_variable)
+   var max_count = d3.max(stop_list, function(d){ return d.count });
+   //var max_avg = d3.max(stop_list, function(d){ return d.rating_average });
+   //var max_comments = d3.max(stop_list, function(d){ return d.review_count });
+   var plot = stop;
+
+
+   //Find the domain for the given selection
+   if(plot_variable == "count"){
+    radius_scale.domain([0, max_count]) 
+    plot = "count"
+   }
+   else if(plot_variable == "average_rating"){
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.rating_average}))
+    plot = "rating_average"
+   }
+   else if(plot_variable == "total_reviews"){
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.review_count}))
+    plot = "review_count"
+   } 
+   else {plot = "stop"}
+
+
+    d3.selectAll('circle').transition().duration(1000).attr("r", function(d){
+
+      var plot_r; //value of plotted radius
+
+      //if stop is selected return radius of 10
+      if(plot == "stop"){ return 10}
+      else {
+
+      //Loop through stops and set radius value based on matching stop id's
+      stop_list.forEach(function(stop){
+        if(stop.id == d.stop_id){
+          plot_r = radius_scale(stop[plot]) 
+        }
+      })
+
+      return plot_r;
+
+    }
+    })
+
+  }
+
+  //Function to control highlight of specific lines
+  function line_display(){
+
+   var e = document.getElementById("mySelectLine");
+   var select_line = e.options[e.selectedIndex].value;
+
+   d3.selectAll('circle').style("opacity", .5)
+
+   var line = d3.selectAll('.' + select_line);
+
+   line.style("opacity", 1);
+
+  }
+
+  //Scale the circles based on the categories
+  function select_cat(){
+
+   var e = document.getElementById("mySelectCat");
+   var filter_category = e.options[e.selectedIndex].value;
+   console.log(filter_category)
+   var plot = "stop";
+
+   radius_scale.domain(d3.extent(stop_list, function(d){ return d.category[filter_category] }))
+
+  
+    d3.selectAll('circle').transition().duration(1000).attr("r", function(d){
+
+      var plot_r; //value of plotted radius
+
+      // //if stop is selected return radius of 10
+      // if(plot == "stop"){ return 10}
+      // else {
+
+      //Loop through stops and set radius value based on matching stop id's
+      stop_list.forEach(function(stop){
+        if(stop.id == d.stop_id){
+          plot_r = radius_scale(stop.category[filter_category]) 
+        }
+      })
+
+      return plot_r; 
+
+
+
+    })  
+
+  }
+
+   startHere()
+
+</script>
+</body>
+</html>
