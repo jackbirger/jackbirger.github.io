@@ -1,0 +1,1 @@
+detailVis.js
