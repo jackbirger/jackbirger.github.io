@@ -52,7 +52,7 @@
 
      <div class="row">
       <label>Scale Circles By: </label>
-      <select id="mySelectOption" onchange="rank()"> 
+      <select id="mySelectOption" onchange="update_vis()"> <!-- rank() -->
         <option value="none"selected>Stop</option>
         <option value="count">Count</option>
         <option value="average_rating" >Avg. Rating</option>
@@ -69,9 +69,9 @@
       </select>
 
       <label> Category Filter: </label>
-      <select id="mySelectCat" onchange="select_cat()"> 
-        <option value="none"selected>None</option>    
-        <option value="Afghan">Afghan</option>
+      <select id="mySelectCat" onchange="update_vis()"> <!-- select_cat() -->
+        <option value="all_cat"selected>All Categories</option>    
+        <option value="Afghan"  >Afghan</option>
         <option value="African">African</option>
         <option value="American (New)">American (New)</option>
         <option value="Arabian" >Arabian</option>
@@ -395,7 +395,7 @@
    var max_count = d3.max(stop_list, function(d){ return d.count });
    //var max_avg = d3.max(stop_list, function(d){ return d.rating_average });
    //var max_comments = d3.max(stop_list, function(d){ return d.review_count });
-   var plot = stop;
+   var plot = "stop";
 
 
    //Find the domain for the given selection
@@ -450,39 +450,107 @@
 
   }
 
-  //Scale the circles based on the categories
-  function select_cat(){
+  // //Scale the circles based on the categories
+  // function select_cat(){
 
-   var e = document.getElementById("mySelectCat");
-   var filter_category = e.options[e.selectedIndex].value;
-   console.log(filter_category)
-   var plot = "stop";
+  //  var e = document.getElementById("mySelectCat");
+  //  var filter_category = e.options[e.selectedIndex].value;
+  //  console.log(filter_category)
+  //  var plot = "stop";
 
-   radius_scale.domain(d3.extent(stop_list, function(d){ return d.category_count[filter_category] }))
+  //  radius_scale.domain(d3.extent(stop_list, function(d){ return d.category_count[filter_category] }))
 
   
+  //   d3.selectAll('circle').transition().duration(1000).attr("r", function(d){
+
+  //     var plot_r; //value of plotted radius
+
+  //     // //if stop is selected return radius of 10
+  //     // if(plot == "stop"){ return 10}
+  //     // else {
+
+  //     //Loop through stops and set radius value based on matching stop id's
+  //     stop_list.forEach(function(stop){
+  //       if(stop.id == d.stop_id){
+  //         plot_r = radius_scale(stop.category_count[filter_category]) 
+  //       }
+  //     })
+
+  //     return plot_r; 
+
+
+
+  //   })  
+
+  // }
+
+
+  function update_vis(){
+
+   //Check how stop will be encoded by (Count, Avg. Rating,Tot. Review)
+   var e = document.getElementById("mySelectOption");
+   var encode_stop_by = e.options[e.selectedIndex].value;
+   console.log(encode_stop_by)
+
+   //Check for the category that will be displayed
+   var f = document.getElementById("mySelectCat");
+   var encode_category = f.options[f.selectedIndex].value;
+   console.log(encode_category)
+
+   //Find the domain for the given selection
+   if(encode_stop_by == "count" && encode_category == "all_cat" ){
+    radius_scale.domain([0, d3.max(stop_list, function(d){ return d.count })]) 
+    plot = "count"
+   } else if(encode_stop_by == "average_rating" && encode_category == "all_cat"){
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.rating_average}))
+    plot = "rating_average"
+   } else if(encode_stop_by == "total_reviews" && encode_category == "all_cat"){
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.review_count}))
+    plot = "review_count"
+   } else if(encode_stop_by == "count" && encode_category == encode_category){
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.category_count[encode_category] }))    
+   } else if(encode_stop_by == "average_rating" && encode_category == encode_category){
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.category_avg_rating[encode_category] }))
+   } else if(encode_stop_by == "total_reviews" && encode_category == encode_category){
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.category_review_count[encode_category] }))
+   } else {plot = "stop"}
+
+
+    //Update the visualization
+
     d3.selectAll('circle').transition().duration(1000).attr("r", function(d){
 
       var plot_r; //value of plotted radius
 
-      // //if stop is selected return radius of 10
-      // if(plot == "stop"){ return 10}
-      // else {
-
-      //Loop through stops and set radius value based on matching stop id's
       stop_list.forEach(function(stop){
-        if(stop.id == d.stop_id){
-          plot_r = radius_scale(stop.category_count[filter_category]) 
-        }
+       if(stop.id == d.stop_id){
+
+         if(encode_stop_by == "count" && encode_category == "all_cat" ){
+          plot_r = radius_scale(stop["count"])  
+          //plot = "count"
+         } else if(encode_stop_by == "average_rating" && encode_category == "all_cat"){
+          plot_r = radius_scale(stop["rating_average"])
+          console.log(stop["rating_average"], plot_r)
+          //plot = "rating_average"
+         } else if(encode_stop_by == "total_reviews" && encode_category == "all_cat"){
+          plot_r = radius_scale(stop["review_count"])
+          //plot = "review_count"
+         } else if(encode_stop_by == "count" && encode_category == encode_category){
+          plot_r = radius_scale(stop.category_count[encode_category])   
+         } else if(encode_stop_by == "average_rating" && encode_category == encode_category){
+          plot_r = radius_scale(stop.category_avg_rating[encode_category])   
+         } else if(encode_stop_by == "total_reviews" && encode_category == encode_category){
+          plot_r = radius_scale(stop.category_review_count[encode_category])   
+         } else {plot_r = 10}
+       }
+
       })
 
-      return plot_r; 
-
-
-
-    })  
-
+      return plot_r
+    })
   }
+
+
 
    startHere()
 
