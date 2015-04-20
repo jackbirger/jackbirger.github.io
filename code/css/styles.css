@@ -29,3 +29,29 @@
   margin-right: 0px; 
   margin-left: 0px; 
 }
+#detailVis{
+	padding-top:10;
+	font-family: 'Open Sans', sans-serif;	
+	min-height: 280px;
+}
+#hero{
+	padding: 15px;
+}
+.location-name {
+    border-bottom: thin dotted #ddd;
+    padding-bottom: 5px;
+}
+.restaurants{
+	padding-top: 5px;
+    min-height: 250px;
+    overflow: scroll;
+}
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}

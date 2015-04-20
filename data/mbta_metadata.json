@@ -1,5 +1,4 @@
 [ 
-
 	{"stop_id":101, "station":"Alewife Station", "line":["red"], "x":640, "y": 196},
 	{"stop_id":102, "station":"Davis Station", "line":["red"], "x":715, "y": 269},
 	{"stop_id":103, "station":"Porter Square Station", "line":["red"], "x":785, "y":344},
