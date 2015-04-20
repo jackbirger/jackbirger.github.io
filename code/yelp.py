@@ -117,6 +117,7 @@ import urllib
 import urllib2
 import math
 import oauth2
+import threading
 
 API_HOST         = 'api.yelp.com'
 SEARCH_LIMIT     = 20
@@ -130,6 +131,8 @@ CONSUMER_KEY    = "srjoLIpsGQzbuL8olqs60g"
 CONSUMER_SECRET = "xfs7njXxIn6gMkT-z73oNGbFcJQ"
 TOKEN           = "firuNF-NSRdkW8UNOCbRX3oEPnxnQDTI"
 TOKEN_SECRET    = "8729C5E15fqQ1CqQIYsZIBMo4mw"
+
+query_cnt = 0
 data = []
 stops = [
             { 'location': 'alewife station, cambrige, ma', 'line': ['red'], 'stop_id': 101 },
@@ -153,37 +156,144 @@ stops = [
             { 'location': '285-297a newport ave, quincy, ma',  'line': ['red'], 'stop_id': 120 },                   # wollaston    
             { 'location': '1300 hancock street, quincy, ma',  'line': ['red'], 'stop_id': 121 },                    # quincy center    
             { 'location': '180 penn st, quincy, ma',  'line': ['red'], 'stop_id': 122 },                            # quincy adams    
-            { 'location': '197 ivory street, braintree, ma',  'line': ['red'], 'stop_id': 123 },                    # braintree   
+            { 'location': '197 ivory street, braintree, ma',  'line': ['red'], 'stop_id': 123 },                    # braintree 
+            { 'location' : 'Oak Grove Station ,Malden, ma' , 'line' : 'orange' , 'stop_id' :130},
+            { 'location' : 'Malden Center Station ,Malden, ma' , 'line' : 'orange' , 'stop_id' :131},
+            { 'location' : 'Wellington Station ,Medford, ma' , 'line' : 'orange' , 'stop_id' :132},
+            { 'location' : 'Assembly Station ,Somerville, ma' , 'line' : 'orange' , 'stop_id' :133},
+            { 'location' : 'Sullivan Square Station ,Charlestown, ma' , 'line' : 'orange' , 'stop_id' :134},
+            { 'location' : 'Community College Station ,Charlestown, ma' , 'line' : 'orange' , 'stop_id' :135},
+            { 'location' : 'North Station ,Boston, ma' , 'line' : 'orange' , 'stop_id' :136},
+            { 'location' : 'Haymarket Station ,Boston, ma' , 'line' : 'orange' , 'stop_id' :137},
+            { 'location' : 'State Station ,Boston, ma' , 'line' : 'orange' , 'stop_id' :138},
+            { 'location' : 'Downtown Crossing Station ,Boston, ma' , 'line' : 'orange' , 'stop_id' :139},
+            { 'location' : 'Chinatown Station ,Boston, ma' , 'line' : 'orange' , 'stop_id' :140},
+            { 'location' : 'Tufts Medical Center Station ,Boston, ma' , 'line' : 'orange' , 'stop_id' :141},
+            { 'location' : 'Back Bay Station ,Boston, ma' , 'line' : 'orange' , 'stop_id' :142},
+            { 'location' : 'Massachusetts Avenue Station ,Boston, ma' , 'line' : 'orange' , 'stop_id' :143},
+            { 'location' : 'Ruggles Station ,Boston, ma' , 'line' : 'orange' , 'stop_id' :144},
+            { 'location' : 'Roxbury Crossing Station ,Roxbury, ma' , 'line' : 'orange' , 'stop_id' :145},
+            { 'location' : 'Jackson Square Station ,Jamaica Plain, ma' , 'line' : 'orange' , 'stop_id' :146},
+            { 'location' : 'Stony Brook Station ,Jamaica Plain, ma' , 'line' : 'orange' , 'stop_id' :147},
+            { 'location' : 'Green Street Station ,Jamaica Plain, ma' , 'line' : 'orange' , 'stop_id' :148},
+            { 'location' : 'Forest Hills Station ,Jamaica Plain, ma' , 'line' : 'orange' , 'stop_id' :149},
+            { 'location' : 'Wonderland Station ,Revere, ma' , 'line' : 'blue' , 'stop_id' :150},
+            { 'location' : 'Revere Beach Station ,Revere, ma' , 'line' : 'blue' , 'stop_id' :151},
+            { 'location' : 'Beachmont Station ,Revere, ma' , 'line' : 'blue' , 'stop_id' :152},
+            { 'location' : 'Suffolk Downs Station ,Boston, ma' , 'line' : 'blue' , 'stop_id' :153},
+            { 'location' : 'Orient Heights Station ,Boston, ma' , 'line' : 'blue' , 'stop_id' :154},
+            { 'location' : 'Wood Island Station ,Boston, ma' , 'line' : 'blue' , 'stop_id' :155},
+            { 'location' : 'Airport Station ,Boston, ma' , 'line' : 'blue' , 'stop_id' :156},
+            { 'location' : 'Maverick Station ,Boston, ma' , 'line' : 'blue' , 'stop_id' :157},
+            { 'location' : 'Aquarium Station ,Boston, ma' , 'line' : 'blue' , 'stop_id' :158},
+            { 'location' : 'State Station ,Boston, ma' , 'line' : 'blue' , 'stop_id' :159},
+            { 'location' : 'Government Center Station ,Boston, ma' , 'line' : 'blue' , 'stop_id' :160},
+            { 'location' : 'Bowdoin Station ,Boston, ma' , 'line' : 'blue' , 'stop_id' :161},
+            { 'location' : 'Lechmere Station ,cambridge, ma' , 'line' : 'Green' , 'stop_id' :162},
+            { 'location' : 'Science Park Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :163},
+            { 'location' : 'North Station Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :164},
+            { 'location' : 'Haymarket Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :165},
+            { 'location' : 'Government Center Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :166},
+            { 'location' : 'Park Street Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :167},
+            { 'location' : 'Boylston Street Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :168},
+            { 'location' : 'Arlington Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :169},
+            { 'location' : 'Copley Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :170},
+            { 'location' : 'Hynes Convention Center Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :171},
+            { 'location' : 'Kenmore Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :172},
+            { 'location' : 'Blanford Street Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :173},
+            { 'location' : 'Boston University East Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :174},
+            { 'location' : 'Boston University Central Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :175},
+            { 'location' : 'Boston University West Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :176},
+            { 'location' : 'St. Paul Street Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :177},
+            { 'location' : 'Pleasant Street Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :178},
+            { 'location' : 'Babcock Street Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :179},
+            { 'location' : 'Packards Corner Station ,Allston, ma' , 'line' : 'Green' , 'stop_id' :180},
+            { 'location' : 'Harvard Avenue Station ,Allston, ma' , 'line' : 'Green' , 'stop_id' :181},
+            { 'location' : 'Griggs Street/ Long Avenue Station ,Allston, ma' , 'line' : 'Green' , 'stop_id' :182},
+            { 'location' : 'Allston Street Station ,Allston, ma' , 'line' : 'Green' , 'stop_id' :183},
+            { 'location' : 'Warren Street Station ,Brighton, ma' , 'line' : 'Green' , 'stop_id' :184},
+            { 'location' : 'Washington Street Station ,Brighton, ma' , 'line' : 'Green' , 'stop_id' :185},
+            { 'location' : 'Sutherland Road Station ,Brighton, ma' , 'line' : 'Green' , 'stop_id' :186},
+            { 'location' : 'Chiswick Road Station ,Brighton, ma' , 'line' : 'Green' , 'stop_id' :187},
+            { 'location' : 'Chestnut Hill Avenue Station ,Brighton, ma' , 'line' : 'Green' , 'stop_id' :188},
+            { 'location' : 'South Street Station ,Brighton, ma' , 'line' : 'Green' , 'stop_id' :189},
+            { 'location' : 'Boston College Station ,Brighton, ma' , 'line' : 'Green' , 'stop_id' :190},
+            { 'location' : 'St. Marys Street Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :191},
+            { 'location' : 'Hawes Street Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :192},
+            { 'location' : 'Kent Street Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :193},
+            { 'location' : 'St. Paul Street Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :194},
+            { 'location' : 'Coolidge Corner Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :195},
+            { 'location' : 'Summit Avenue Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :196},
+            { 'location' : 'Brandon Hall Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :197},
+            { 'location' : 'Fairbanks Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :198},
+            { 'location' : 'Washington Square Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :199},
+            { 'location' : 'Tappan Street Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :200},
+            { 'location' : 'Dean Road Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :201},
+            { 'location' : 'Englewood Avenue Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :202},
+            { 'location' : 'Cleveland Circle Station ,Brighton, ma' , 'line' : 'Green' , 'stop_id' :203},
+            { 'location' : 'Fenway Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :204},
+            { 'location' : 'Longwood Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :205},
+            { 'location' : 'Brookline Village Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :206},
+            { 'location' : 'Brookline Hills Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :207},
+            { 'location' : 'Beaconsfield Station ,Brookline, ma' , 'line' : 'Green' , 'stop_id' :208},
+            { 'location' : 'Resevoir Station ,Brighton, ma' , 'line' : 'Green' , 'stop_id' :209},
+            { 'location' : 'Chestnut Hill Avenue Station ,Chestnut Hill, ma' , 'line' : 'Green' , 'stop_id' :210},
+            { 'location' : 'Newton Centre Station ,Newton, ma' , 'line' : 'Green' , 'stop_id' :211},
+            { 'location' : 'Newton Highlands Station ,Newton, ma' , 'line' : 'Green' , 'stop_id' :212},
+            { 'location' : 'Eliot Station ,Newton, ma' , 'line' : 'Green' , 'stop_id' :213},
+            { 'location' : 'Waban Station ,Newton, ma' , 'line' : 'Green' , 'stop_id' :214},
+            { 'location' : 'Woodland Station ,Newton, ma' , 'line' : 'Green' , 'stop_id' :215},
+            { 'location' : 'Riverside Station ,Newton, ma' , 'line' : 'Green' , 'stop_id' :216},
+            { 'location' : 'Prudential Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :217},
+            { 'location' : 'Symphony Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :218},
+            { 'location' : 'Northeastern University Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :219},
+            { 'location' : 'Museum of Fine Arts Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :220},
+            { 'location' : 'Longwood Medical Area Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :221},
+            { 'location' : 'Brigham Circle Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :222},
+            { 'location' : 'Fenwood Road Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :223},
+            { 'location' : 'Mission Park Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :224},
+            { 'location' : 'Riverway Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :225},
+            { 'location' : 'Back of the Hill Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :226},
+            { 'location' : '315 Heath St Boston, MA 02130' , 'line' : 'Green' , 'stop_id' :227},              
         ]
 
 def main():
+    threads = []    
+    for radius in (100, 200, 400, 600, 800, 1000, 1200, 1400, 1600):
+        t = threading.Thread(target=get_data_by_radius, args=(radius,))
+        threads.append(t)
+        t.start()
 
+
+def get_data_by_radius(radius):
     category  = 'Restaurants'
     for stop in stops:
         try:
-            query_api(category, stop)
+            query_api(category, stop, radius)
         except urllib2.HTTPError as error:
-            sys.exit('Encountered HTTP error {0}. Abort program.'.format(error.code))
+            sys.exit('Encountered HTTP error {0}. Abort program.'.format(error.code))  
 
-
-def query_api(category, stop):
-
+def query_api(category, stop, radius):
+    global query_cnt
     url_params = {
         'term': 'restaurants',
         'location': stop['location'].replace(' ', '+'),
-        'radius_filter' : 1600,
+        'radius_filter' : radius,
         'sort': '0',
         'offset': '0',
         'limit': 20
     }
 
     response = request(API_HOST, SEARCH_PATH, url_params=url_params)
+    query_cnt += 1
     runs  = int(math.ceil(int(response['total'])/float(20)))
 
     for i in range(runs):
 
         url_params['offset'] = i*20
         response = request(API_HOST, SEARCH_PATH, url_params=url_params)
+
+
         for item in response['businesses'] :
             
             cat = []
@@ -199,8 +309,10 @@ def query_api(category, stop):
                 continue
 
             business = { 'name'         : item['name'], 
+                         'radius'       : radius,            
                          'rating'       : item['rating'], 
-                         'review_count' : item['review_count'], 
+                         'review_count' : item['review_count'],
+                         'url'          : item['url'],
                          'categories'   : cat, 
                          'latitude'     : latitude,
                          'longitude'    : longitude,
@@ -209,15 +321,17 @@ def query_api(category, stop):
                        }
 
             data.append(business)
-            print business['name']
 
             # response = get_business(item['id'])
             # pprint.pprint(response, indent=2)
             # print ""
 
+        query_cnt += 1
+        print "radius: {0}, stop {1}".format(radius, stop)
+        print "total queries: {0}".format(query_cnt)
+
     with open('data.json', 'w') as outfile:
         json.dump(data, outfile)
-
 
 
 def request(host, path, url_params=None):
@@ -253,7 +367,7 @@ def request(host, path, url_params=None):
     oauth_request.sign_request(oauth2.SignatureMethod_HMAC_SHA1(), consumer, token)
     signed_url = oauth_request.to_url()
     
-    print u'Querying {0} ...'.format(url)
+    # print u'Querying {0} ...'.format(url)
 
     conn = urllib2.urlopen(signed_url, None)
     try:
