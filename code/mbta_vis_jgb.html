@@ -226,7 +226,7 @@
    var metaData;
    var allData;
    var stop_list = [];  //Aggregate data list
-   var radius_scale = d3.scale.linear().range([10,60]);
+   var radius_scale = d3.scale.linear().range([0,60]);
    var circles = d3.selectAll('circle')
 
      //List of all possible categories
@@ -386,55 +386,6 @@
   }
 
 
-  //Scale the circles based on the Count, Average Rating, etc.
-  function rank(){
-
-   var e = document.getElementById("mySelectOption");
-   var plot_variable = e.options[e.selectedIndex].value;
-   console.log(plot_variable)
-   var max_count = d3.max(stop_list, function(d){ return d.count });
-   //var max_avg = d3.max(stop_list, function(d){ return d.rating_average });
-   //var max_comments = d3.max(stop_list, function(d){ return d.review_count });
-   var plot = "stop";
-
-
-   //Find the domain for the given selection
-   if(plot_variable == "count"){
-    radius_scale.domain([0, max_count]) 
-    plot = "count"
-   }
-   else if(plot_variable == "average_rating"){
-    radius_scale.domain(d3.extent(stop_list, function(d){ return d.rating_average}))
-    plot = "rating_average"
-   }
-   else if(plot_variable == "total_reviews"){
-    radius_scale.domain(d3.extent(stop_list, function(d){ return d.review_count}))
-    plot = "review_count"
-   } 
-   else {plot = "stop"}
-
-
-    d3.selectAll('circle').transition().duration(1000).attr("r", function(d){
-
-      var plot_r; //value of plotted radius
-
-      //if stop is selected return radius of 10
-      if(plot == "stop"){ return 10}
-      else {
-
-      //Loop through stops and set radius value based on matching stop id's
-      stop_list.forEach(function(stop){
-        if(stop.id == d.stop_id){
-          plot_r = radius_scale(stop[plot]) 
-        }
-      })
-
-      return plot_r;
-
-    }
-    })
-
-  }
 
   //Function to control highlight of specific lines
   function line_display(){
@@ -450,41 +401,8 @@
 
   }
 
-  // //Scale the circles based on the categories
-  // function select_cat(){
 
-  //  var e = document.getElementById("mySelectCat");
-  //  var filter_category = e.options[e.selectedIndex].value;
-  //  console.log(filter_category)
-  //  var plot = "stop";
-
-  //  radius_scale.domain(d3.extent(stop_list, function(d){ return d.category_count[filter_category] }))
-
-  
-  //   d3.selectAll('circle').transition().duration(1000).attr("r", function(d){
-
-  //     var plot_r; //value of plotted radius
-
-  //     // //if stop is selected return radius of 10
-  //     // if(plot == "stop"){ return 10}
-  //     // else {
-
-  //     //Loop through stops and set radius value based on matching stop id's
-  //     stop_list.forEach(function(stop){
-  //       if(stop.id == d.stop_id){
-  //         plot_r = radius_scale(stop.category_count[filter_category]) 
-  //       }
-  //     })
-
-  //     return plot_r; 
-
-
-
-  //   })  
-
-  // }
-
-
+  //Update the scaling of the circles based on the user selections
   function update_vis(){
 
    //Check how stop will be encoded by (Count, Avg. Rating,Tot. Review)
@@ -517,7 +435,6 @@
 
 
     //Update the visualization
-
     d3.selectAll('circle').transition().duration(1000).attr("r", function(d){
 
       var plot_r; //value of plotted radius
@@ -527,14 +444,11 @@
 
          if(encode_stop_by == "count" && encode_category == "all_cat" ){
           plot_r = radius_scale(stop["count"])  
-          //plot = "count"
          } else if(encode_stop_by == "average_rating" && encode_category == "all_cat"){
           plot_r = radius_scale(stop["rating_average"])
           console.log(stop["rating_average"], plot_r)
-          //plot = "rating_average"
          } else if(encode_stop_by == "total_reviews" && encode_category == "all_cat"){
           plot_r = radius_scale(stop["review_count"])
-          //plot = "review_count"
          } else if(encode_stop_by == "count" && encode_category == encode_category){
           plot_r = radius_scale(stop.category_count[encode_category])   
          } else if(encode_stop_by == "average_rating" && encode_category == encode_category){

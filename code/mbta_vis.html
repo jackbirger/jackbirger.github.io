@@ -52,7 +52,7 @@
 
      <div class="row">
       <label>Scale Circles By: </label>
-      <select id="mySelectOption" onchange="rank()"> 
+      <select id="mySelectOption" onchange="update_vis()"> <!-- rank() -->
         <option value="none"selected>Stop</option>
         <option value="count">Count</option>
         <option value="average_rating" >Avg. Rating</option>
@@ -68,11 +68,10 @@
         <option value="blue" >Blue</option>
       </select>
 
-
       <label> Category Filter: </label>
-      <select id="mySelectCat" onchange="select_cat()"> 
-        <option value="none"selected>None</option>    
-        <option value="Afghan"selected>Afghan</option>
+      <select id="mySelectCat" onchange="update_vis()"> <!-- select_cat() -->
+        <option value="all_cat"selected>All Categories</option>    
+        <option value="Afghan"  >Afghan</option>
         <option value="African">African</option>
         <option value="American (New)">American (New)</option>
         <option value="Arabian" >Arabian</option>
@@ -188,33 +187,14 @@
         <option value="Thai">Thai</option>
         <option value="Trinidadian">Trinidadian</option>
         <option value="Turkish">Turkish</option>
-        <option vaQ1W145lue="Ukrainian">Ukrainian</option>
+        <option value="Ukrainian">Ukrainian</option>
         <option value="Uzbek">Uzbek</option>
         <option value="Vegan">Vegan</option>
         <option value="Vegetarian">Vegetarian</option>
         <option value="Venezuelan">Venezuelan</option>
         <option value="Vietnamese">Vietnamese</option>
       </select>
-      </div>
-
-<!--   ["Afghan", "African", "American (New)", "American (Traditional)", "Arabian", "Argentine",
-  "Armenian", "Asian Fusion", "Australian", "Austrian", "Bangladeshi", "Barbeque", "Basque",
-  "Belgian", "Brasseries", "Brazilian", "Breakfast & Brunch", "British", "Buffets", "Burgers",
-  "Burmese", "Cafes", "Cafeteria", "Cajun/Creole", "Cambodian", "Cantonese", "Caribbean",
-  "Catalan", "Cheesesteaks", "Chicken Shop", "Chicken Wings", "Chinese", "Colombian","Comfort Food",
-  "Creperies", "Cuban", "Czech", "Delis", "Dim Sum", "Diners", "Dominican", "Egyptian", "Ethiopian",
-  "Falafel", "Fast Food", "Filipino", "Fish & Chips", "Fondue", "Food Court", "Food Stands", "French",
-  "Gastropubs", "German", "Gluten-Free", "Greek", "Haitian", "Halal", "Hawaiian","Himalayan/Nepalese",
-  "Hot Dogs", "Hot Pot", "Hungarian", "Iberian", "Indian", "Indonesian", "Irish", "Italian", "Japanese",
-  "Korean", "Kosher", "Laotian", "Latin American", "Lebanese", "Live/Raw Food", "Malaysian", "Mediterranean",
-  "Mexican", "Middle Eastern", "Modern European", "Mongolian", "Moroccan", "Pakistani", "Persian/Iranian",
-  "Peruvian", "Pizza", "Polish", "Portuguese", "Poutineries", "Puerto Rican", "Ramen", "Russian", "Salad",
-  "Salvadoran", "Sandwiches", "Scandinavian", "Scottish", "Seafood", "Senegalese", "Shanghainese", "Singaporean",
-  "Slovakian", "Soul Food", "Soup", "South African", "Southern", "Spanish", "Sri Lankan", "Steakhouses",
-  "Sushi Bars", "Szechuan", "Taiwanese", "Tapas Bars", "Tapas/Small Plates", "Teppanyaki", "Tex-Mex", "Thai",
-  "Trinidadian", "Turkish", "Ukrainian", "Uzbek", "Vegan", "Vegetarian", "Venezuelan","Vietnamese"] -->
-
-</div>
+    </div>
 
     <div class="row">
       <div class="col-lg-12">
@@ -231,7 +211,6 @@
         <p>&copy; Company 2015</p>
       </footer>
 
-
     </div> <!-- /container -->
 
 
@@ -247,7 +226,7 @@
    var metaData;
    var allData;
    var stop_list = [];  //Aggregate data list
-   var radius_scale = d3.scale.linear().range([10,60]);
+   var radius_scale = d3.scale.linear().range([0,60]);
    var circles = d3.selectAll('circle')
 
      //List of all possible categories
@@ -277,7 +256,7 @@
          d3.select("#circles").append('circle')
             .attr("cx", stop['x'])
             .attr("cy", stop['y'])
-            .attr("r", 25)
+            .attr("r", 10)
             .attr("class", function(){
                if(stop.line.length == 1){
                   return stop.line[0];
@@ -335,18 +314,24 @@
      //create blank array of objects containing agregate information for each t-stop
       stop_list = metaData.map(function(d){
 
-        var initialized_cat= {}
+        var initialized_cat_count = {}
+        var initialized_cat_rating = {}
+        var initialized_cat_review = {}
 
         category_list.forEach(function(category){
-          initialized_cat[category] = 0
+          initialized_cat_count[category] = 0
+          initialized_cat_rating[category] = 0
+          initialized_cat_review[category] = 0
         })
 
       temp = {  id: d.stop_id,
-                line: d.line[0],
+                line: d.line,
                 count:0,
                 rating_average:0,
                 review_count:0,
-                category: initialized_cat
+                category_count: initialized_cat_count,
+                category_avg_rating: initialized_cat_rating,
+                category_review_count: initialized_cat_review
              }  
 
       return temp   
@@ -368,7 +353,9 @@
 
             restaurant.categories.forEach(function(cat){
               if(category_list.indexOf(cat) >= 0){
-                  stop.category[cat]+= 1;               
+                  stop.category_count[cat] += 1;
+                  stop.category_avg_rating[cat] += restaurant.rating
+                  stop.category_review_count[cat] += restaurant.review_count              
               }
             })
 
@@ -380,7 +367,18 @@
 
       //divide by number of restaurants in the given stop to create averages when necessary
       stop_list.forEach(function(stop){
+
+        //find rating average of total count
         stop.rating_average = stop.rating_average / stop.count;
+
+        //find rating average of each category
+        for(var key in stop.category_avg_rating){
+          if(stop.category_avg_rating.hasOwnProperty(key)){
+            if(!isNaN(stop.category_avg_rating[key] / stop.category_count[key])){ //Ensure no 0/0
+              stop.category_avg_rating[key] = stop.category_avg_rating[key] / stop.category_count[key];              
+            }
+          }
+        }        
 
       })
 
@@ -388,55 +386,6 @@
   }
 
 
-  //Scale the circles based on the Count, Average Rating, etc.
-  function rank(){
-
-   var e = document.getElementById("mySelectOption");
-   var plot_variable = e.options[e.selectedIndex].value;
-   console.log(plot_variable)
-   var max_count = d3.max(stop_list, function(d){ return d.count });
-   //var max_avg = d3.max(stop_list, function(d){ return d.rating_average });
-   //var max_comments = d3.max(stop_list, function(d){ return d.review_count });
-   var plot = stop;
-
-
-   //Find the domain for the given selection
-   if(plot_variable == "count"){
-    radius_scale.domain([0, max_count]) 
-    plot = "count"
-   }
-   else if(plot_variable == "average_rating"){
-    radius_scale.domain(d3.extent(stop_list, function(d){ return d.rating_average}))
-    plot = "rating_average"
-   }
-   else if(plot_variable == "total_reviews"){
-    radius_scale.domain(d3.extent(stop_list, function(d){ return d.review_count}))
-    plot = "review_count"
-   } 
-   else {plot = "stop"}
-
-
-    d3.selectAll('circle').transition().duration(1000).attr("r", function(d){
-
-      var plot_r; //value of plotted radius
-
-      //if stop is selected return radius of 10
-      if(plot == "stop"){ return 10}
-      else {
-
-      //Loop through stops and set radius value based on matching stop id's
-      stop_list.forEach(function(stop){
-        if(stop.id == d.stop_id){
-          plot_r = radius_scale(stop[plot]) 
-        }
-      })
-
-      return plot_r;
-
-    }
-    })
-
-  }
 
   //Function to control highlight of specific lines
   function line_display(){
@@ -453,44 +402,71 @@
   }
 
 
-  //Scale the circles based on the categories
-  function select_cat(){
+  //Update the scaling of the circles based on the user selections
+  function update_vis(){
 
-   var e = document.getElementById("mySelectCat");
-   var filter_category = e.options[e.selectedIndex].value;
-   console.log(filter_category)
-   var plot = "stop";
+   //Check how stop will be encoded by (Count, Avg. Rating,Tot. Review)
+   var e = document.getElementById("mySelectOption");
+   var encode_stop_by = e.options[e.selectedIndex].value;
+   console.log(encode_stop_by)
 
-   radius_scale.domain(d3.extent(stop_list, function(d){ return d.category[filter_category] }))
+   //Check for the category that will be displayed
+   var f = document.getElementById("mySelectCat");
+   var encode_category = f.options[f.selectedIndex].value;
+   console.log(encode_category)
 
-  
+   //Find the domain for the given selection
+   if(encode_stop_by == "count" && encode_category == "all_cat" ){
+    radius_scale.domain([0, d3.max(stop_list, function(d){ return d.count })]) 
+    plot = "count"
+   } else if(encode_stop_by == "average_rating" && encode_category == "all_cat"){
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.rating_average}))
+    plot = "rating_average"
+   } else if(encode_stop_by == "total_reviews" && encode_category == "all_cat"){
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.review_count}))
+    plot = "review_count"
+   } else if(encode_stop_by == "count" && encode_category == encode_category){
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.category_count[encode_category] }))    
+   } else if(encode_stop_by == "average_rating" && encode_category == encode_category){
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.category_avg_rating[encode_category] }))
+   } else if(encode_stop_by == "total_reviews" && encode_category == encode_category){
+    radius_scale.domain(d3.extent(stop_list, function(d){ return d.category_review_count[encode_category] }))
+   } else {plot = "stop"}
+
+
+    //Update the visualization
     d3.selectAll('circle').transition().duration(1000).attr("r", function(d){
 
       var plot_r; //value of plotted radius
 
-      // //if stop is selected return radius of 10
-      // if(plot == "stop"){ return 10}
-      // else {
-
-      //Loop through stops and set radius value based on matching stop id's
       stop_list.forEach(function(stop){
-        if(stop.id == d.stop_id){
-          plot_r = radius_scale(stop.category[filter_category]) 
-        }
+       if(stop.id == d.stop_id){
+
+         if(encode_stop_by == "count" && encode_category == "all_cat" ){
+          plot_r = radius_scale(stop["count"])  
+         } else if(encode_stop_by == "average_rating" && encode_category == "all_cat"){
+          plot_r = radius_scale(stop["rating_average"])
+          console.log(stop["rating_average"], plot_r)
+         } else if(encode_stop_by == "total_reviews" && encode_category == "all_cat"){
+          plot_r = radius_scale(stop["review_count"])
+         } else if(encode_stop_by == "count" && encode_category == encode_category){
+          plot_r = radius_scale(stop.category_count[encode_category])   
+         } else if(encode_stop_by == "average_rating" && encode_category == encode_category){
+          plot_r = radius_scale(stop.category_avg_rating[encode_category])   
+         } else if(encode_stop_by == "total_reviews" && encode_category == encode_category){
+          plot_r = radius_scale(stop.category_review_count[encode_category])   
+         } else {plot_r = 10}
+       }
+
       })
 
-      return plot_r; 
-
-
-
-    })  
-
+      return plot_r
+    })
   }
 
 
 
    startHere()
-
 
 </script>
 </body>
