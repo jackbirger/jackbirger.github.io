@@ -38,49 +38,53 @@
         <h3 class="text-muted">Exploring Boston Food by MBTA</h3>
       </div>
 
-     <div class="row">
-      <label>Scale Circles By: </label>
-      <select class="chosen" id="mySelectOption" onchange="update_vis()"> <!-- rank() -->
-        <option value="none" selected>Stop</option>
-        <option value="count">Count</option>
-        <option value="average_rating" >Avg. Rating</option>
-        <option value="total_reviews" >Tot. Reviews</option>
-      </select>
-
-      <label> Display Line: </label>
-      <select class="chosen" id="mySelectLine" onchange="line_display()"> 
-        <option value="none"selected>All</option>
-        <option value="red">Red</option>
-        <option value="green">Green</option>
-        <option value="orange" >Orange</option>
-        <option value="blue" >Blue</option>
-      </select>
-
-      <label> Category Filter: </label>
-      <select class="chosen" id="mySelectCat" onchange="update_vis()"> <!-- select_cat() -->
-      <script>document.write(cat_options)</script>
-      </select>
-    </div>
-
     <div class="row">
-      <div class="col-lg-8"><!-- 0 0 1947 1825 -->
-        <div id="hero">
+      <div class="col-lg-9"><!-- 0 0 1947 1825 -->
+        <div id="map">
           <svg id="mbta_svg"
-             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 2000 1800"
-             enable-background="new 0 0 2000 1800" xml:space="preserve">
+             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 2050 1850"
+             enable-background="new 0 0 2050 1850" xml:space="preserve">
              <script>document.write(mbta_svg)</script>
              <g id="circles"></g>                   
           </svg>
         </div>
+        <div id="circle-packing">
+          <svg width="780" height="650" style="background-color: lightblue">
+              <text x="50" y="50">circle packing area</text>
+          </svg>
+        </div>
       </div>
-      <div class="col-lg-4" id="detailVis">
-      
-    </div>
-    <div id="circle-packing">
-      <svg width="360" height="350" style="background-color: lightblue">
-          <text x="50" y="50">circle packing area</text>
-      </svg>
-    </div>
+      <div class="col-lg-3" id="rightRail">
+      <div id="visOptions">
+        <div class="btn-group-sm" role="group" aria-label="...">
+          <button type="button" class="btn btn-default" onclick="showMap();">Map</button>
+          <button type="button" class="btn btn-default" onclick="showCircles();">Circles</button>
+        </div>
+
+        <label>Scale Circles By: </label>
+        <select class="chosen" id="mySelectOption" onchange="update_vis()"> <!-- rank() -->
+          <option value="none" selected>Stop</option>
+          <option value="count">Count</option>
+          <option value="average_rating" >Avg. Rating</option>
+          <option value="total_reviews" >Tot. Reviews</option>
+        </select><br/>
+
+        <label> Line: </label>
+        <select class="chosen" id="mySelectLine" onchange="line_display()"> 
+          <option value="none"selected>All</option>
+          <option value="red">Red</option>
+          <option value="green">Green</option>
+          <option value="orange" >Orange</option>
+          <option value="blue" >Blue</option>
+        </select><br/>
+
+        <label> Category: </label>
+        <select class="chosen" id="mySelectCat" onchange="update_vis()"> <!-- select_cat() -->
+        <script>document.write(cat_options)</script>
+        </select>
+      </div>
+      <div id="detailVis"></div>
+      </div>
       <footer class="footer">
         <!-- <p>&copy; Company 2015</p> -->
       </footer>
@@ -91,6 +95,16 @@
 
 
 <script type="text/javascript">
+  function showCircles() {
+    $("#circle-packing").show();
+    $('#map').hide();
+  }
+
+  function showMap() {
+    $("#circle-packing").hide();
+    $('#map').show();
+  }
+
    $(".chosen").chosen()
    //Global Variables
    var metaData;
