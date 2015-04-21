@@ -165,7 +165,27 @@ stops = [
             { 'll': '42.267818, -71.092132', 'line': ['red'], 'stop_id': 129 }, # mattapan    
 
 
-            # { 'll' : 'Oak Grove Station ,Malden, ma' , 'line' : 'orange' , 'stop_id' :130},
+            { 'll' : '42.436720, -71.071065' , 'line' : ['orange'] , 'stop_id' :130}, # Oak Grove Station
+            { 'll' : '42.426417, -71.073811' , 'line' : ['orange'] , 'stop_id' :131}, # Malden Center Station
+            { 'll' : '42.401894, -71.077159' , 'line' : ['orange'] , 'stop_id' :132}, # Wellington Station
+            { 'll' : '42.392735, -71.077245' , 'line' : ['orange'] , 'stop_id' :133}, # Assembly Station
+            { 'll' : '42.383955, -71.077159' , 'line' : ['orange'] , 'stop_id' :134}, # Sullivan Square Station
+            { 'll' : '42.373588, -71.069777' , 'line' : ['orange'] , 'stop_id' :135}, # Community College Station
+            { 'll' : '42.365598, -71.061666' , 'line' : ['orange', "green"] , 'stop_id' :136}, # North Station
+            { 'll' : '42.362998, -71.058362' , 'line' : ['orange', "green"] , 'stop_id' :137}, # Haymarket Station
+            { 'll' : '42.358939, -71.057804' , 'line' : ['orange', "blue"] , 'stop_id' :138}, # State Street Station
+            { 'll' : '42.352501, -71.062610' , 'line' : ['orange'] , 'stop_id' :140}, # Chinatown Station
+            { 'll' : '42.349615, -71.063941' , 'line' : ['orange'] , 'stop_id' :141}, # Tufts Medical Center Station
+            { 'll' : '42.347332, -71.076043' , 'line' : ['orange'] , 'stop_id' :142}, # Back Bay Station
+            { 'll' : '42.347902, -71.087973' , 'line' : ['orange'] , 'stop_id' :143}, # Massachusetts Avenue Station
+            { 'll' : '42.347902, -71.087973' , 'line' : ['orange'] , 'stop_id' :144}, # Ruggles Station
+            { 'll' : '42.331428, -71.095613' , 'line' : ['orange'] , 'stop_id' :145}, # Roxbury Crossing Station
+            { 'll' : '42.323115, -71.099733' , 'line' : ['orange'] , 'stop_id' :146}, # Jackson Square Station
+            { 'll' : '42.317213, -71.104754' , 'line' : ['orange'] , 'stop_id' :147}, # Stony Brook Station
+            { 'll' : '42.310359, -71.107801' , 'line' : ['orange'] , 'stop_id' :148}, # Green Street Station
+            { 'll' : '42.300647, -71.115869' , 'line' : ['orange'] , 'stop_id' :149}, # Forest Hills Station
+
+
             # { 'll' : 'Malden Center Station ,Malden, ma' , 'line' : 'orange' , 'stop_id' :131},
             # { 'll' : 'Wellington Station ,Medford, ma' , 'line' : 'orange' , 'stop_id' :132},
             # { 'll' : 'Assembly Station ,Somerville, ma' , 'line' : 'orange' , 'stop_id' :133},
@@ -185,6 +205,7 @@ stops = [
             # { 'll' : 'Stony Brook Station ,Jamaica Plain, ma' , 'line' : 'orange' , 'stop_id' :147},
             # { 'll' : 'Green Street Station ,Jamaica Plain, ma' , 'line' : 'orange' , 'stop_id' :148},
             # { 'll' : 'Forest Hills Station ,Jamaica Plain, ma' , 'line' : 'orange' , 'stop_id' :149},
+
             # { 'll' : 'Wonderland Station ,Revere, ma' , 'line' : 'blue' , 'stop_id' :150},
             # { 'll' : 'Revere Beach Station ,Revere, ma' , 'line' : 'blue' , 'stop_id' :151},
             # { 'll' : 'Beachmont Station ,Revere, ma' , 'line' : 'blue' , 'stop_id' :152},
@@ -197,6 +218,7 @@ stops = [
             # { 'll' : 'State Station ,Boston, ma' , 'line' : 'blue' , 'stop_id' :159},
             # { 'll' : 'Government Center Station ,Boston, ma' , 'line' : 'blue' , 'stop_id' :160},
             # { 'll' : 'Bowdoin Station ,Boston, ma' , 'line' : 'blue' , 'stop_id' :161},
+
             # { 'll' : 'Lechmere Station ,cambridge, ma' , 'line' : 'Green' , 'stop_id' :162},
             # { 'll' : 'Science Park Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :163},
             # { 'll' : 'North Station Station ,Boston, ma' , 'line' : 'Green' , 'stop_id' :164},
