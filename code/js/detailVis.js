@@ -1,3 +1,4 @@
+
 // '''
 // add useful comments here
 
@@ -45,10 +46,22 @@ DetailVis.prototype.wrangleData = function(stop_id, category, radius, station) {
 
 	console.log(this.stopData)	//array of restaurants for the given stop
 
+	var valid_categories = [];
+
+	this.stopData.forEach(function(restaurant){
+		restaurant.categories.forEach(function(cat){
+			if(valid_categories.indexOf(cat) < 0 && category_list.indexOf(cat) >= 0 ){
+				valid_categories.push(cat)
+			}
+		})
+	})
+
+	console.log("valid categories", valid_categories)
+
 
 	//initialize second level
 	this.category_level = []
-	category_list.forEach(function(cat){
+	valid_categories.forEach(function(cat){
 		 that.temp = {
 			"name": cat,				//The name of the category
 			"children": []				//Array holding object with restaurant "name" and the "size" (rating)
