@@ -49,8 +49,9 @@
           </svg>
         </div>
         <div id="circle-packing">
-          <svg width="780" height="650" style="background-color: lightblue">
-              <text x="50" y="50">circle packing area</text>
+          <svg width="780" height="650">
+          <!--     <text x="50" y="50">circle packing area</text> -->
+          <g id="packing"> </g>
           </svg>
         </div>
       </div>
@@ -95,6 +96,7 @@
 
 
 <script type="text/javascript">
+
   function showCircles() {
     $("#circle-packing").show();
     $('#map').hide();
