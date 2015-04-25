@@ -299,12 +299,15 @@ def query_api(category, stop, radius):
             cat = []
             latitude  = ""
             longitude = ""
+            postal_code = "xxx"
+
 
             try:
                 for c in item['categories']:
                     cat.append(c[0])
                 latitude  = item['location']['coordinate']['latitude']
                 longitude = item['location']['coordinate']['longitude']
+                postal_code = item['location']['postal_code']
             except:
                 continue
 
@@ -313,9 +316,10 @@ def query_api(category, stop, radius):
                          'review_count' : item['review_count'],
                          'url'          : item['url'],
                          'distance'     : item['distance'],
+                         'zip'          : postal_code,
                          'categories'   : cat, 
-                         #'latitude'     : latitude,
-                         #'longitude'    : longitude,
+                         'latitude'     : latitude,
+                         'longitude'    : longitude,
                          'line'         : stop['line'],
                          'stop_id'      : stop['stop_id']
                        }
