@@ -77,12 +77,12 @@
       <div class="col-lg-9">
         <div id="scatter"></div>
       </div>
-        <div class="col-lg-3" id="scatterRail">
+      <div class="col-lg-3" id="scatterRail">
         <div id="scatter-zoom">
-          <svg width="350" height="350" style="background-color: lightblue">
+<!--           <svg width="350" height="350" style="background-color: lightblue">
               <text x="50" y="50">scatter zoom area</text>
           <g id="scatter"> </g>
-          </svg>        
+          </svg>   -->      
         options stuff here
         </div>
       </div>
@@ -116,10 +116,21 @@
          console.log("metaData", metaData);
          console.log("allData", allData)
 
+         var MyEventHandler = new Object();
+
          // create a new mbtaVis object
          //initVis();
          mv = new mbtaVis('#detailVis', allData, metaData);
-         ds = new ScatterVis('#scatter', allData, metaData);
+         ds = new ScatterVis('#scatter', allData, metaData, MyEventHandler);
+         zv = new ZoomVis('#scatter-zoom', allData, metaData);
+
+
+        $(MyEventHandler).bind("selectionChanged", function(event, selectionStart, selectionEnd){
+
+            zv.onSelectionChange(selectionStart, selectionEnd)
+
+        });
+
       }
 
    }

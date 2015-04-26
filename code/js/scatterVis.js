@@ -1,7 +1,8 @@
-ScatterVis = function(_parentElement, _data, _metaData){
+ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
     this.parentElement = _parentElement;
     this.data = _data;
     this.metaData = _metaData;
+    this.eventHandler = _eventHandler;
 
     //Margin, width, and height definitions for scatter plot svg
     this.margin = {top: 20, right: 0, bottom: 200, left: 50},
@@ -143,87 +144,22 @@ ScatterVis.prototype.updateVis = function(){
         .on("brush", function() {
           var extent = d3.event.target.extent();
           that.circle_enter.classed("selected", function(d) {
-
+       
             return extent[0][0] <= that.x(d.latitude) && that.x(d.latitude) < extent[1][0]
                 && extent[0][1] <= that.y(d.longitude) && that.y(d.longitude) < extent[1][1];
           });
+
+          $(that.eventHandler).trigger("selectionChanged", d3.event.target.extent())
+
+          // if(that.brush.empty()){
+          //  $(that.eventHandler).trigger("selectionChanged", d3.event.target.extent(), , d3.selectAll(".selected"))           
+          // }
+          // else{$(that.eventHandler).trigger("selectionChanged", d3.event.target.extent(), d3.selectAll(".selected"))}  
+
         }));
 
           
 }
-
-// ScatterVis.prototype.updateVis_2 = function(){
-
-//   var data = d3.range(5000).map(function() {
-//     return [Math.random() * this.width, Math.random() * this.width];
-//   });
-
-//   var quadtree = d3.geom.quadtree()
-//       .extent([[-1, -1], [this.width + 1, this.height + 1]])
-//       (data);
-
-//   var brush = d3.svg.brush()
-//       .x(d3.scale.identity().domain([0, this.width]))
-//       .y(d3.scale.identity().domain([0, this.height]))
-//       .extent([[100, 100], [200, 200]])
-//       .on("brush", this.brushed);
-
-//   var svg = this.svg
-
-//   svg.selectAll(".node")
-//       .data(this.nodes(quadtree))
-//     .enter().append("rect")
-//       .attr("class", "node")
-//       .attr("x", function(d) { return d.x; })
-//       .attr("y", function(d) { return d.y; })
-//       .attr("width", function(d) { return d.width; })
-//       .attr("height", function(d) { return d.height; });
-
-//   var point = svg.selectAll(".point")
-//       .data(data)
-//     .enter().append("circle")
-//       .attr("class", "point")
-//       .attr("cx", function(d) { return d[0]; })
-//       .attr("cy", function(d) { return d[1]; })
-//       .attr("r", 4);
-
-//   svg.append("g")
-//       .attr("class", "brush")
-//       .call(brush);
-
-//   brushed();
-
-// }
-
-
-// ScatterVis.prototype.brushed = function() {
-//   var extent = brush.extent();
-//   point.each(function(d) { d.scanned = d.selected = false; });
-//   search(quadtree, extent[0][0], extent[0][1], extent[1][0], extent[1][1]);
-//   point.classed("scanned", function(d) { return d.scanned; });
-//   point.classed("selected", function(d) { return d.selected; });
-// }
-
-// // Collapse the quadtree into an array of rectangles.
-// ScatterVis.prototype.nodes = function(quadtree) {
-//   var nodes = [];
-//   quadtree.visit(function(node, x1, y1, x2, y2) {
-//     nodes.push({x: x1, y: y1, width: x2 - x1, height: y2 - y1});
-//   });
-//   return nodes;
-// }
-
-// // Find the nodes within the specified rectangle.
-// ScatterVis.prototype.search = function(quadtree, x0, y0, x3, y3) {
-//   quadtree.visit(function(node, x1, y1, x2, y2) {
-//     var p = node.point;
-//     if (p) {
-//       p.scanned = true;
-//       p.selected = (p[0] >= x0) && (p[0] < x3) && (p[1] >= y0) && (p[1] < y3);
-//     }
-//     return x1 >= x3 || y1 >= y3 || x2 < x0 || y2 < y0;
-//   });
-// }
 
 
 
