@@ -63,7 +63,7 @@
         <script>document.write(cat_options)</script>
         </select>
       </div>
-      <div id="detailVis"></div>
+      <div id="mbtaVis"></div>
       </div>
 
     <div class="row">
@@ -109,19 +109,20 @@
 
       if (!error) {
 
-         allData = _allData
-         metaData = _metaData
+         allData = _allData;
+         metaData = _metaData;
+         plotData = _plotData;
 
          console.log("metaData", metaData);
-         console.log("allData", allData)
+         console.log("allData", allData);
 
          var MyEventHandler = new Object();
 
          // create a new mbtaVis object
          //initVis();
-         mv = new mbtaVis('#detailVis', allData, metaData);
+         mv = new mbtaVis('#mbtaVis', allData, metaData);
          ds = new ScatterVis('#scatter', allData, metaData, MyEventHandler);
-         zv = new ZoomVis('#scatter-zoom', allData, metaData);
+         zv = new ZoomVis('#scatter-zoom', plotData, metaData);
 
         $(MyEventHandler).bind("selectionChanged", function(event, selectionStart, selectionEnd){
             zv.onSelectionChange(selectionStart, selectionEnd)
@@ -137,7 +138,7 @@
        queue()
            .defer(d3.json, '../data/mbta_metadata.json') // AllData
            .defer(d3.json, '../data/data-800m.json') // Contains meta-information about AllData.
-           .defer(d3.json, '../data/data-3km-scatterplot.json') // Contains meta-information about AllData.           
+           .defer(d3.json, '../data/data-3km-scatterplot.json') // Contains plot data (no duplicates).           
            .await(dataLoaded); // Call dataLoaded function
 
    }
