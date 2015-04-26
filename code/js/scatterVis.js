@@ -68,20 +68,27 @@ ScatterVis.prototype.initVis = function(){
 ScatterVis.prototype.wrangleData = function(){
 
 	var that = this;
-	that.plotData = []
+	var plotData = []
 
 	this.data.forEach(function(d){
+        latitude = d.latitude;
+        longitude = d.longitude;
 
-		if(that.plotData.indexOf(d) < 0){
-			that.plotData.push(d)
-		}
+        match = 1;
+        plotData.forEach(function(e){
+            if (e.longitude == longitude && e.latitude == latitude) { match=0; }
+        })
+        if (match){
+            plotData.push(d);
+        }
 
 	})
 
-	console.log("plotData", this.plotData)
+	console.log("plotData", plotData)
 
 
 }
+
 
 
 ScatterVis.prototype.updateVis = function(){
