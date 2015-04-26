@@ -12,7 +12,7 @@ love what it loves.
 http://www.rjgeib.com/thoughts/geese/geese.html
 '''
 
-data = json.loads(open("../data/data-2km.json").read())
+data = json.loads(open("../data/data-3km.json").read())
 scatterData = []
 for d in data:
 	match = 1
@@ -25,6 +25,6 @@ for d in data:
 print "orig: {} de-dup: {}".format(len(data),len(scatterData))
 
 # write json to file
-out_file = open("../data/data-2km-scatterplot.json","w")
+out_file = open("../data/data-3km-scatterplot.json","w")
 json.dump(scatterData,out_file)                                    
 out_file.close()
