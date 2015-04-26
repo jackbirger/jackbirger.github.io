@@ -45,7 +45,7 @@
       </div>
 
     <div class="row">
-      <div class="col-lg-9"><!-- 0 0 1947 1825 -->
+      <div class="col-lg-9">
         <div id="map">
           <svg id="mbta_svg"
              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 2050 1850"
@@ -58,9 +58,8 @@
       </div>
       <div class="col-lg-3" id="rightRail">
       <div id="visOptions">
-
         <label> Category: </label>
-        <select class="chosen" id="mySelectCat" onchange="update_vis()"> <!-- select_cat() -->
+        <select class="chosen" id="mySelectCat" onchange="mv.update()"> <!-- select_cat() -->
         <script>document.write(cat_options)</script>
         </select>
       </div>
@@ -106,7 +105,7 @@
    var allData;
 
    //check if there is an error, store data in global variables
-   var dataLoaded = function (error, _metaData, _allData) {
+   var dataLoaded = function (error, _metaData, _allData, _plotData) {
 
       if (!error) {
 
@@ -124,11 +123,8 @@
          ds = new ScatterVis('#scatter', allData, metaData, MyEventHandler);
          zv = new ZoomVis('#scatter-zoom', allData, metaData);
 
-
         $(MyEventHandler).bind("selectionChanged", function(event, selectionStart, selectionEnd){
-
             zv.onSelectionChange(selectionStart, selectionEnd)
-
         });
 
       }
@@ -138,11 +134,10 @@
    //Start the dataload
    var startHere = function(){
 
-       // Load data here and call "dataLoaded" afterwards
-       // Hint: http://giscollective.org/d3-queue-js/
        queue()
            .defer(d3.json, '../data/mbta_metadata.json') // AllData
-           .defer(d3.json, '../data/data-2km.json') // Contains meta-information about AllData. 
+           .defer(d3.json, '../data/data-800m.json') // Contains meta-information about AllData.
+           .defer(d3.json, '../data/data-3km-scatterplot.json') // Contains meta-information about AllData.           
            .await(dataLoaded); // Call dataLoaded function
 
    }
