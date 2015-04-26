@@ -58,27 +58,6 @@
       </div>
       <div class="col-lg-3" id="rightRail">
       <div id="visOptions">
-        <div class="btn-group-sm" role="group" aria-label="...">
-          <button type="button" class="btn btn-default" onclick="showMap();">Map</button>
-          <button type="button" class="btn btn-default" onclick="showCircles();">Circles</button>
-        </div>
-
-        <label>Scale Circles By: </label>
-        <select class="chosen" id="mySelectOption" onchange="update_vis()"> <!-- rank() -->
-          <option value="none" selected>Stop</option>
-          <option value="count">Count</option>
-          <option value="average_rating" >Avg. Rating</option>
-          <option value="total_reviews" >Tot. Reviews</option>
-        </select><br/>
-
-        <label> Line: </label>
-        <select class="chosen" id="mySelectLine" onchange="line_display()"> 
-          <option value="none"selected>All</option>
-          <option value="red">Red</option>
-          <option value="green">Green</option>
-          <option value="orange" >Orange</option>
-          <option value="blue" >Blue</option>
-        </select><br/>
 
         <label> Category: </label>
         <select class="chosen" id="mySelectCat" onchange="update_vis()"> <!-- select_cat() -->
@@ -96,12 +75,7 @@
 
     <div class="row">
       <div class="col-lg-9">
-        <div id="scatter">
-<!--           <svg width="780" height="650">
-              <text x="50" y="50">scatter plot area</text>
-          </svg> -->
-        </div>
-
+        <div id="scatter"></div>
       </div>
         <div class="col-lg-3" id="scatterRail">
         <div id="scatter-zoom">
@@ -131,10 +105,6 @@
    var metaData;
    var allData;
 
-  // dv = new mbtaVis('#detailVis', allData, metaData);
-  // ds = new ScatterVis('#scatter', allData, metaData);
-
-
    //check if there is an error, store data in global variables
    var dataLoaded = function (error, _metaData, _allData) {
 
@@ -161,7 +131,7 @@
        // Hint: http://giscollective.org/d3-queue-js/
        queue()
            .defer(d3.json, '../data/mbta_metadata.json') // AllData
-           .defer(d3.json, '../data/data.json') // Contains meta-information about AllData. 
+           .defer(d3.json, '../data/data-2km.json') // Contains meta-information about AllData. 
            .await(dataLoaded); // Call dataLoaded function
 
    }
