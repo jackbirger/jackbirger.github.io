@@ -84,6 +84,7 @@ ScatterVis.prototype.wrangleData = function(){
 
 	})
 
+  this.plotData = plotData
 	console.log("plotData", plotData)
 
 
@@ -101,11 +102,11 @@ ScatterVis.prototype.updateVis = function(){
 
 	// this.x.domain(d3.extent(this.data, function(d){return d.latitude}))
 
-	this.x.domain([42.25, 42.45])
+	this.x.domain([42.2, 42.5])
 	console.log("latitude extents for x-axis", d3.extent(this.data, function(d){return d.latitude}))
 
 	// this.y.domain(d3.extent(this.data, function(d){return d.longitude}))
-	this.y.domain([-71.0, -71.2])
+	this.y.domain([-70.9, -71.3])
 	console.log("longitude extents for y-axis", d3.extent(this.data, function(d){return d.longitude}))
 
   //update axis
@@ -119,7 +120,7 @@ ScatterVis.prototype.updateVis = function(){
   //Plot circles for scatter plot
   this.circle = this.svg
   						.selectAll("circle")
-  						.data(this.data)
+  						.data(this.plotData)
 
  	this.circle_enter = this.circle
  							.enter()
@@ -134,7 +135,8 @@ ScatterVis.prototype.updateVis = function(){
 						   .attr("r", function(d) {
 						         return 2;
 						   })
-						   .style("opacity", .1)
+						   .style("opacity", .5)
+						   .style("stroke-width", 0)
 
 
 
