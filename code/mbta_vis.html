@@ -97,10 +97,9 @@
     <div class="row">
       <div class="col-lg-9">
         <div id="scatter">
-          <svg width="780" height="650" style="background-color: lightblue">
+<!--           <svg width="780" height="650">
               <text x="50" y="50">scatter plot area</text>
-          <g id="scatter"> </g>
-          </svg>
+          </svg> -->
         </div>
 
       </div>
@@ -147,6 +146,7 @@
    //Initialize circles using metadata
    var initVis = function(){
       dv = new DetailVis('#detailVis', allData, metaData);
+      ds = new ScatterVis('#scatter', allData, metaData);
 
       metaData.forEach(function(stop){
 
