@@ -67,9 +67,12 @@
       <div class="col-lg-3" id="rightRail">
       <div id="visOptions">
         <label> Category: </label>
-        <select class="chosen" id="mySelectCat" onchange="mv.update()"> <!-- select_cat() -->
+        <select class="chosen" id="mySelectCat" onchange="mbtaUpdate()"> <!-- select_cat() -->
         <script>document.write(cat_options)</script>
         </select>
+      </div>
+      <div id="mbtaHeatmap">
+      <svg width="300" height="620" style="background-color: lightblue">
       </div>
       <div id="mbtaVis"></div>
       </div>
@@ -108,6 +111,11 @@
    var metaData;
    var allData;
 
+   var mbtaUpdate = function(){
+      mv.update();
+      hv.update();
+   }
+
    //check if there is an error, store data in global variables
    var dataLoaded = function (error, _metaData, _allData, _plotData) {
 
@@ -126,6 +134,7 @@
          //initVis();
          mv = new mbtaVis('#mbtaVis', allData, metaData);
          ds = new ScatterVis('#scatter', plotData, metaData, MyEventHandler);
+         hv = new heatmapVis('#mbtaVis', allData, metaData);
          zv = new ZoomVis('#scatter-zoom', plotData, metaData);
 
         $(MyEventHandler).bind("selectionChanged", function(event, selectionStart, selectionEnd){
