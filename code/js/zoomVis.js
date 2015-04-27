@@ -66,14 +66,50 @@ ZoomVis.prototype.initVis = function(){
 ZoomVis.prototype.wrangleData = function(){}
 
 
-ZoomVis.prototype.onSelectionChange = function (selectionArea_1, selectionArea_2){
+ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
 
-	console.log("selectionArea", selectionArea_1)
-	console.log("selectionArea", selectionArea_2)
+	this.plotData = d3.selectAll('.selected');
 
-	console.log(d3.selectAll('.selected'))
+	var that = this;
 
+	// this.x.domain(d3.extent(this.plotData, function(d){return d.latitude}))
+	// this.y.domain(d3.extent(this.plotData, function(d){return d.longitude}))
+
+	this.x.domain([x_extents[0], x_extents[1]])
+	this.y.domain([y_extents[1], y_extents[0]])
+
+	//update axis
+	this.svg.select(".x.axis")
+		.call(this.xAxis)     
+
+  	this.svg.select(".y.axis")
+    	.call(this.yAxis);
+
+
+  	//Plot circles for scatter plot
+  	this.circle = this.svg
+		.selectAll(".circle")
+		.data(this.plotData)
+
+
+ 	this.circle_enter = this.circle
+			.enter()
+			.append("circle")	
+			.attr("class", "circle")
+			.attr("cx", function(d) {
+	        	return that.x(d.latitude);
+	 		})
+	  		.attr("cy", function(d) {
+	        	return that.y(d.longitude);
+	 		})
+	  		.attr("r", function(d) {
+	        	return 2;
+	   		})
+	   		.style("opacity", .5)
+	   		.style("stroke-width", 0)
+
+	this.circle_exit = this.circle.exit().remove();
 
 }
 

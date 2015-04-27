@@ -144,12 +144,20 @@ ScatterVis.prototype.updateVis = function(){
         .on("brush", function() {
           var extent = d3.event.target.extent();
           that.circle_enter.classed("selected", function(d) {
-       
+
             return extent[0][0] <= that.x(d.latitude) && that.x(d.latitude) < extent[1][0]
                 && extent[0][1] <= that.y(d.longitude) && that.y(d.longitude) < extent[1][1];
           });
 
-          $(that.eventHandler).trigger("selectionChanged", d3.event.target.extent())
+          var extent = d3.event.target.extent();
+          console.log("extent", extent)
+          var extent2 = [
+                          [that.x.invert(extent[0][0]), that.x.invert(extent[1][0])],
+                          [that.y.invert(extent[0][1]), that.y.invert(extent[1][1])]
+                        ]
+
+
+          $(that.eventHandler).trigger("selectionChanged", extent2)
 
           // if(that.brush.empty()){
           //  $(that.eventHandler).trigger("selectionChanged", d3.event.target.extent(), , d3.selectAll(".selected"))           
