@@ -5,7 +5,7 @@ mbtaVis = function(_parentElement, _data, _metaData){
     this.metaData = _metaData;
 
 	var stop_list = [];  //Aggregate data list
-	this.radius_scale = d3.scale.linear().range([0,60]);
+	this.radius_scale = d3.scale.linear().range([7,75]);
 	//var circles = d3.selectAll('circle')
 	var encode_category='all_cat'; // set this to all categories to start
 
@@ -128,13 +128,13 @@ mbtaVis.prototype.update = function(){
       	if(stop.id == d.stop_id){
 
 			if(encode_category == "all_cat" ){
-				plot_r = radius_scale(stop["count"])
-				tot_r += stop["count"];  
+				plot_r = stop["count"] ? radius_scale(stop["count"]) : 0;
+				tot_r  += stop["count"];  
 				tot_a.push(stop["count"]);
 			} 
 			else if(encode_category == encode_category){
 				var cnt = stop.category_count[encode_category];
-				plot_r  = radius_scale(cnt) 
+				plot_r  = cnt ? radius_scale(cnt) : 0;
 				tot_r   += cnt; 
 				if (cnt>0) {
 					tot_a.push(cnt);
