@@ -86,7 +86,7 @@ ScatterVis.prototype.wrangleData = function(){
 	})
 
   this.plotData = plotData
-	console.log("plotData", plotData)
+
 
 
 }
@@ -133,7 +133,7 @@ ScatterVis.prototype.updateVis = function(){
 						   .attr("r", function(d) {
 						         return 2;
 						   })
-						   .style("opacity", .5)
+						   .style("opacity", 1)
 						   .style("stroke-width", 0)
 
   var brush = this.svg.append("g")

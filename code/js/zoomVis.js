@@ -63,26 +63,38 @@ ZoomVis.prototype.initVis = function(){
 }
 
 
-ZoomVis.prototype.wrangleData = function(){}
+ZoomVis.prototype.wrangleData = function(){
+
+
+
+}
 
 
 ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
-
-	this.plotData = d3.selectAll('.selected');
-	console.log(this.plotData)
-
 	var that = this;
 
+	this.plotData = [];
+
+	this.data.forEach(function(d){
+
+		if( x_extents[0] <= d.latitude && d.latitude < x_extents[1]
+                && y_extents[0] <= d.longitude && d.longitude < y_extents[1]){
+			
+			that.plotData.push(d)
+		}
+	})
+
+	console.log("plotData", this.plotData)
 	// this.x.domain(d3.extent(this.plotData, function(d){return d.latitude}))
 	// this.y.domain(d3.extent(this.plotData, function(d){return d.longitude}))
 
 	this.x.domain([x_extents[0], x_extents[1]])
-	this.y.domain([y_extents[1], y_extents[0]])
+	this.y.domain([y_extents[0], y_extents[1]])
 
 	//update axis
 	this.svg.select(".x.axis")
-		.call(this.xAxis)     
+		.call(this.xAxis);     
 
   	this.svg.select(".y.axis")
     	.call(this.yAxis);
@@ -107,8 +119,8 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 	  		.attr("r", function(d) {
 	        	return 2;
 	   		})
-	   		.style("opacity", .5)
-	   		.style("stroke-width", 0)
+	   		.style("opacity", 1)
+	   		.style("stroke-width", 1)
 
 	this.circle_exit = this.circle.exit().remove();
 
