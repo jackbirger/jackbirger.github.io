@@ -122,12 +122,19 @@ ScatterVis.prototype.updateVis = function(){
         .x(d3.scale.identity().domain([0, this.width]))
         .y(d3.scale.identity().domain([0, this.height]))
         .on("brush", function() {
+          var count = 0
           var extent = d3.event.target.extent();
           that.circle_enter.classed("selected", function(d) {
 
-            return extent[0][0] <= that.x(d.latitude) && that.x(d.latitude) < extent[1][0]
-                && extent[0][1] <= that.y(d.longitude) && that.y(d.longitude) < extent[1][1];
+            if( extent[0][0] <= that.x(d.latitude) && that.x(d.latitude) < extent[1][0]
+                && extent[0][1] <= that.y(d.longitude) && that.y(d.longitude) < extent[1][1] ){
+              count++;
+              return true
+            }else{return false}
+
           });
+
+          console.log("count", count)
 
           var extent = d3.event.target.extent();
           var extent_invert = [

@@ -4,9 +4,9 @@ ZoomVis = function(_parentElement, _data, _metaData){
     this.metaData = _metaData;
 
     //Margin, width, and height definitions for scatter plot svg
-    this.margin = {top: 20, right: 0, bottom: 20, left: 50},
+    this.margin = {top: 20, right: 20, bottom: 50, left: 50},
     this.width = 350 - this.margin.left - this.margin.right,
-    this.height = 350 - this.margin.top - this.margin.bottom;
+    this.height = 400 - this.margin.top - this.margin.bottom;
 
     //Initialize the scatter plot visualization
     this.initVis();
@@ -73,9 +73,6 @@ ZoomVis.prototype.wrangleData = function(){
 
 ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
-	console.log("x_extents", x_extents)
-	console.log("y_extents", y_extents)
-
 	var that = this;
 
 	this.plotData = [];
@@ -90,8 +87,6 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 	})
 
 	console.log("plotData", this.plotData)
-	// this.x.domain(d3.extent(this.plotData, function(d){return d.latitude}))
-	// this.y.domain(d3.extent(this.plotData, function(d){return d.longitude}))
 
 
 	this.x.domain([x_extents[0], x_extents[1]])
@@ -99,7 +94,15 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
 	//update axis
 	this.svg.select(".x.axis")
-		.call(this.xAxis);     
+		.call(this.xAxis)
+      .selectAll("text")  
+	    .style("text-anchor", "end")
+	    .attr("dx", "-.8em")
+	    .attr("dy", ".15em")
+	    .attr("transform", function(d) {
+	        return "rotate(-65)" 
+	     });      
+
 
 
   	this.svg.select(".y.axis")
