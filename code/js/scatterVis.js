@@ -1,6 +1,6 @@
 ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
     this.parentElement = _parentElement;
-    this.data = _data;
+    this.plotData = _data;
     this.metaData = _metaData;
     this.eventHandler = _eventHandler;
 
@@ -68,26 +68,6 @@ ScatterVis.prototype.initVis = function(){
 
 ScatterVis.prototype.wrangleData = function(){
 
-	var that = this;
-	var plotData = []
-
-	this.data.forEach(function(d){
-        latitude = d.latitude;
-        longitude = d.longitude;
-
-        match = 1;
-        plotData.forEach(function(e){
-            if (e.longitude == longitude && e.latitude == latitude) { match=0; }
-        })
-        if (match){
-            plotData.push(d);
-        }
-
-	})
-
-  this.plotData = plotData
-
-
 
 }
 
@@ -150,13 +130,13 @@ ScatterVis.prototype.updateVis = function(){
           });
 
           var extent = d3.event.target.extent();
-          var extent2 = [
+          var extent_invert = [
                           [that.x.invert(extent[0][0]), that.x.invert(extent[1][0])],
                           [that.y.invert(extent[0][1]), that.y.invert(extent[1][1])]
                         ]
 
 
-          $(that.eventHandler).trigger("selectionChanged", extent2)
+          $(that.eventHandler).trigger("selectionChanged", extent_invert)
 
           // if(that.brush.empty()){
           //  $(that.eventHandler).trigger("selectionChanged", d3.event.target.extent(), , d3.selectAll(".selected"))           

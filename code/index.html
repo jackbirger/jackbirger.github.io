@@ -125,7 +125,7 @@
          // create a new mbtaVis object
          //initVis();
          mv = new mbtaVis('#mbtaVis', allData, metaData);
-         ds = new ScatterVis('#scatter', allData, metaData, MyEventHandler);
+         ds = new ScatterVis('#scatter', plotData, metaData, MyEventHandler);
          zv = new ZoomVis('#scatter-zoom', plotData, metaData);
 
         $(MyEventHandler).bind("selectionChanged", function(event, selectionStart, selectionEnd){

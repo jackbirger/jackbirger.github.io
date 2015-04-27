@@ -73,6 +73,9 @@ ZoomVis.prototype.wrangleData = function(){
 
 ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
+	console.log("x_extents", x_extents)
+	console.log("y_extents", y_extents)
+
 	var that = this;
 
 	this.plotData = [];
@@ -92,7 +95,7 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
 
 	this.x.domain([x_extents[0], x_extents[1]])
-	this.y.domain([y_extents[0], y_extents[1]])
+	this.y.domain([y_extents[1], y_extents[0]])
 
 	//update axis
 	this.svg.select(".x.axis")
