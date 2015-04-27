@@ -70,6 +70,7 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
 
 	this.plotData = d3.selectAll('.selected');
+	console.log(this.plotData)
 
 	var that = this;
 

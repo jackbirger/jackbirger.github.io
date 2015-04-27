@@ -101,11 +101,11 @@ ScatterVis.prototype.updateVis = function(){
 	// this.x.domain(d3.extent(this.data, function(d){return d.latitude}))
 
 	this.x.domain([42.2, 42.5])
-	console.log("latitude extents for x-axis", d3.extent(this.data, function(d){return d.latitude}))
+
 
 	// this.y.domain(d3.extent(this.data, function(d){return d.longitude}))
 	this.y.domain([-70.9, -71.3])
-	console.log("longitude extents for y-axis", d3.extent(this.data, function(d){return d.longitude}))
+
 
   //update axis
   this.svg.select(".x.axis")
@@ -150,7 +150,6 @@ ScatterVis.prototype.updateVis = function(){
           });
 
           var extent = d3.event.target.extent();
-          console.log("extent", extent)
           var extent2 = [
                           [that.x.invert(extent[0][0]), that.x.invert(extent[1][0])],
                           [that.y.invert(extent[0][1]), that.y.invert(extent[1][1])]
