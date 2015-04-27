@@ -90,14 +90,14 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
   	//Plot circles for scatter plot
   	this.circle = this.svg
-		.selectAll(".circle")
+		.selectAll(".brush-circles")
 		.data(this.plotData)
 
 
  	this.circle_enter = this.circle
 			.enter()
 			.append("circle")	
-			.attr("class", "circle")
+			.attr("class", "brush-circles")
 			.attr("cx", function(d) {
 	        	return that.x(d.latitude);
 	 		})
