@@ -117,13 +117,13 @@ ScatterVis.prototype.updateVis = function(){
 
   //Plot circles for scatter plot
   this.circle = this.svg
-  						.selectAll("circle")
+  						.selectAll("scatter_circle")
   						.data(this.plotData)
 
  	this.circle_enter = this.circle
  							.enter()
  							.append("circle")
- 							.attr("class", "circle")
+ 							.attr("class", "scatter_circle")
 						   .attr("cx", function(d) {
 						        return that.x(d.latitude);
 						   })
