@@ -16,13 +16,14 @@ mbtaVis = function(_parentElement, _data, _metaData){
 	    .attr("cx", stop['x'])
 	    .attr("cy", stop['y'])
 	    .attr("r", 10)
-	    .attr("class", function(){
-	       if(stop.line.length == 1){
-	          return stop.line[0];
-	       } else{
-	          return stop.line[0] + ' ' + stop.line[1]
-	       }
-	    })
+	    .attr("class", "mbta-circle")
+	    // .attr("class", function(){
+	    //    if(stop.line.length == 1){
+	    //       return stop.line[0];
+	    //    } else{
+	    //       return stop.line[0] + ' ' + stop.line[1]
+	    //    }
+	    // })
 	    .attr("id", stop["station"])
 	    .datum(stop);	    
 	})
@@ -115,18 +116,21 @@ mbtaVis.prototype.update = function(){
 		radius_scale.domain(d3.extent(stop_list, function(d){ return d.category_count[encode_category] }))    
 	} 
 
-
-    //Update the visualization
-    d3.selectAll('circle').transition().duration(1000).attr("r", function(d){
+    tot_r = 1; 
+    tot_a = [];
+    d3.selectAll('.mbta-circle').transition().duration(1000).attr("r", function(d){
 
       var plot_r; //value of plotted radius
+
 
       stop_list.forEach(function(stop){
 
       	if(stop.id == d.stop_id){
 
 			if(encode_category == "all_cat" ){
-				plot_r = radius_scale(stop["count"])  
+				plot_r = radius_scale(stop["count"])
+				tot_r += stop["count"];  
+				tot_a.push(stop["count"]);
 			} 
 			else if(encode_category == encode_category){
 				plot_r = radius_scale(stop.category_count[encode_category])   
@@ -141,4 +145,9 @@ mbtaVis.prototype.update = function(){
       return plot_r;
 
     })
+    console.log('this');
+    console.log(tot_a);
+    d3.select('#total-restaurants').text(tot_r);
+    d3.select('#total-max').text(Math.max(tot_a));
+    d3.select('#total-min').text(Math.min(tot_a));
   }

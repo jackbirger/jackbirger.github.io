@@ -99,3 +99,6 @@ text {
   stroke: #fff;
   shape-rendering: crispEdges;
 }
+.legend{
+  font-size: 24px;
+}
