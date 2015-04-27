@@ -70,6 +70,7 @@ ZoomVis.prototype.wrangleData = function(){
 }
 
 
+
 ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
 	var that = this;
@@ -89,12 +90,14 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 	// this.x.domain(d3.extent(this.plotData, function(d){return d.latitude}))
 	// this.y.domain(d3.extent(this.plotData, function(d){return d.longitude}))
 
+
 	this.x.domain([x_extents[0], x_extents[1]])
 	this.y.domain([y_extents[0], y_extents[1]])
 
 	//update axis
 	this.svg.select(".x.axis")
 		.call(this.xAxis);     
+
 
   	this.svg.select(".y.axis")
     	.call(this.yAxis);
@@ -104,7 +107,6 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
   	this.circle = this.svg
 		.selectAll(".brush-circles")
 		.data(this.plotData)
-
 
  	this.circle_enter = this.circle
 			.enter()

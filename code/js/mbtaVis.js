@@ -116,7 +116,7 @@ mbtaVis.prototype.update = function(){
 		radius_scale.domain(d3.extent(stop_list, function(d){ return d.category_count[encode_category] }))    
 	} 
 
-    tot_r = 1; 
+    tot_r = 0; 
     tot_a = [];
     d3.selectAll('.mbta-circle').transition().duration(1000).attr("r", function(d){
 
@@ -133,7 +133,12 @@ mbtaVis.prototype.update = function(){
 				tot_a.push(stop["count"]);
 			} 
 			else if(encode_category == encode_category){
-				plot_r = radius_scale(stop.category_count[encode_category])   
+				var cnt = stop.category_count[encode_category];
+				plot_r  = radius_scale(cnt) 
+				tot_r   += cnt; 
+				if (cnt>0) {
+					tot_a.push(cnt);
+				}				  
 			} 
 			else {
 				plot_r = 10;
@@ -145,9 +150,11 @@ mbtaVis.prototype.update = function(){
       return plot_r;
 
     })
-    console.log('this');
-    console.log(tot_a);
+
+    var max = Math.max.apply(Math, tot_a);
+    var min = Math.min.apply(Math, tot_a);
+
     d3.select('#total-restaurants').text(tot_r);
-    d3.select('#total-max').text(Math.max(tot_a));
-    d3.select('#total-min').text(Math.min(tot_a));
+    d3.select('#total-max').text(max);
+    d3.select('#total-min').text(min);
   }
