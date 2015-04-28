@@ -51,7 +51,8 @@
              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 2050 1850"
              enable-background="new 0 0 2050 1850" xml:space="preserve">
              <script>document.write(mbta_svg)</script>
-             <g id="circles"></g> 
+             <g id="cat-circles"></g>
+             <g id="review-circles"></g> 
              <g id="legend">
              <text class="legend" x="20" y="1500">Total: </text>
              <text id="total-restaurants" class="legend" x="120" y="1500"></text>
@@ -134,7 +135,7 @@
          //initVis();
          mv = new mbtaVis('#mbtaVis', allData, metaData);
          ds = new ScatterVis('#scatter', plotData, metaData, MyEventHandler);
-         hv = new heatmapVis('#mbtaVis', allData, metaData);
+         hv = new heatmapVis('#heatmapVis', allData, metaData);
          zv = new ZoomVis('#scatter-zoom', plotData, metaData);
 
         $(MyEventHandler).bind("selectionChanged", function(event, selectionStart, selectionEnd){
