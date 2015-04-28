@@ -64,13 +64,13 @@ circle {
   stroke: rgb(31, 119, 180);
   stroke-width: 2.5px;
 }
-.mbta-circle {
+.mbta-circle, .mbta-circle-legend {
   fill: rgb(31, 119, 180);
   fill-opacity: 0;
   stroke: rgb(31, 119, 180);
   stroke-width: 2.5px;
 }
-.review-circle {
+.review-circle, .review-circle-legend {
   fill: rgb(31, 119, 180);
   fill-opacity: .25;
   stroke: rgb(31, 119, 180);
@@ -104,6 +104,14 @@ text {
 }
 .legend{
   font-size: 36px;
+  font-family: 'Inconsolata';
+/*  font-family: 'Open Sans', sans-serif;*/
+}
+.legend-em{
+  font-size: 36px;
+  font-family: 'Inconsolata';
+  font-weight: 700;
+/*  font-family: 'Open Sans', sans-serif;*/
 }
 .axis path,
 .axis line {

@@ -1,4 +1,4 @@
-
+	
 mbtaVis = function(_parentElement, _data, _metaData){
     this.parentElement  = _parentElement;
     this.data           = _data;
@@ -57,9 +57,11 @@ mbtaVis = function(_parentElement, _data, _metaData){
 
 		//loop through every restaurant and calculate the total numbers per stop
 		allData.forEach(function(restaurant){
+			
 			stop_list.forEach(function(stop){
 
 				if(restaurant.stop_id == stop.id){
+					
 				    stop.count += 1;  //total count
 				    stop.rating_average += restaurant.rating  //total ratings
 				    stop.review_count += restaurant.review_count;
@@ -75,8 +77,8 @@ mbtaVis = function(_parentElement, _data, _metaData){
 
 			})
 		})
-
-
+	
+					
 		//divide by number of restaurants in the given stop to create averages when necessary
 		stop_list.forEach(function(stop){
 
@@ -155,12 +157,11 @@ mbtaVis.prototype.update = function(){
     })
 
     var max = Math.max.apply(Math, tot_a);
-    var min = Math.min.apply(Math, tot_a);
-
     d3.select('#total-restaurants').text(tot_r);
     d3.select('#total-max').text(max);
-    d3.select('#total-min').text(min);
 
+    rev_r = 0; // total number of restaurants to display in the legend
+    rev_a = [];  // all of the individual data to determine max and min
 
     d3.selectAll('.review-circle').transition().duration(1000).attr("r", function(d){
 
@@ -173,15 +174,15 @@ mbtaVis.prototype.update = function(){
 			if (encode_category == "all_cat" ){
 				plot_r = stop["count"] ? review_scale(stop["review_count"]) : 0;
 
-				tot_r  += stop["count"];  
-				tot_a.push(stop["count"]);
+				rev_r  += stop["review_count"];  
+				rev_a.push(stop["review_count"]);
 			} 
 			else if (encode_category == encode_category){
 				var cnt = stop.category_review_count[encode_category];
 				plot_r  = cnt ? review_scale(cnt) : 0;
-				tot_r   += cnt; 
+				rev_r   += cnt; 
 				if (cnt>0) {
-					tot_a.push(cnt);
+					rev_a.push(cnt);
 				}				  
 			} 
         }
@@ -191,4 +192,8 @@ mbtaVis.prototype.update = function(){
       return plot_r;
 
     })
+
+    var max = Math.max.apply(Math, rev_a);
+    d3.select('#reviews-total').text(rev_r);
+    d3.select('#reviews-max').text(max);
   }
