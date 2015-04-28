@@ -107,13 +107,13 @@ ScatterVis.prototype.updateVis = function(){
 
   //Plot circles for scatter plot
   this.circle = this.svg
-  						.selectAll("scatter_circle")
+  						.selectAll("scatter-circle")
   						.data(this.plotData)
 
  	this.circle_enter = this.circle
  							.enter()
  							.append("circle")
- 							.attr("class", "scatter_circle")
+ 							.attr("class", "scatter-circle")
 						   .attr("cx", function(d) {
 						        return that.x(d.latitude);
 						   })
@@ -125,6 +125,24 @@ ScatterVis.prototype.updateVis = function(){
 						   })
 						   .style("opacity", 1)
 						   .style("stroke-width", 0)
+
+  var stops = this.svg
+              .selectAll("scatter-stops")
+              .data(this.metaData)
+              .enter()
+              .append("circle")
+              .attr("class", "scatter-stops")
+              .attr("cx", function(d){
+                return that.x(d.ll[0])
+              })
+              .attr("cy", function(d){
+                return that.y(d.ll[1])
+              })
+              .attr("r", function(d){return 3})
+              .style("stroke", "red")
+              .style("fill", "red")
+
+
 
   var brush = this.svg.append("g")
       .attr("class", "brush")
@@ -161,6 +179,7 @@ ScatterVis.prototype.updateVis = function(){
           // else{$(that.eventHandler).trigger("selectionChanged", d3.event.target.extent(), d3.selectAll(".selected"))}  
 
         }));
+
 
           
 }

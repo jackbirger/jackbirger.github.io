@@ -88,6 +88,19 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
 	console.log("plotData", this.plotData)
 
+	this.plotStops = [];
+
+	this.metaData.forEach(function(d){
+
+		if( x_extents[0] <= d.ll[0] && d.ll[0] < x_extents[1]
+                && y_extents[0] <= d.ll[1] && d.ll[1] < y_extents[1]){
+			
+			that.plotStops.push(d)
+		}
+	})
+
+	console.log("plotted stops", this.plotStops)
+
 
 	this.x.domain([x_extents[0], x_extents[1]])
 	this.y.domain([y_extents[1], y_extents[0]])
@@ -131,6 +144,26 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 	   		.style("stroke-width", 1)
 
 	this.circle_exit = this.circle.exit().remove();
+
+
+  this.stops = this.svg
+              .selectAll(".brush-stops")
+              .data(this.plotStops);
+
+  this.stops_enter = this.stops.enter()
+              .append("circle")
+              .attr("class", "brush-stops")
+              .attr("cx", function(d){
+                return that.x(d.ll[0])
+              })
+              .attr("cy", function(d){
+                return that.y(d.ll[1])
+              })
+              .attr("r", function(d){return 3})
+              .style("stroke", "red")
+              .style("fill", "red");
+
+   this.stops_exit = this.stops.exit().remove();
 
 }
 
