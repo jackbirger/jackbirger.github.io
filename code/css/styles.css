@@ -113,6 +113,17 @@ text {
   font-weight: 700;
 /*  font-family: 'Open Sans', sans-serif;*/
 }
+.legend-sm{
+  font-size: 30px;
+  font-family: 'Inconsolata';
+/*  font-family: 'Open Sans', sans-serif;*/
+}
+.legend-sm-em{
+  font-size: 30px;
+  font-family: 'Inconsolata';
+  font-weight: 700;
+/*  font-family: 'Open Sans', sans-serif;*/
+}
 .axis path,
 .axis line {
     fill: none;

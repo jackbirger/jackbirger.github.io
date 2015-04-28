@@ -53,26 +53,25 @@
              <script>document.write(mbta_svg)</script>
              <g id="cat-circles"></g>
              <g id="review-circles"></g> 
-             <g id="legend">
+             <g id="legend" transform="translate(10, 1400)">
+               <text class="legend" x="0" y="40">Largest circles represent: </text>
 
-             <text class="legend" x="20" y="1340">Largest circles represent: </text>
+               <circle class="mbta-circle-legend" cx="70" cy="150" r="75"/>
+               <text class="legend-em" id="total-max" x="70" y="162" text-anchor="middle"></text> 
+               <text class="legend-em" x="180" y="140">Restaurants</text>
 
-             <circle class="mbta-circle-legend" cx="90" cy="1450" r="75"/>
-             <text class="legend-em" id="total-max" x="90" y="1462" text-anchor="middle"></text> 
-             <text class="legend" x="200" y="1462">Restaurants</text>
+               <text class="legend-sm" x="180" y="180">Total: </text>
+               <text class="legend-sm" id="reviews-total" x="280" y="180"></text> 
 
-             <circle class="review-circle-legend" cx="90" cy="1620" r="75"/>
-             <text class="legend-em" id="reviews-max" x="90" y="1632" text-anchor="middle"></text>   
-             <text class="legend" x="200" y="1632">Reviews</text>
+               <circle class="review-circle-legend" cx="70" cy="320" r="75"/>
+               <text class="legend-em" id="reviews-max" x="70" y="332" text-anchor="middle"></text>   
+               <text class="legend-em" x="180" y="312">Reviews</text>  
 
-             <text class="legend" x="20" y="1750">Total Reviews: </text>
-             <text class="legend-em" id="reviews-total" x="290" y="1750"></text> 
-
-             <text class="legend" x="20" y="1800">Total number of restaurants within 800m of an MBTA stop: </text>
-             <text class="legend-em" id="total-restaurants" x="1050" y="1800"></text>
-  
-                     
+               <text class="legend-sm" x="180" y="352">Total: </text>            
+               <text class="legend-sm" id="total-restaurants" x="280" y="352"></text>
+                 
              </g>                  
+
           </svg>
         </div>
 
