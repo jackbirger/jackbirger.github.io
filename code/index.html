@@ -137,16 +137,14 @@
          metaData = _metaData;
          plotData = _plotData;
 
-         // console.log("metaData", metaData);
-         // console.log("allData", allData);
-
+         var stop_list = createStopList();  
          var MyEventHandler = new Object();
 
          // create a new mbtaVis object
          //initVis();
-         mv = new mbtaVis('#mbtaVis', allData, metaData);
+         mv = new mbtaVis('#mbtaVis', allData, metaData, stop_list);
          ds = new ScatterVis('#scatter', plotData, metaData, MyEventHandler);
-         hv = new heatmapVis('#heatmapVis', allData, metaData);
+         hv = new heatmapVis('#heatmapVis', allData, metaData, stop_list);
          zv = new ZoomVis('#scatter-zoom', plotData, metaData);
 
         $(MyEventHandler).bind("selectionChanged", function(event, selectionStart, selectionEnd){
@@ -166,6 +164,60 @@
            .defer(d3.json, '../data/data-3km-scatterplot.json') // Contains plot data (no duplicates).           
            .await(dataLoaded); // Call dataLoaded function
 
+   }
+
+   var createStopList = function() {
+        var stop_list       = [];
+
+        //create blank array of objects containing agregate information for each t-stop
+        stop_list = metaData.map(function(d){
+
+          var initialized_cat_count  = {}
+          var initialized_cat_rating = {}
+          var initialized_cat_review = {}
+
+          category_list.forEach(function(category){
+            initialized_cat_count[category]  = 0
+            initialized_cat_rating[category] = 0
+            initialized_cat_review[category] = 0
+          })
+
+        return { 
+                 id                    : d.stop_id,
+             line                  : d.line,
+             count                 : 0,
+             rating_average        : 0,
+             review_count          : 0,
+             category_count        : initialized_cat_count,
+             category_avg_rating   : initialized_cat_rating,
+             category_review_count : initialized_cat_review
+               }    
+
+        })
+
+        //loop through every restaurant and calculate the total numbers per stop
+        allData.forEach(function(restaurant){
+
+        stop_list.forEach(function(stop){
+
+          if(restaurant.stop_id == stop.id){
+            
+              stop.count += 1;  //total count
+              stop.rating_average += restaurant.rating  //total ratings
+              stop.review_count += restaurant.review_count;
+
+              restaurant.categories.forEach(function(cat){
+              if(category_list.indexOf(cat) >= 0){
+                stop.category_count[cat] += 1;
+                stop.category_avg_rating[cat] += restaurant.rating
+                stop.category_review_count[cat] += restaurant.review_count              
+              }
+              })
+          }
+
+        })
+        })
+        return stop_list;
    }
 
    startHere()

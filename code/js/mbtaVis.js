@@ -1,10 +1,11 @@
 	
-mbtaVis = function(_parentElement, _data, _metaData){
+mbtaVis = function(_parentElement, _data, _metaData, _stopList){
     this.parentElement  = _parentElement;
     this.data           = _data;
     this.metaData       = _metaData;
-
-	var stop_list       = [];  //Aggregate data list
+    this.stop_list      = _stopList;
+    
+	// var stop_list       = [];  //Aggregate data list
 	this.radius_scale   = d3.scale.linear().range([7,75]);
 	this.review_scale   = d3.scale.linear().range([7,75]);
 	var encode_category ='all_cat'; // set this to all categories to start
@@ -55,49 +56,32 @@ mbtaVis = function(_parentElement, _data, _metaData){
 
      })
 
-		//loop through every restaurant and calculate the total numbers per stop
-		allData.forEach(function(restaurant){
+		// //loop through every restaurant and calculate the total numbers per stop
+		// allData.forEach(function(restaurant){
 			
-			stop_list.forEach(function(stop){
+		// 	stop_list.forEach(function(stop){
 
-				if(restaurant.stop_id == stop.id){
+		// 		if(restaurant.stop_id == stop.id){
 					
-				    stop.count += 1;  //total count
-				    stop.rating_average += restaurant.rating  //total ratings
-				    stop.review_count += restaurant.review_count;
+		// 		    stop.count += 1;  //total count
+		// 		    stop.rating_average += restaurant.rating  //total ratings
+		// 		    stop.review_count += restaurant.review_count;
 
-				    restaurant.categories.forEach(function(cat){
-						if(category_list.indexOf(cat) >= 0){
-							stop.category_count[cat] += 1;
-							stop.category_avg_rating[cat] += restaurant.rating
-							stop.category_review_count[cat] += restaurant.review_count              
-						}
-				    })
-				}
+		// 		    restaurant.categories.forEach(function(cat){
+		// 				if(category_list.indexOf(cat) >= 0){
+		// 					stop.category_count[cat] += 1;
+		// 					stop.category_avg_rating[cat] += restaurant.rating
+		// 					stop.category_review_count[cat] += restaurant.review_count              
+		// 				}
+		// 		    })
+		// 		}
 
-			})
-		})
-	
+		// 	})
+		// })
 					
-		//divide by number of restaurants in the given stop to create averages when necessary
-		stop_list.forEach(function(stop){
-
-		//find rating average of total count
-		stop.rating_average = stop.rating_average / stop.count;
-
-        //find rating average of each category
-        for(var key in stop.category_avg_rating){
-          if(stop.category_avg_rating.hasOwnProperty(key)){
-            if(!isNaN(stop.category_avg_rating[key] / stop.category_count[key])){ //Ensure no 0/0
-              stop.category_avg_rating[key] = stop.category_avg_rating[key] / stop.category_count[key];              
-            }
-          }
-        }        
-
-      })
 
       // console.log("stop list aggregate", stop_list)
-      this.stop_list = stop_list;
+      // this.stop_list = stop_list;
       this.update();
  }
 
