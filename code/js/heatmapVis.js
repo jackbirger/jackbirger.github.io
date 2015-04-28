@@ -6,7 +6,7 @@ heatmapVis = function(_parentElement, _data, _metaData, _stopList){
 
     this.svg = d3.select(this.parentElement).append("svg")
         .attr("width", 300)
-        .attr("height", 620)
+        .attr("height", 650)
         .attr('id', 'svg-heatmap')
        .append('g')
         .attr('id', 'heat-text');
@@ -23,6 +23,8 @@ heatmapVis.prototype.update = function(){
     var yScale = d3.scale.ordinal().rangeRoundBands([0, this.ordered_stations.length*15], .8, 0);
 	yScale.domain(this.ordered_stations.map(function(d) { return d.name; }));
 
+	// draw text labels //
+	// 
 	// select and join
     var g = d3.select('#heat-text');
     var bar = g.selectAll(".station-name")
@@ -42,6 +44,9 @@ heatmapVis.prototype.update = function(){
     // exit
     bar.exit().remove(); 
 
+
+    // draw circles in the color of the line the station is on
+    //
     // do the same for the circles
     var circ = g.selectAll(".line-circle")
         .data(this.ordered_stations);
@@ -56,6 +61,15 @@ heatmapVis.prototype.update = function(){
         .attr('fill', function(d) { return d.line; });
 
     circ.exit().remove();
+
+    // draw a rect to the right of each 
+    var rank_rect = g.selectAll(".rank-rect")
+        .data(this.ordered_stations); 
+        
+    rank_rect.enter().append('rect')
+    			.attr('class', 'rank-rect')
+                .attr('x', 40)
+                .attr('y', function(d) { return yScale(d.name) + 6; });                         
 }
 
 heatmapVis.prototype.wrangleData = function() {
@@ -72,8 +86,8 @@ heatmapVis.prototype.wrangleData = function() {
 		this.stop_list.forEach(function(stop){
 			if (stop.id == d.stop_id){
 				if (encode_category == "all_cat" ){
-					tot_r  += stop["count"];  
-					selected_stations.push({id: stop.id, name: stop.name, line: stop.line[0], count: cnt} );
+					tot_r  += stop["count"];
+					selected_stations.push({id: stop.id, name: stop.name, line: stop.line[0], count: stop["count"]} );
 				} 
 				else if (encode_category == encode_category){
 					var cnt = stop.category_count[encode_category];
@@ -95,5 +109,15 @@ heatmapVis.prototype.wrangleData = function() {
 		return 0;
 	}
 
-	this.ordered_stations = selected_stations.sort(compare);
+	// sort the stations by count
+	ordered_stations = selected_stations.sort(compare);
+
+	// slice out stations that fall after 45 on list
+	if (ordered_stations.length > 45) {
+		this.ordered_stations = ordered_stations.slice(0,44);
+	}
+	else {
+		this.ordered_stations = ordered_stations;
+	}
+
 }

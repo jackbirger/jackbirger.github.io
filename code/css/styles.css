@@ -137,4 +137,7 @@ text {
     font-family: sans-serif;
     font-size: 11px;
 }
-
+.rank-rect {
+  stroke: black;
+  fill: blue;
+}
