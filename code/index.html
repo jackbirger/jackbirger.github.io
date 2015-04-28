@@ -54,7 +54,7 @@
              <g id="cat-circles"></g>
              <g id="review-circles"></g> 
              <g id="legend" transform="translate(10, 1400)">
-               <text class="legend" x="0" y="40">Largest circles represent: </text>
+               <text class="legend" x="0" y="40">Largest circle represents: </text>
 
                <circle class="mbta-circle-legend" cx="70" cy="150" r="75"/>
                <text class="legend-em" id="total-max" x="70" y="162" text-anchor="middle"></text> 
@@ -68,8 +68,7 @@
                <text class="legend-em" x="180" y="312">Reviews</text>  
 
                <text class="legend-sm" x="180" y="352">Total: </text>            
-               <text class="legend-sm" id="reviews-total" x="280" y="352"></text>
-                 
+               <text class="legend-sm" id="reviews-total" x="280" y="352"></text>                 
              </g>                  
 
           </svg>
@@ -83,8 +82,8 @@
         <script>document.write(cat_options)</script>
         </select>
       </div>
-      <div id="mbtaHeatmap">
-      <svg width="300" height="620" style="background-color: lightblue">
+      <div id="heatmapVis">
+
       </div>
       <div id="mbtaVis"></div>
       </div>
@@ -140,8 +139,6 @@
          var stop_list = createStopList();  
          var MyEventHandler = new Object();
 
-         // create a new mbtaVis object
-         //initVis();
          mv = new mbtaVis('#mbtaVis', allData, metaData, stop_list);
          ds = new ScatterVis('#scatter', plotData, metaData, MyEventHandler);
          hv = new heatmapVis('#heatmapVis', allData, metaData, stop_list);
@@ -184,13 +181,14 @@
 
         return { 
                  id                    : d.stop_id,
-             line                  : d.line,
-             count                 : 0,
-             rating_average        : 0,
-             review_count          : 0,
-             category_count        : initialized_cat_count,
-             category_avg_rating   : initialized_cat_rating,
-             category_review_count : initialized_cat_review
+                 name                  : d.station,
+                 line                  : d.line,
+                 count                 : 0,
+                 rating_average        : 0,
+                 review_count          : 0,
+                 category_count        : initialized_cat_count,
+                 category_avg_rating   : initialized_cat_rating,
+                 category_review_count : initialized_cat_review
                }    
 
         })
