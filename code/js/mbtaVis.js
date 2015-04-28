@@ -4,8 +4,7 @@ mbtaVis = function(_parentElement, _data, _metaData, _stopList){
     this.data           = _data;
     this.metaData       = _metaData;
     this.stop_list      = _stopList;
-    
-	// var stop_list       = [];  //Aggregate data list
+
 	this.radius_scale   = d3.scale.linear().range([7,75]);
 	this.review_scale   = d3.scale.linear().range([7,75]);
 	var encode_category ='all_cat'; // set this to all categories to start
@@ -30,59 +29,7 @@ mbtaVis = function(_parentElement, _data, _metaData, _stopList){
 	    .datum(stop);	        
 	 })
 
-     //create blank array of objects containing agregate information for each t-stop
-      stop_list = metaData.map(function(d){
-
-        var initialized_cat_count  = {}
-        var initialized_cat_rating = {}
-        var initialized_cat_review = {}
-
-        category_list.forEach(function(category){
-          initialized_cat_count[category]  = 0
-          initialized_cat_rating[category] = 0
-          initialized_cat_review[category] = 0
-        })
-
-      return { 
-      	       id                    : d.stop_id,
- 		       line                  : d.line,
- 		       count                 : 0,
- 		       rating_average        : 0,
- 		       review_count          : 0,
- 		       category_count        : initialized_cat_count,
- 		       category_avg_rating   : initialized_cat_rating,
- 		       category_review_count : initialized_cat_review
-             }    
-
-     })
-
-		// //loop through every restaurant and calculate the total numbers per stop
-		// allData.forEach(function(restaurant){
-			
-		// 	stop_list.forEach(function(stop){
-
-		// 		if(restaurant.stop_id == stop.id){
-					
-		// 		    stop.count += 1;  //total count
-		// 		    stop.rating_average += restaurant.rating  //total ratings
-		// 		    stop.review_count += restaurant.review_count;
-
-		// 		    restaurant.categories.forEach(function(cat){
-		// 				if(category_list.indexOf(cat) >= 0){
-		// 					stop.category_count[cat] += 1;
-		// 					stop.category_avg_rating[cat] += restaurant.rating
-		// 					stop.category_review_count[cat] += restaurant.review_count              
-		// 				}
-		// 		    })
-		// 		}
-
-		// 	})
-		// })
-					
-
-      // console.log("stop list aggregate", stop_list)
-      // this.stop_list = stop_list;
-      this.update();
+    this.update();
  }
 
 
