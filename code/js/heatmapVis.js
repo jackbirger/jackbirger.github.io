@@ -87,15 +87,15 @@ heatmapVis.prototype.update = function(){
             if (that.heatData[z].stop_id == d.id) {
 
                 distance = that.heatData[z]['distance'];
-                distance.forEach(function(item){
-                    // add a rect to the current g with an x of dScale
-                    d.append('rect')
-                        .attr('class', 'dist-rect')
-                        .attr('width', 2)
-                        .attr('height', 10)
-                        .attr('x', function(d) { return 110; })
-                        .attr('y', 0);
-                });
+                // distance.forEach(function(item){
+                //     // add a rect to the current g with an x of dScale
+                //     this.append('rect')
+                //         .attr('class', 'dist-rect')
+                //         .attr('width', 2)
+                //         .attr('height', 10)
+                //         .attr('x', function(d) { return 110; })
+                //         .attr('y', 0);
+                // });
                 break;
             }
         }
