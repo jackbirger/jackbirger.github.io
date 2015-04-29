@@ -155,8 +155,6 @@ ScatterVis.prototype.updateVis = function(){
 								return that.y(d.ll[0])
 							})
 							.attr("r", function(d){return 3})
-							// .style("stroke", "red")
-							// .style("fill", "red")
 
 
 
@@ -168,7 +166,7 @@ ScatterVis.prototype.updateVis = function(){
 				.on("brush", function() {
 				
 					var extent = d3.event.target.extent();
-					that.circle_enter.classed("selected", function(d) {
+					that.circle_enter.classed("brush-selected", function(d) {
 
 						if( extent[0][0] <= that.x(d.longitude) && that.x(d.longitude) < extent[1][0]
 								&& extent[0][1] <= that.y(d.latitude) && that.y(d.latitude) < extent[1][1] ){

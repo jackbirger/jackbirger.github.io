@@ -89,8 +89,11 @@ text {
   stroke-width: 1.5px;
 }
 
-.selected {
+.scatter-circle, .brush-selected {
   fill: red;
+  fill-opacity: .6;
+  stroke: red;
+  stroke-width: 0px;
 }
 
 .link {
@@ -140,20 +143,20 @@ text {
   fill: rgb(31, 119, 180);
   fill-opacity: .6;
   stroke: rgb(31, 119, 180);
-  stroke-width: 2.5px;
+  stroke-width: 0px;
 
 }
 .scatter-stops {
-  fill: red;
+  fill: black;
   fill-opacity: .5;
-  stroke: rgb(31, 119, 180);
+  stroke: black;
   stroke-width: 2.5px;
 
 }
 .brush-stops{
-  fill: red;
+  fill: black;
   fill-opacity: .5;
-  stroke: rgb(31, 119, 180);
+  stroke: black;
   stroke-width: 2.5px;
 
 

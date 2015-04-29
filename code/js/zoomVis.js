@@ -47,7 +47,7 @@ ZoomVis.prototype.initVis = function(){
 	//g containing the x axis
 	this.svg.append("g")
 		.attr("class", "x axis")
-		.attr("transform", "translate(0," + this.height + ")")
+		.attr("transform", "translate(0," + (this.height +2) + ")")
 
 	//g containing the y axis
 	this.svg.append("g")
@@ -157,16 +157,18 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 		.attr("r", function(d) {
 			return 2;
 		})
-		// .style("opacity", 1)
-		// .style("stroke-width", 1)
+
 
 	this.circle_exit = this.circle.exit().remove();
 
-	this.stops = this.svg
+
+	var stops = this.svg
 		.selectAll(".brush-stops")
 		.data(this.plotStops)
 
-	this.stops_enter = this.stops.enter()
+
+	var stops_enter = stops
+		.enter()
 		.append("circle")
 		.attr("class", "brush-stops")
 		.attr("cx", function(d){
@@ -176,10 +178,9 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 			return that.y(d.ll[0])
 		})
 		.attr("r", function(d){return 3})
-		// .style("stroke", "red")
-		// .style("fill", "red");
 
-	this.stops_exit = this.stops.exit().remove();
+
+	var stops_exit = stops.exit().remove();
 
 }
 
