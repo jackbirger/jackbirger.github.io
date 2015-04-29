@@ -15,15 +15,15 @@ heatmapVis = function(_parentElement, _metaData, _stopList, _heatData){
 }
 
 heatmapVis.prototype.update = function(){
-
+    d3.selectAll('.heat-rect').remove();
     that = this;
 
 	// get fresh data	
 	this.wrangleData();
 
 	// create an ordinal scale for the station names
-    var yScale = d3.scale.ordinal().rangeRoundBands([0, this.ordered_stations.length*15], .8, 0);
-	yScale.domain(this.ordered_stations.map(function(d) { return d.name; }));
+    var yScale = d3.scale.ordinal().rangeRoundBands([0, this.ordered_stations.length*15], .8, 0)
+	                               .domain(this.ordered_stations.map(function(d) { return d.name; }));
 
 	// draw text labels //
 	// 
@@ -68,19 +68,19 @@ heatmapVis.prototype.update = function(){
     var rank_rect = g.selectAll(".rank-rect")
         .data(this.ordered_stations); 
         
-    rank_rect.enter().append('g').attr('class','dist-map').append('rect')
+    rank_rect.enter().append('g').attr('class','rank-map').append('rect')
     			.attr('class', 'rank-rect')
-                .attr('width', 60)
+                .attr('width', 70)
                 .attr('height', 10)
                 .attr('x', 200)
-                .attr('y', function(d) { return yScale(d.name); });  
+                .attr('y', function(d) { return yScale(d.name) +1 ; });  
 
     rank_rect.exit().remove(); 
     
     // create a linear scale for distance 
     dScale = d3.scale.linear().range([0,60]).domain([1,5]);
 
-    distmaps = d3.selectAll('.dist-map').each( function(d,i){
+    distmaps = d3.selectAll('.rank-map').each( function(d,i){
         for (z=0; z<that.heatData.length; z++){
             if (that.heatData[z].stop_id == d.id) {
                 distance = that.heatData[z]['rating'];
@@ -88,11 +88,11 @@ heatmapVis.prototype.update = function(){
                 distance.forEach(function(item){
                     // add a rect to the current g with an x of dScale
                     x.append('rect')
-                        .attr('class', 'dist-rect')
+                        .attr('class', 'heat-rect')
                         .attr('width', 9)
                         .attr('height', 10)
                         .attr('x', function(d) { return 200 + dScale(item); })
-                        .attr('y', function(d) { return yScale(d.name); });
+                        .attr('y', function(d) { console.log(d.name); return yScale(d.name) + 1; });
                 });
                 break;
             }

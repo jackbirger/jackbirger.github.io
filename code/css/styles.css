@@ -167,9 +167,10 @@ text {
   stroke: rgb(31, 119, 180);
   stroke-width: 0px;
 
-}.rank-rect {
-  fill: #c6dcec;
 }
-.dist-rect {
+.rank-rect {
+  fill: #eee; /*#c6dcec;*/
+}
+.heat-rect {
   opacity: .05;
 }
