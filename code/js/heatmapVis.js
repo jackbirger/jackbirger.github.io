@@ -39,7 +39,7 @@ heatmapVis.prototype.update = function(){
                 .attr("font-family", "sans-serif")
 
     // update
-    bar.text(function (d) { return d.name; });
+    bar.text(function (d) { return d.name + ' (' + d.count + ')'; });
 
     // exit
     bar.exit().remove(); 
@@ -70,7 +70,7 @@ heatmapVis.prototype.update = function(){
     			.attr('class', 'rank-rect')
                 .attr('width', 60)
                 .attr('height', 10)
-                .attr('x', 170)
+                .attr('x', 200)
                 .attr('y', function(d) { return yScale(d.name); });  
 
     rank_rect.exit().remove(); 
@@ -80,15 +80,15 @@ heatmapVis.prototype.update = function(){
 
 
     // draw a rect for each to show distance 
-    var distance_rect = g.selectAll(".dist-rect")
-        .data(this.ordered_stations); 
+    // var distance_rect = g.selectAll(".dist-rect")
+    //     .data(this.ordered_stations); 
     
-    distance_rect.enter().append('rect')
-                .attr('class', 'dist-rect')
-                .attr('width', 2)
-                .attr('height', 10)
-                .attr('x', function(d) { return 170 + 10; })
-                .attr('y', function(d) { return yScale(d.name); });  
+    // distance_rect.enter().append('rect')
+    //             .attr('class', 'dist-rect')
+    //             .attr('width', 2)
+    //             .attr('height', 10)
+    //             .attr('x', function(d) { return 170 + 10; })
+    //             .attr('y', function(d) { return yScale(d.name); });  
 
 }
 
