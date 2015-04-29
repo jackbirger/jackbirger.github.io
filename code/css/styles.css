@@ -165,7 +165,7 @@ text {
   fill: rgb(31, 119, 180);
   fill-opacity: .10;
   stroke: rgb(31, 119, 180);
-  stroke-width: 2.5px;
+  stroke-width: 0px;
 
 }.rank-rect {
   fill: #c6dcec;

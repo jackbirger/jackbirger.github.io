@@ -139,8 +139,7 @@ ScatterVis.prototype.updateVis = function(){
 							 .attr("r", function(d) {
 										 return 2;
 							 })
-							 // .style("opacity", 1)
-							 // .style("stroke-width", 0)
+
 
 	var stops = this.svg
 							.selectAll("scatter-stops")

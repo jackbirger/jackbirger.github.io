@@ -47,7 +47,7 @@ ZoomVis.prototype.initVis = function(){
 	//g containing the x axis
 	this.svg.append("g")
 		.attr("class", "x axis")
-		.attr("transform", "translate(0," + (this.height +2) + ")")
+		.attr("transform", "translate(0," + (this.height +5) + ")")
 
 	//g containing the y axis
 	this.svg.append("g")
@@ -117,7 +117,8 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
 	// filter, aggregate, modify data
 	this.wrangleData(x_extents, y_extents);
-
+	// console.log("x_extents", x_extents);
+	// console.log("y_extents", y_extents);
 
 	this.x.domain([x_extents[0], x_extents[1]])
 	this.y.domain([y_extents[1], y_extents[0]])
@@ -143,6 +144,17 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 		.selectAll(".brush-circles")
 		.data(this.plotData)
 
+	this.circle
+		.attr("cx", function(d) {
+			return that.x(d.longitude);
+		})
+		.attr("cy", function(d) {
+			return that.y(d.latitude);
+		})
+		.attr("r", function(d) {
+			return 5;
+		})
+
 
 	this.circle_enter = this.circle
 		.enter()
@@ -155,7 +167,7 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 			return that.y(d.latitude);
 		})
 		.attr("r", function(d) {
-			return 2;
+			return 5;
 		})
 
 
@@ -166,18 +178,30 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 		.selectAll(".brush-stops")
 		.data(this.plotStops)
 
+	stops
+		.attr("cx", function(d){
+			console.log("xScaled", that.x(d.ll[1]))
+			return that.x(d.ll[1])
+		})
+		.attr("cy", function(d){
+			return that.y(d.ll[0])
+		})
+		.attr("r", function(d){return 7});
 
 	var stops_enter = stops
 		.enter()
 		.append("circle")
 		.attr("class", "brush-stops")
 		.attr("cx", function(d){
+			console.log("xScaled", that.x(d.ll[1]))
 			return that.x(d.ll[1])
 		})
 		.attr("cy", function(d){
 			return that.y(d.ll[0])
 		})
-		.attr("r", function(d){return 3})
+		.attr("r", function(d){return 7})
+
+
 
 
 	var stops_exit = stops.exit().remove();
