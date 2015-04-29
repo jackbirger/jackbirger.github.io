@@ -12,10 +12,13 @@ for i in range(101,227):
 	for d in data:
 		if i == d['stop_id']:
 			#print "match"
-			item['distance'].append(round(d['distance']))
+			if d['distance'] > 800:
+				item['distance'].append(800)
+			else:	
+				item['distance'].append(round(d['distance']))
 			item['rating'].append(d['rating'])
 	storage.append(item)
-	pprint.pprint(item)
+	#pprint.pprint(item)
 
 # write json to file
 out_file = open("../data/data-heatmap-dist-rating.json","w")

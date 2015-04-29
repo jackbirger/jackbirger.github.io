@@ -78,38 +78,26 @@ heatmapVis.prototype.update = function(){
     rank_rect.exit().remove(); 
     
     // create a linear scale for distance 
-    dScale = d3.scale.linear().range([0,60]).domain([0,800]);
-    //console.log(that.heatData);
+    dScale = d3.scale.linear().range([0,60]).domain([1,5]);
+
     distmaps = d3.selectAll('.dist-map').each( function(d,i){
-        //onsole.log(distmaps);
         for (z=0; z<that.heatData.length; z++){
-
             if (that.heatData[z].stop_id == d.id) {
-
-                distance = that.heatData[z]['distance'];
-                // distance.forEach(function(item){
-                //     // add a rect to the current g with an x of dScale
-                //     this.append('rect')
-                //         .attr('class', 'dist-rect')
-                //         .attr('width', 2)
-                //         .attr('height', 10)
-                //         .attr('x', function(d) { return 110; })
-                //         .attr('y', 0);
-                // });
+                distance = that.heatData[z]['rating'];
+                x = d3.select(this);
+                distance.forEach(function(item){
+                    // add a rect to the current g with an x of dScale
+                    x.append('rect')
+                        .attr('class', 'dist-rect')
+                        .attr('width', 9)
+                        .attr('height', 10)
+                        .attr('x', function(d) { return 200 + dScale(item); })
+                        .attr('y', function(d) { return yScale(d.name); });
+                });
                 break;
             }
         }
     });
-    // draw a rect for each to show distance 
-    // var distance_rect = g.selectAll(".dist-rect")
-    //     .data(this.ordered_stations); 
-    
-    // distance_rect.enter().append('rect')
-    //             .attr('class', 'dist-rect')
-    //             .attr('width', 2)
-    //             .attr('height', 10)
-    //             .attr('x', function(d) { return 170 + 10; })
-    //             .attr('y', function(d) { return yScale(d.name); });  
 
 }
 
