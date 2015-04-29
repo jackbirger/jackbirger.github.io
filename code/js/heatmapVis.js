@@ -1,8 +1,8 @@
-heatmapVis = function(_parentElement, _data, _metaData, _stopList){
+heatmapVis = function(_parentElement, _metaData, _stopList, _heatData){
     this.parentElement = _parentElement;
-    this.data = _data;
     this.metaData = _metaData;
     this.stop_list = _stopList;
+    this.heatData = _heatData;
 
     this.svg = d3.select(this.parentElement).append("svg")
         .attr("width", 300)
@@ -68,8 +68,28 @@ heatmapVis.prototype.update = function(){
         
     rank_rect.enter().append('rect')
     			.attr('class', 'rank-rect')
-                .attr('x', 40)
-                .attr('y', function(d) { return yScale(d.name) + 6; });                         
+                .attr('width', 60)
+                .attr('height', 10)
+                .attr('x', 170)
+                .attr('y', function(d) { return yScale(d.name); });  
+
+    rank_rect.exit().remove(); 
+    
+    // create a linear scale for distance 
+    dScale = d3.scale.linear().range([0,60]).domain([0,800]);
+
+
+    // draw a rect for each to show distance 
+    var distance_rect = g.selectAll(".dist-rect")
+        .data(this.ordered_stations); 
+    
+    distance_rect.enter().append('rect')
+                .attr('class', 'dist-rect')
+                .attr('width', 2)
+                .attr('height', 10)
+                .attr('x', function(d) { return 170 + 10; })
+                .attr('y', function(d) { return yScale(d.name); });  
+
 }
 
 heatmapVis.prototype.wrangleData = function() {

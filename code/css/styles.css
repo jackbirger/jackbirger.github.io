@@ -138,6 +138,5 @@ text {
     font-size: 11px;
 }
 .rank-rect {
-  stroke: black;
-  fill: blue;
+  fill: #eee;
 }
