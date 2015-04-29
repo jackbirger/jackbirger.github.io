@@ -16,6 +16,8 @@ heatmapVis = function(_parentElement, _metaData, _stopList, _heatData){
 
 heatmapVis.prototype.update = function(){
 
+    that = this;
+
 	// get fresh data	
 	this.wrangleData();
 
@@ -66,7 +68,7 @@ heatmapVis.prototype.update = function(){
     var rank_rect = g.selectAll(".rank-rect")
         .data(this.ordered_stations); 
         
-    rank_rect.enter().append('rect')
+    rank_rect.enter().append('g').attr('class','dist-map').append('rect')
     			.attr('class', 'rank-rect')
                 .attr('width', 60)
                 .attr('height', 10)
@@ -77,8 +79,27 @@ heatmapVis.prototype.update = function(){
     
     // create a linear scale for distance 
     dScale = d3.scale.linear().range([0,60]).domain([0,800]);
+    //console.log(that.heatData);
+    distmaps = d3.selectAll('.dist-map').each( function(d,i){
+        //onsole.log(distmaps);
+        for (z=0; z<that.heatData.length; z++){
 
+            if (that.heatData[z].stop_id == d.id) {
 
+                distance = that.heatData[z]['distance'];
+                distance.forEach(function(item){
+                    // add a rect to the current g with an x of dScale
+                    d.append('rect')
+                        .attr('class', 'dist-rect')
+                        .attr('width', 2)
+                        .attr('height', 10)
+                        .attr('x', function(d) { return 110; })
+                        .attr('y', 0);
+                });
+                break;
+            }
+        }
+    });
     // draw a rect for each to show distance 
     // var distance_rect = g.selectAll(".dist-rect")
     //     .data(this.ordered_stations); 
