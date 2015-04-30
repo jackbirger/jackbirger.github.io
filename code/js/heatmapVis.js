@@ -16,6 +16,7 @@ heatmapVis = function(_parentElement, _metaData, _stopList, _heatData){
 
 heatmapVis.prototype.update = function(){
     d3.selectAll('.heat-rect').remove();
+    d3.selectAll('.rank-map').remove();
     that = this;
 
 	// get fresh data	
@@ -80,7 +81,7 @@ heatmapVis.prototype.update = function(){
     // go through each of the rect map placeholders
     rankmaps = d3.selectAll('.rank-map').each( function(d,i){
 
-        x = d3.select(this);
+        var x = d3.select(this);
 
         var rankings;
         for (z=0; z<that.heatData.length; z++){
@@ -94,7 +95,7 @@ heatmapVis.prototype.update = function(){
             var max = d3.max(rankings);
             rScale = d3.scale.linear().range([.01,1]).domain([1,max]);
             
-            // add a rect to the current g with an x of dScale
+            // add a rect to the current g with an opacity of rScale
             x.append('rect')
                 .attr('class', 'heat-rect')
                 .attr('opacity', rScale(rankings[g]))
