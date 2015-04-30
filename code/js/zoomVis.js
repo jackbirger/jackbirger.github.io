@@ -4,9 +4,9 @@ ZoomVis = function(_parentElement, _data, _metaData){
 	this.metaData = _metaData;
 
 	//Margin, width, and height definitions for scatter plot svg
-	this.margin = {top: 20, right: 50, bottom: 100, left: 70},
-	this.width = 780 - this.margin.left - this.margin.right,
-	this.height = 650 - this.margin.top - this.margin.bottom;
+	this.margin = {top: 20, right: 50, bottom: 100, left: 70, padding:10},
+	this.width = 450 - this.margin.left - this.margin.right,
+	this.height = 450 - this.margin.top - this.margin.bottom;
 
 	//Initialize the scatter plot visualization
 	this.initVis();
@@ -47,7 +47,7 @@ ZoomVis.prototype.initVis = function(){
 	//g containing the x axis
 	this.svg.append("g")
 		.attr("class", "x axis")
-		.attr("transform", "translate(0," + (this.height +5) + ")")
+		.attr("transform", "translate(0," + (this.height) + ")")
 
 	//g containing the y axis
 	this.svg.append("g")
@@ -152,7 +152,7 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 			return that.y(d.latitude);
 		})
 		.attr("r", function(d) {
-			return 5;
+			return 3;
 		})
 
 
@@ -167,7 +167,7 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 			return that.y(d.latitude);
 		})
 		.attr("r", function(d) {
-			return 5;
+			return 3;
 		})
 
 
@@ -180,28 +180,24 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
 	stops
 		.attr("cx", function(d){
-			console.log("xScaled", that.x(d.ll[1]))
 			return that.x(d.ll[1])
 		})
 		.attr("cy", function(d){
 			return that.y(d.ll[0])
 		})
-		.attr("r", function(d){return 7});
+		.attr("r", function(d){return 3});
 
 	var stops_enter = stops
 		.enter()
 		.append("circle")
 		.attr("class", "brush-stops")
 		.attr("cx", function(d){
-			console.log("xScaled", that.x(d.ll[1]))
 			return that.x(d.ll[1])
 		})
 		.attr("cy", function(d){
 			return that.y(d.ll[0])
 		})
-		.attr("r", function(d){return 7})
-
-
+		.attr("r", function(d){return 3})
 
 
 	var stops_exit = stops.exit().remove();
