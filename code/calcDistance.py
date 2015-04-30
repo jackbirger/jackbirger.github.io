@@ -4,7 +4,7 @@ import pprint
 storage = []
 data = json.loads(open("../data/data-800m.json").read())
 
-for i in range(101,227):	
+for i in range(101,228):	
 	item = {}
 	item['stop_id'] = i
 	item['distance'] = []

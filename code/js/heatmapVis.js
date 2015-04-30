@@ -71,7 +71,7 @@ heatmapVis.prototype.update = function(){
         
     rank_rect.enter().append('g').attr('class','rank-map').append('rect')
     			.attr('class', 'rank-rect')
-                .attr('width', 70)
+                .attr('width', 90)
                 .attr('height', 10)
                 .attr('x', 200)
                 .attr('y', function(d) { return yScale(d.name) +1 ; });  
