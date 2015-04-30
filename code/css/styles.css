@@ -172,5 +172,5 @@ text {
   fill: #eee; /*#c6dcec;*/
 }
 .heat-rect {
-  opacity: .05;
+  fill: #337AB7;
 }

@@ -77,28 +77,33 @@ heatmapVis.prototype.update = function(){
 
     rank_rect.exit().remove(); 
     
-    // create a linear scale for distance 
-    dScale = d3.scale.linear().range([0,60]).domain([1,5]);
+    // go through each of the rect map placeholders
+    rankmaps = d3.selectAll('.rank-map').each( function(d,i){
 
-    distmaps = d3.selectAll('.rank-map').each( function(d,i){
+        x = d3.select(this);
+
+        var rankings;
         for (z=0; z<that.heatData.length; z++){
-            if (that.heatData[z].stop_id == d.id) {
-                distance = that.heatData[z]['rating'];
-                x = d3.select(this);
-                distance.forEach(function(item){
-                    // add a rect to the current g with an x of dScale
-                    x.append('rect')
-                        .attr('class', 'heat-rect')
-                        .attr('width', 9)
-                        .attr('height', 10)
-                        .attr('x', function(d) { return 200 + dScale(item); })
-                        .attr('y', function(d) { console.log(d.name); return yScale(d.name) + 1; });
-                });
+            if (that.heatData[z].stop_id == d.id) {  
+                rankings =  that.heatData[z].rating;
                 break;
             }
         }
-    });
 
+        for (g=0;g<9;g++){
+            var max = d3.max(rankings);
+            rScale = d3.scale.linear().range([.01,1]).domain([1,max]);
+            
+            // add a rect to the current g with an x of dScale
+            x.append('rect')
+                .attr('class', 'heat-rect')
+                .attr('opacity', rScale(rankings[g]))
+                .attr('width', 10)
+                .attr('height', 10)
+                .attr('x', function(d) { return 200 + g*10; })
+                .attr('y', function(d) { console.log(d.name); return yScale(d.name) + 1; });  
+        }
+    });        
 }
 
 heatmapVis.prototype.wrangleData = function() {
