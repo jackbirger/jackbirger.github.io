@@ -4,7 +4,7 @@ ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
 		this.metaData = _metaData;
 		this.eventHandler = _eventHandler;
 
-		console.log(this.plotData)
+		// console.log(this.plotData)
 
 		//Margin, width, and height definitions for scatter plot svg
 		this.margin = {top: 20, right: 50, bottom: 100, left: 70},
@@ -175,9 +175,11 @@ ScatterVis.prototype.updateVis = function(){
 
 						if( extent[0][0] <= that.x(d.longitude) && that.x(d.longitude) < extent[1][0]
 								&& extent[0][1] <= that.y(d.latitude) && that.y(d.latitude) < extent[1][1] ){
-
-							return true
-						}else{return false}
+							return true;
+						}
+						else {
+							return false;
+						}
 
 					});
 

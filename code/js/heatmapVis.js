@@ -22,7 +22,7 @@ heatmapVis.prototype.update = function(){
     //Check for the category that will be displayed
     var f = document.getElementById("mySelectCat");
     selected_category = f.options[f.selectedIndex].value;
-    console.log(selected_category);
+
 	// get fresh data	
 	this.wrangleData();
 
@@ -33,6 +33,7 @@ heatmapVis.prototype.update = function(){
 	// draw text labels //
 	// 
 	// select and join
+    
     var g = d3.select('#heat-text');
     var bar = g.selectAll(".station-name")
         .data(this.ordered_stations);
@@ -55,6 +56,7 @@ heatmapVis.prototype.update = function(){
     // draw circles in the color of the line the station is on
     //
     // do the same for the circles
+
     var circ = g.selectAll(".line-circle")
         .data(this.ordered_stations);
 

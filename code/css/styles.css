@@ -64,17 +64,58 @@
   stroke: rgb(31, 119, 180);
   stroke-width: 2.5px;
 }*/
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: #efefef;
+  color: 333;
+  border-radius: 4px;
+  border: 1px solid black;
+}
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display:  inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+.tip-details {
+  font-size: .8em;
+  margin-top: 4px;
+  line-height: 1.1em;
+}
+
 .mbta-circle, .mbta-circle-legend {
   fill: rgb(31, 119, 180);
   fill-opacity: 0;
   stroke: rgb(31, 119, 180);
   stroke-width: 2.5px;
 }
+/*.mbta-circle:hover {
+  stroke: orangered;
+}*/
 .review-circle, .review-circle-legend {
   fill: rgb(31, 119, 180);
   fill-opacity: .25;
   stroke: rgb(31, 119, 180);
   stroke-width: 0px;
+}
+.review-circle:hover {
+  fill: orangered;
+  fill-opacity: .25;  
 }
 .leaf circle {
   fill: #ff7f0e;

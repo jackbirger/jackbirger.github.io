@@ -176,8 +176,8 @@ stops = [
             { 'll' : '42.352501, -71.062610' , 'line' : ['orange'] , 'stop_id' :140}, # Chinatown Station
             { 'll' : '42.349615, -71.063941' , 'line' : ['orange'] , 'stop_id' :141}, # Tufts Medical Center Station
             { 'll' : '42.347332, -71.076043' , 'line' : ['orange'] , 'stop_id' :142}, # Back Bay Station
-            { 'll' : '42.347902, -71.087973' , 'line' : ['orange'] , 'stop_id' :143}, # Massachusetts Avenue Station
-            { 'll' : '42.347902, -71.087973' , 'line' : ['orange'] , 'stop_id' :144}, # Ruggles Station
+            { 'll' : '42.331460, -71.095420' , 'line' : ['orange'] , 'stop_id' :143}, # Massachusetts Avenue Station
+            { 'll' : '42.341550, -71.083479' , 'line' : ['orange'] , 'stop_id' :144}, # Ruggles Station
             { 'll' : '42.331428, -71.095613' , 'line' : ['orange'] , 'stop_id' :145}, # Roxbury Crossing Station
             { 'll' : '42.323115, -71.099733' , 'line' : ['orange'] , 'stop_id' :146}, # Jackson Square Station
             { 'll' : '42.317213, -71.104754' , 'line' : ['orange'] , 'stop_id' :147}, # Stony Brook Station
@@ -264,7 +264,7 @@ def main():
     category  = 'Restaurants'
     for stop in stops:
         try:
-            query_api(category, stop, 2000)
+            query_api(category, stop, 500)
         except urllib2.HTTPError as error:
             sys.exit('Encountered HTTP error {0}. Abort program.'.format(error.code)) 
 
@@ -334,7 +334,7 @@ def query_api(category, stop, radius):
         print "radius: {0}, stop {1}".format(radius, stop)
         print "total queries: {0}".format(query_cnt)
 
-    with open('data.json', 'w') as outfile:
+    with open('data-500m.json', 'w') as outfile:
         json.dump(data, outfile)
 
 
