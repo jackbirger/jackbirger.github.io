@@ -19,6 +19,10 @@ heatmapVis.prototype.update = function(){
     d3.selectAll('.rank-map').remove();
     that = this;
 
+    //Check for the category that will be displayed
+    var f = document.getElementById("mySelectCat");
+    selected_category = f.options[f.selectedIndex].value;
+    console.log(selected_category);
 	// get fresh data	
 	this.wrangleData();
 
@@ -92,17 +96,17 @@ heatmapVis.prototype.update = function(){
         }
 
         for (g=0;g<9;g++){
-            var max = d3.max(rankings);
-            rScale = d3.scale.linear().range([.01,1]).domain([1,max]);
+            var max = d3.max(rankings[selected_category]);
+            rScale = d3.scale.linear().range([.01,1]).domain([0,max]);
             
             // add a rect to the current g with an opacity of rScale
             x.append('rect')
                 .attr('class', 'heat-rect')
-                .attr('opacity', rScale(rankings[g]))
+                .attr('opacity', rScale(rankings[selected_category][g]))
                 .attr('width', 10)
                 .attr('height', 10)
                 .attr('x', function(d) { return 200 + g*10; })
-                .attr('y', function(d) { console.log(d.name); return yScale(d.name) + 1; });  
+                .attr('y', function(d) { return yScale(d.name) + 1; });  
         }
     });        
 }

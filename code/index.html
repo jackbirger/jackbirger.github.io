@@ -162,7 +162,7 @@
            .defer(d3.json, '../data/mbta_metadata.json') // AllData
            .defer(d3.json, '../data/data-800m.json') // Contains meta-information about AllData.
            .defer(d3.json, '../data/data-3km-scatterplot.json') // Contains plot data (no duplicates).           
-           .defer(d3.json, '../data/data-heatmap-dist-rating.json') // Contains plot data (no duplicates).           
+           .defer(d3.json, '../data/data-heatmap-rating.json') // Contains plot data (no duplicates).           
            .await(dataLoaded); // Call dataLoaded function
 
    }
