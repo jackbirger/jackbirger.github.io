@@ -166,7 +166,7 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
 
 	this.circle_exit = this.circle.exit().remove();
-
+	
 
 	var stops = this.svg
 		.selectAll(".brush-stops")
@@ -174,6 +174,9 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 		.attr("class", function(d){
 			return "brush-stops " + d.line[0];
 		})
+
+
+
 
 	stops
 		.attr("cx", function(d){
