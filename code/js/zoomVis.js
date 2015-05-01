@@ -5,8 +5,8 @@ ZoomVis = function(_parentElement, _data, _metaData){
 
 	//Margin, width, and height definitions for scatter plot svg
 	this.margin = {top: 20, right: 50, bottom: 100, left: 70, padding:10},
-	this.width = 450 - this.margin.left - this.margin.right,
-	this.height = 450 - this.margin.top - this.margin.bottom;
+	this.width = 350 - this.margin.left - this.margin.right,
+	this.height = 350 - this.margin.top - this.margin.bottom;
 
 	//Initialize the scatter plot visualization
 	this.initVis();
@@ -44,26 +44,34 @@ ZoomVis.prototype.initVis = function(){
 		.scale(this.y)
 		.orient("left");
 
-	//g containing the x axis
-	this.svg.append("g")
-		.attr("class", "x axis")
-		.attr("transform", "translate(0," + (this.height) + ")")
+	//create rectangle for the zoom view
 
-	//g containing the y axis
-	this.svg.append("g")
-	  .attr("class", "y axis")
-	  .attr("transform", "translate(0,0)")  
+	this.svg.append("rect").attr("class", "border")
+		.attr("x", 0)
+		.attr("y", 0)
+		.attr("width", this.width)
+		.attr("height", this.height)
 
-	this.svg.append("g").append("text")
-		.attr("text-anchor", "middle") 
-		.attr("transform", "translate("+ -this.margin.left/1.5 +","+(this.height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-		.text("longitude");
+	// //g containing the x axis
+	// this.svg.append("g")
+	// 	.attr("class", "x axis")
+	// 	.attr("transform", "translate(0," + (this.height+1) + ")")
+
+	// //g containing the y axis
+	// this.svg.append("g")
+	//   .attr("class", "y axis")
+	//   .attr("transform", "translate(1,0)")  
+
+	// this.svg.append("g").append("text")
+	// 	.attr("text-anchor", "middle") 
+	// 	.attr("transform", "translate("+ -this.margin.left/1.5 +","+(this.height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+	// 	.text("longitude");
 
 
-	this.svg.append("g").append("text")
-			.attr("text-anchor", "middle") 
-			.attr("transform", "translate("+ (this.width/2) +","+(this.height + this.margin.bottom/2)+")")  // centre below axis
-			.text("latitude");
+	// this.svg.append("g").append("text")
+	// 		.attr("text-anchor", "middle") 
+	// 		.attr("transform", "translate("+ (this.width/2) +","+(this.height + this.margin.bottom/2)+")")  // centre below axis
+	// 		.text("latitude");
 
   // call the update method
 
@@ -113,30 +121,16 @@ ZoomVis.prototype.wrangleData = function(x_extents, y_extents){
 ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
 
+
 	var that = this;
 
 	// filter, aggregate, modify data
 	this.wrangleData(x_extents, y_extents);
-	// console.log("x_extents", x_extents);
-	// console.log("y_extents", y_extents);
+
 
 	this.x.domain([x_extents[0], x_extents[1]])
 	this.y.domain([y_extents[1], y_extents[0]])
 
-	//update axis
-	this.svg.select(".x.axis")
-		.call(this.xAxis)
-	  .selectAll("text")  
-		.style("text-anchor", "end")
-		.attr("dx", "-.8em")
-		.attr("dy", ".15em")
-		.attr("transform", function(d) {
-			return "rotate(-65)" 
-		 });      
-
-
-	this.svg.select(".y.axis")
-		.call(this.yAxis);
 
 
 	//Plot circles for scatter plot
@@ -152,7 +146,7 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 			return that.y(d.latitude);
 		})
 		.attr("r", function(d) {
-			return 3;
+			return 2;
 		})
 
 
@@ -167,7 +161,7 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 			return that.y(d.latitude);
 		})
 		.attr("r", function(d) {
-			return 3;
+			return 2;
 		})
 
 
@@ -177,6 +171,9 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 	var stops = this.svg
 		.selectAll(".brush-stops")
 		.data(this.plotStops)
+		.attr("class", function(d){
+			return "brush-stops " + d.line[0];
+		})
 
 	stops
 		.attr("cx", function(d){
@@ -185,12 +182,14 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 		.attr("cy", function(d){
 			return that.y(d.ll[0])
 		})
-		.attr("r", function(d){return 3});
+		.attr("r", function(d){return 3})
 
 	var stops_enter = stops
 		.enter()
 		.append("circle")
-		.attr("class", "brush-stops")
+		.attr("class", function(d){
+			return "brush-stops " + d.line[0];
+		})
 		.attr("cx", function(d){
 			return that.x(d.ll[1])
 		})
@@ -198,9 +197,15 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 			return that.y(d.ll[0])
 		})
 		.attr("r", function(d){return 3})
+		.style("stroke-width", 2);
 
 
 	var stops_exit = stops.exit().remove();
+
+
+
+
+
 
 }
 

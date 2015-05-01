@@ -8,8 +8,9 @@ ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
 
 		//Margin, width, and height definitions for scatter plot svg
 		this.margin = {top: 20, right: 50, bottom: 100, left: 70},
-		this.width = 780 - this.margin.left - this.margin.right,
-		this.height = 650 - this.margin.top - this.margin.bottom;
+		this.width = 873 - this.margin.left - this.margin.right,
+		this.height = 750 - this.margin.top - this.margin.bottom;
+		//Width x Height: 780x650
 
 		//Initialize the scatter plot visualization
 		this.initVis();
@@ -34,7 +35,7 @@ ScatterVis.prototype.initVis = function(){
 	//Define Axis and Scales
 
 	this.x = d3.scale.linear()
-		.range([0, this.width]);
+		.range([100, this.width]);
 
 	this.y = d3.scale.linear()
 		.range([this.height, 0]);
@@ -50,7 +51,7 @@ ScatterVis.prototype.initVis = function(){
 	//g containing the x axis
 	this.svg.append("g")
 		.attr("class", "x axis")
-		.attr("transform", "translate(0," + this.height + ")")
+		.attr("transform", "translate(0," + (this.height +1) + ")")
 
 	//g containing the y axis
 	this.svg.append("g")
@@ -64,9 +65,10 @@ ScatterVis.prototype.initVis = function(){
 
 
 	this.svg.append("g").append("text")
-			.attr("text-anchor", "middle") 
-			.attr("transform", "translate("+ (this.width/2) +","+(this.height + this.margin.bottom/2)+")")  // centre below axis
-			.text("latitude");
+		.attr("text-anchor", "middle") 
+		.attr("transform", "translate("+ (this.width/2) +","+(this.height + this.margin.bottom/2)+")")  // centre below axis
+		.text("latitude");
+
 
 	// filter, aggregate, modify data
 	this.wrangleData();
@@ -107,7 +109,7 @@ ScatterVis.prototype.updateVis = function(){
 	// this.x.domain(d3.extent(this.data, function(d){return d.latitude}))
 
 	this.x.domain([-71.3, -70.9])
-
+	//(-71.3, -80.9)
 
 	// this.y.domain(d3.extent(this.data, function(d){return d.longitude}))
 	this.y.domain([42.18, 42.5])
@@ -141,12 +143,15 @@ ScatterVis.prototype.updateVis = function(){
 							 })
 
 
+
 	var stops = this.svg
 							.selectAll("scatter-stops")
 							.data(this.metaData)
 							.enter()
 							.append("circle")
-							.attr("class", "scatter-stops")
+							.attr("class", function(d){
+								return "scatter-stops " + d.line[0];
+							})
 							.attr("cx", function(d){
 								return that.x(d.ll[1])
 							})
@@ -154,6 +159,7 @@ ScatterVis.prototype.updateVis = function(){
 								return that.y(d.ll[0])
 							})
 							.attr("r", function(d){return 3})
+
 
 
 

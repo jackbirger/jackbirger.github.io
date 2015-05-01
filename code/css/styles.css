@@ -140,31 +140,16 @@ text {
     font-size: 11px;
 }
 .scatter-circle {
-  fill: rgb(31, 119, 180);
-  fill-opacity: .6;
-  stroke: rgb(31, 119, 180);
+  fill: rgb(190, 186, 218); /*31, 119, 180*/
+  fill-opacity: 1;
+  stroke: rgb(190, 186, 218);
   stroke-width: 0px;
 
 }
-.scatter-stops {
-  fill: black;
-  fill-opacity: .5;
-  stroke: black;
-  stroke-width: 2.5px;
-
-}
-.brush-stops{
-  fill: black;
-  fill-opacity: .5;
-  stroke: black;
-  stroke-width: 2.5px;
-
-
-}
 .brush-circles{
-  fill: rgb(31, 119, 180);
-  fill-opacity: .6;
-  stroke: rgb(31, 119, 180);
+  fill: rgb(190, 186, 218);
+  fill-opacity: 1;
+  stroke: rgb(190, 186, 218);
   stroke-width: 0px;
 
 }
@@ -174,3 +159,50 @@ text {
 .heat-rect {
   fill: #337AB7;
 }
+.container_2 { position:relative; }
+.imgA1 { position:absolute; top: 1000px; left: 150px; z-index: 1; } 
+.imgB1 { position:absolute; top: 1000px; left: 165px; z-index: 2; } 
+.container_2 { position:absolute; top}
+.border{
+  fill-opacity: 0;
+  stroke: black;
+  stroke-width: 2px;
+}
+.red {
+  fill: red;
+  fill-opacity: .5;
+  stroke: red;
+  stroke-width: 1px;
+}
+.blue {
+  fill: blue;
+  fill-opacity: .5;
+  stroke: blue;
+  stroke-width: 1px;
+}
+.orange {
+  fill: orange;
+  fill-opacity: .5;
+  stroke: orange;
+  stroke-width: 1px;
+}
+.green {
+  fill: green;
+  fill-opacity: .5;
+  stroke: green;
+  stroke-width: 1px;
+}
+/*.scatter-stops {
+  fill: black;
+  fill-opacity: .5;
+  stroke: black;
+  stroke-width: .5px;
+
+}
+.brush-stops{
+  fill: black;
+  fill-opacity: .5;
+  stroke: black;
+  stroke-width: 2.5px;
+
+}*/
