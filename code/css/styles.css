@@ -113,7 +113,6 @@ text {
   stroke-width: 1.5px;
 }
 
-
 .link {
   stroke: #999;
 }
@@ -200,29 +199,46 @@ text {
   fill: red;
   fill-opacity: .5;
   stroke: red;
-  stroke-width: 1px;
+  stroke-width: .6px;
 }
 .blue {
   fill: blue;
   fill-opacity: .5;
   stroke: blue;
-  stroke-width: 1px;
+  stroke-width: .6px;
 }
 .orange {
   fill: orange;
   fill-opacity: .5;
   stroke: orange;
-  stroke-width: 1px;
+  stroke-width: .6px;
 }
 .green {
   fill: green;
   fill-opacity: .5;
   stroke: green;
-  stroke-width: 1px;
+  stroke-width: .6px;
 }
 .brush-selected {
   fill: rgb(252, 197, 192);
   fill-opacity: 1;
   stroke: rgb(31, 119, 180);
   stroke-width: .3px;
+}
+.packing-circle {
+  fill: rgb(31, 119, 180);
+  fill-opacity: .25;
+  stroke: rgb(31, 119, 180);
+  stroke-width: 1px;
+}
+
+.leaf circle {
+  fill: #ff7f0e;
+  fill-opacity: 1;
+}
+
+text {
+  font-size: 9px;
+  font-family: 'Inconsolata';
+  font-weight: 10;
 }

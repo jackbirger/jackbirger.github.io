@@ -6,7 +6,7 @@ ZoomStat = function(_parentElement, _data, _metaData){
 	//Margin, width, and height definitions for scatter plot svg
 	this.margin = {top: 20, right: 50, bottom: 100, left: 0, padding:10},
 	this.width = 350 - this.margin.left - this.margin.right,
-	this.height = 800 - this.margin.top - this.margin.bottom;
+	this.height = 400 - this.margin.top - this.margin.bottom;
 
 
 	//Initialize the scatter plot visualization
@@ -28,6 +28,28 @@ ZoomStat.prototype.initVis = function(){
 	  .append("g")
 	  	.attr("id", "zoom-legend")
 		.attr("transform", "translate(" + this.margin.left+ "," + this.margin.top + ")");
+
+//////////////////////////
+//Trial init for circle packing
+//////////////////////////
+
+
+
+
+this.diameter = 250
+this.format = d3.format(",d");
+
+this.pack = d3.layout.pack()
+    .size([this.diameter - 4, this.diameter - 4])
+    .value(function(d) { return d.size; });
+
+this.packing_svg = d3.select('#zoomStats').append("svg")
+    .attr("width", this.diameter)
+    .attr("height", this.diameter)
+  .append("g")
+    .attr("transform", "translate(2,2)");
+
+
 
 }
 
@@ -67,17 +89,23 @@ ZoomStat.prototype.wrangleData = function(){
 	})
 
 	//Populate topCat with a list of the top 5 categories
-	for (i = 0; i < 5; i++) {
-    	topCat[i] = {name: all_cat_stats[i].cat, size: all_cat_stats[i].count}
+	if(all_cat_stats.length >= 5){	
+		for (i = 0; i < 5; i++) {
+	    	topCat[i] = {name: all_cat_stats[i].cat, size: all_cat_stats[i].count}
+		}
+	} else{
+		for (i = 0; i < all_cat_stats.length; i++) {
+	    	topCat[i] = {name: all_cat_stats[i].cat, size: all_cat_stats[i].count}
+		}
 	}
 
 
-	console.log("count", stats)
-	console.log("topCat", topCat)
-
+	this.packingData = {"name": "circlepacking", "children":topCat}
 
     d3.select('#zoom-restaurants').text(stats.count);
     d3.select('#zoom-totalReviews').text(stats.review);
+
+    this.makeCirclePack()
 
 
 }
@@ -144,36 +172,35 @@ ZoomStat.prototype.onSelectionChange = function (plotData, plotStops){
 
 }
 
-ZoomStat.prototype.displayData = function (){
+ZoomStat.prototype.makeCirclePack = function (){
 
-var that = this
+  var that = this
 
+    var nodeStringLenth = d3.selectAll("g.node").toString().length; 
+    if ( nodeStringLenth > 0) {
+        d3.selectAll("g.node")
+            .remove();
+    }
 
-
-  var node;
-
-
-
-  node = this.svg.datum(this.data).selectAll(".node")
+  var node = this.packing_svg.datum(this.packingData).selectAll(".node")
       .data(this.pack.nodes)
 
+	var node_enter = 	node.enter().append("g")
+	  .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
+	  .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-  node.enter().append("g")
-      .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
- 	.append("circle")
-      .attr("r", function(d) { return d.r; })   
-	.append("title")
-      .text(function(d) { return d.name + (d.children ? "" : ": " + that.format(d.size)); })
+  node_enter.append("title")
+      .text(function(d) { return d.name + (d.children ? "" : ": " + that.format(d.size)); });
 
+  node_enter.append("circle").attr("class", "packing-circle")
+      .attr("r", function(d) { return d.r; });
 
-  node.filter(function(d) { return !d.children; }).append("text")
+  node_enter.filter(function(d) { return !d.children; }).append("text")
       .attr("dy", ".3em")
       .style("text-anchor", "middle")
       .text(function(d) { return d.name.substring(0, d.r / 3); });
 
 
-node.exit().remove()
 
 d3.select(self.frameElement).style("height", this.diameter + "px");
 
