@@ -58,13 +58,8 @@
     background-color: rgba(0,0,0,.5);
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
-/*circle {
-  fill: rgb(31, 119, 180);
-  fill-opacity: .25;
-  stroke: rgb(31, 119, 180);
-  stroke-width: 2.5px;
-}*/
 
+/* tooltip */
 .d3-tip {
   line-height: 1;
   font-weight: bold;
