@@ -206,7 +206,6 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
 
 	$(that.eventHandler_2).trigger("brushChanged", [that.plotData, that.plotStops]);
-	//console.log(that.plotStops);
 
 
 }
