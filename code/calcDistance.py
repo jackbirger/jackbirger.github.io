@@ -9,7 +9,7 @@ category_list = ["American (New)","Asian Fusion","Barbeque","Brazilian","Breakfa
                  "Pizza","Salad","Sandwiches","Seafood","Soup","Southern","Spanish","Steakhouses","Sushi Bars","Taiwanese","Tapas Bars",
                  "Tapas/Small Plates","Tex-Mex","Thai","Turkish","Vegan","Vegetarian","Vietnamese"]
 
-data = json.loads(open("../data/data-800m.json").read())
+data = json.loads(open("../data/data-500m.json").read())
 
 for i in range(101,228):    
     # {"stop_id":101, "station":"Alewife Station", "line":["red"], "x":640, "y": 196, "ll":[42.395781, -71.142059]},
@@ -80,6 +80,6 @@ for i in range(101,228):
 
 
 # write json to file
-out_file = open("../data/data-heatmap-rating.json","w")
+out_file = open("../data/data-heatmap-rating-500m.json","w")
 json.dump(storage,out_file)                                    
 out_file.close()

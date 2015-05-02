@@ -99,7 +99,7 @@ heatmapVis.prototype.update = function(){
 
         for (g=0;g<9;g++){
             var max = d3.max(rankings[selected_category]);
-            rScale = d3.scale.linear().range([.01,1]).domain([0,max]);
+            rScale = d3.scale.linear().range([.1,1]).domain([0,max]);
             
             // add a rect to the current g with an opacity of rScale
             x.append('rect')

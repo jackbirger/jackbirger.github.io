@@ -118,12 +118,15 @@ import urllib2
 import math
 import oauth2
 import threading
+import sys, getopt
+
 
 API_HOST         = 'api.yelp.com'
 SEARCH_LIMIT     = 20
 SEARCH_PATH      = '/v2/search/'
 BUSINESS_PATH    = '/v2/business/'
 CATEGORIES = [  'Restaurants', 'Pizza', 'Burgers', 'Mexican', 'Sandwiches', 'Japanese', 'Cafes', 'Fast Food', 'Italian', 'American (Traditional)', 'Sushi Bars', 'American (New)', 'Bars', 'Breakfast & Brunch', 'Indian', 'Nightlife', 'Seafood' ]
+DISTANCE_R = 0
 
 # OAuth credentials
 CONSUMER_KEY    = "srjoLIpsGQzbuL8olqs60g"
@@ -176,8 +179,8 @@ stops = [
             { 'll' : '42.352501, -71.062610' , 'line' : ['orange'] , 'stop_id' :140}, # Chinatown Station
             { 'll' : '42.349615, -71.063941' , 'line' : ['orange'] , 'stop_id' :141}, # Tufts Medical Center Station
             { 'll' : '42.347332, -71.076043' , 'line' : ['orange'] , 'stop_id' :142}, # Back Bay Station
-            { 'll' : '42.331460, -71.095420' , 'line' : ['orange'] , 'stop_id' :143}, # Massachusetts Avenue Station
-            { 'll' : '42.341550, -71.083479' , 'line' : ['orange'] , 'stop_id' :144}, # Ruggles Station
+            { 'll' : '42.341453, -71.083682' , 'line' : ['orange'] , 'stop_id' :143}, # Massachusetts Avenue Station
+            { 'll' : '42.336314, -71.088532' , 'line' : ['orange'] , 'stop_id' :144}, # Ruggles Station
             { 'll' : '42.331428, -71.095613' , 'line' : ['orange'] , 'stop_id' :145}, # Roxbury Crossing Station
             { 'll' : '42.323115, -71.099733' , 'line' : ['orange'] , 'stop_id' :146}, # Jackson Square Station
             { 'll' : '42.317213, -71.104754' , 'line' : ['orange'] , 'stop_id' :147}, # Stony Brook Station
@@ -260,14 +263,21 @@ stops = [
             { 'll' : '42.328666, -71.110524' , 'line' : ['green'] , 'stop_id' :227}, # Heath ST                        
         ]
 
-def main():
+def main(argv):
+
+
+    print "parsing data for {}m".format(argv[0])
+    DISTANCE_R = argv[0]
+
     category  = 'Restaurants'
+
     for stop in stops:
         try:
-            query_api(category, stop, 500)
+            query_api(category, stop, DISTANCE_R)
         except urllib2.HTTPError as error:
             sys.exit('Encountered HTTP error {0}. Abort program.'.format(error.code)) 
 
+    print "runs complete"
 
 def query_api(category, stop, radius):
     global query_cnt
@@ -288,6 +298,10 @@ def query_api(category, stop, radius):
     for i in range(runs):
 
         url_params['offset'] = i*20
+        if url_params['offset'] >= 1000:
+            print "hit max offset: {}".format(url_params['offset'])
+            break
+
         response = request(API_HOST, SEARCH_PATH, url_params=url_params)
 
         # pprint.pprint(response, indent=4)
@@ -314,7 +328,7 @@ def query_api(category, stop, radius):
             business = { 'name'         : item['name'], 
                          'rating'       : item['rating'], 
                          'review_count' : item['review_count'],
-                         'url'          : item['url'],
+                         #'url'          : item['url'],
                          'distance'     : item['distance'],
                          'zip'          : postal_code,
                          'categories'   : cat, 
@@ -331,10 +345,13 @@ def query_api(category, stop, radius):
             # print ""
 
         query_cnt += 1
-        print "radius: {0}, stop {1}".format(radius, stop)
-        print "total queries: {0}".format(query_cnt)
+        # print "radius: {0}, stop {1}".format(radius, stop)
+        # print "total queries: {0}".format(query_cnt)
 
-    with open('data-500m.json', 'w') as outfile:
+    out_fname = 'data-{}m.json'.format(radius)
+    print "writing output to {}".format(out_fname)
+
+    with open(out_fname, 'w') as outfile:
         json.dump(data, outfile)
 
 
@@ -399,4 +416,4 @@ def get_business(business_id):
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
