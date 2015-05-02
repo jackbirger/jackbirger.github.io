@@ -33,7 +33,50 @@ ZoomStat.prototype.initVis = function(){
 
 
 
-ZoomStat.prototype.wrangleData = function(x_extents, y_extents){
+//Wrangle data to find statistics based on the selected extents
+ZoomStat.prototype.wrangleData = function(){
+
+	var stats = {count:0};		// Number of restaurants in the zoomed region
+	var all_categories = [];	// Total list of categories contained in zoomed region
+	var all_cat_stats = [];		// List of restaurant categories and correlating number of restaurants
+								// in each categry in zoomed region
+	var topCat = [];	// Top 5 categories in zoomed region
+
+	this.plotData.forEach(function(d){
+		stats["count"]++;
+		d.categories.forEach(function(cat){
+			if(all_categories.indexOf(cat) < 0){
+				all_categories.push(cat)
+				var temp = {cat, count:1}
+				all_cat_stats.push(temp)
+			} else {all_cat_stats[all_categories.indexOf(cat)].count++}
+		})	
+
+	})
+
+	//Sort all_cat_stats
+	all_cat_stats.sort(function(a,b){
+		if(a.count>b.count){
+			return -1;
+		}
+		if(a.count < b.count){
+			return 1;
+		}
+		return 0
+	})
+
+	//Populate topCat with a list of the top 5 categories
+	for (i = 0; i < 5; i++) {
+    	topCat[i] = {name: all_cat_stats[i].cat, size: all_cat_stats[i].count}
+	}
+
+
+	console.log("count", stats)
+	console.log("topCat", topCat)
+
+
+
+
 
 }
 
@@ -43,8 +86,8 @@ ZoomStat.prototype.onSelectionChange = function (plotData, plotStops){
 
 	var that = this
 
-	this.plotData = plotData;
-	this.plotStops = plotStops;
+	this.plotData = plotData;		//List of restaurants contained in the extents
+	this.plotStops = plotStops;		//List of Stops contianed in the extents
 
 
 	// create an ordinal scale for the station names
@@ -89,22 +132,12 @@ ZoomStat.prototype.onSelectionChange = function (plotData, plotStops){
 	circle.attr('stroke', function(d) { return d.line[0]; })
 	    .attr('fill', function(d) { return d.line[0]; });
 
+	//Remove extra elements
+	circle.exit().remove()
 
-circle.exit().remove()
+	//wrangle stops data to find basic stats of zoom region
+	this.wrangleData()
 
-
-
-
-
-
-
-
-
-
-//this.wrangleData()
-
-// console.log("plotted data:", plotData);
-console.log("plotted stops:", plotStops);
 
 
 }
