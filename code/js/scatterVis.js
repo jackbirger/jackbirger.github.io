@@ -70,6 +70,46 @@ ScatterVis.prototype.initVis = function(){
 		.text("latitude");
 
 
+	//Define Legend Material For ScatterPlot Zoom Portion
+	this.legend = this.svg.append("g");
+
+	this.legend.append("text")
+		.attr("class", "zoom-legend-sm-em")
+		.attr("text-anchor", "middle")
+		.attr("x", this.height/8)
+		.attr("y", 460)
+		.text("Total Restaurants");
+
+	this.legend.append("text").attr("class", "zoom-legend-sm-em")
+		.attr("text-anchor", "middle")
+		.attr("x", this.height/8)
+		.attr("y", 505)
+		.text("Total Reviews");
+
+	this.legend
+		.append("rect")
+		.attr("class", "border")
+		.attr("x",0)
+		.attr("y", this.height*(3/4) )
+		.attr("width", this.height/4 +1)
+		.attr("height", this.height/4 +1)
+		.style("stroke-width", 1);
+
+
+	//To be populated in ZoomVis.js	
+	this.legend.append("text").attr("id", "zoom-restaurants")
+		.attr("class", "legend-sm-sm")
+		.attr("text-anchor", "middle")
+		.attr("x", this.height/8)
+		.attr("y", 480);
+
+	this.legend.append("text").attr("id", "zoom-totalReviews")
+		.attr("class", "legend-sm-sm")
+		.attr("text-anchor", "middle")
+		.attr("x", this.height/8)	
+		.attr("y", 525);
+
+
 	// filter, aggregate, modify data
 	this.wrangleData();
 

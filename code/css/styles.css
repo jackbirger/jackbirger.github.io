@@ -147,6 +147,12 @@ text {
   font-weight: 700;
 /*  font-family: 'Open Sans', sans-serif;*/
 }
+.zoom-legend-sm-em{
+  font-size: 14px;
+  font-family: 'Inconsolata';
+  font-weight: 700;
+/*  font-family: 'Open Sans', sans-serif;*/
+}
 .axis path,
 .axis line {
     fill: none;
@@ -160,15 +166,15 @@ text {
 .scatter-circle {
   fill: rgb(190, 186, 218); /*31, 119, 180*/
   fill-opacity: 1;
-  stroke: rgb(190, 186, 218);
-  stroke-width: 0px;
+  stroke: rgb(31, 119, 180);
+  stroke-width: .3px;
 
 }
 .brush-circles{
   fill: rgb(190, 186, 218);
   fill-opacity: 1;
-  stroke: rgb(190, 186, 218);
-  stroke-width: 0px;
+  stroke: rgb(31, 119, 180);
+  stroke-width: .3px;
 
 }
 .rank-rect {
@@ -215,24 +221,8 @@ text {
   stroke-width: 1px;
 }
 .brush-selected {
-  fill: rgb(150, 150, 150);
-  fill-opacity: .6;
-  stroke: rgb(150, 150, 150);
-  stroke-width: .8px;
+  fill: rgb(252, 197, 192);
+  fill-opacity: 1;
+  stroke: rgb(31, 119, 180);
+  stroke-width: .3px;
 }
-
-/*31, 119, 180 light blue*/
-/*.scatter-stops {
-  fill: black;
-  fill-opacity: .5;
-  stroke: black;
-  stroke-width: .5px;
-
-}
-.brush-stops{
-  fill: black;
-  fill-opacity: .5;
-  stroke: black;
-  stroke-width: 2.5px;
-
-}*/

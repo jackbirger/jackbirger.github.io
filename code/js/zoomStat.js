@@ -36,7 +36,7 @@ ZoomStat.prototype.initVis = function(){
 //Wrangle data to find statistics based on the selected extents
 ZoomStat.prototype.wrangleData = function(){
 
-	var stats = {count:0};		// Number of restaurants in the zoomed region
+	var stats = {count:0, review:0};		// Number of restaurants in the zoomed region
 	var all_categories = [];	// Total list of categories contained in zoomed region
 	var all_cat_stats = [];		// List of restaurant categories and correlating number of restaurants
 								// in each categry in zoomed region
@@ -44,6 +44,7 @@ ZoomStat.prototype.wrangleData = function(){
 
 	this.plotData.forEach(function(d){
 		stats["count"]++;
+		stats["review"] += d.review_count;
 		d.categories.forEach(function(cat){
 			if(all_categories.indexOf(cat) < 0){
 				all_categories.push(cat)
@@ -75,7 +76,8 @@ ZoomStat.prototype.wrangleData = function(){
 	console.log("topCat", topCat)
 
 
-
+    d3.select('#zoom-restaurants').text(stats.count);
+    d3.select('#zoom-totalReviews').text(stats.review);
 
 
 }
@@ -105,7 +107,7 @@ ZoomStat.prototype.onSelectionChange = function (plotData, plotStops){
 	//Create new text labels and assign locations
 	names.enter().append("text")
 					.attr("class", "station-name")
-	                .attr("x", 100)
+	                .attr("x", 10)
 	                .attr("y", function(d) { return yScale(d.station) + 9; })
 	                .attr("font-size", "10px")
 	                .attr("font-family", "sans-serif")
@@ -124,7 +126,7 @@ ZoomStat.prototype.onSelectionChange = function (plotData, plotStops){
 	//Create new circle elements when needed and assign locations
 	circle.enter().append("circle")
 				.attr("class", "line-circle")
-	            .attr('cx', 90)
+	            .attr('cx', 4)
 	            .attr('cy', function(d) { return yScale(d.station) + 6; })               
 	            .attr('r', 3);
 
