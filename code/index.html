@@ -86,17 +86,16 @@
 
       </div>
       <div class="col-lg-3" id="rightRail">
-      <div id="visOptions">
-        <label> Category: </label>
-        <select class="chosen" id="mySelectCat" onchange="mbtaUpdate()"> <!-- select_cat() -->
-        <script>document.write(cat_options)</script>
-        </select>
+        <div id="visOptions">
+          <label> Category: </label>
+          <select class="chosen" id="mySelectCat" onchange="mbtaUpdate()"> <!-- select_cat() -->
+          <script>document.write(cat_options)</script>
+          </select>
+        </div>
+        <div id="heatmapVis">
       </div>
-      <div id="heatmapVis">
 
-      </div>
-      <div id="mbtaVis"></div>
-      </div>
+    </div> <!-- end row -->
 
     <div class="row">
       <div class="col-lg-12">
@@ -173,9 +172,9 @@
 
         $(MyEventHandler_2).bind("brushChanged", function(event, zoomData, zoomStops){
           console.log("data", zoomData)
+
             lv.onSelectionChange(zoomData, zoomStops)
         })
-
       }
 
    }
