@@ -31,10 +31,10 @@ ZoomVis.prototype.initVis = function(){
 
 	//Define Scales
 	this.x = d3.scale.linear()
-		.range([0, this.width]);
+		.range([2, this.width-2]);
 
 	this.y = d3.scale.linear()
-		.range([this.height, 0]);
+		.range([this.height-2, 2]);
 
 	//Define Axes
 	this.xAxis = d3.svg.axis()
@@ -52,29 +52,6 @@ ZoomVis.prototype.initVis = function(){
 		.attr("y", 0)
 		.attr("width", this.width)
 		.attr("height", this.height)
-
-	// //g containing the x axis
-	// this.svg.append("g")
-	// 	.attr("class", "x axis")
-	// 	.attr("transform", "translate(0," + (this.height+1) + ")")
-
-	// //g containing the y axis
-	// this.svg.append("g")
-	//   .attr("class", "y axis")
-	//   .attr("transform", "translate(1,0)")  
-
-	// this.svg.append("g").append("text")
-	// 	.attr("text-anchor", "middle") 
-	// 	.attr("transform", "translate("+ -this.margin.left/1.5 +","+(this.height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-	// 	.text("longitude");
-
-
-	// this.svg.append("g").append("text")
-	// 		.attr("text-anchor", "middle") 
-	// 		.attr("transform", "translate("+ (this.width/2) +","+(this.height + this.margin.bottom/2)+")")  // centre below axis
-	// 		.text("latitude");
-
-  // call the update method
 
 
 }
