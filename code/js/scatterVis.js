@@ -192,10 +192,6 @@ ScatterVis.prototype.updateVis = function(){
 
 					$(that.eventHandler).trigger("selectionChanged", extent_invert)
 
-					// if(that.brush.empty()){
-					//  $(that.eventHandler).trigger("selectionChanged", d3.event.target.extent(), , d3.selectAll(".selected"))           
-					// }
-					// else{$(that.eventHandler).trigger("selectionChanged", d3.event.target.extent(), d3.selectAll(".selected"))}  
 
 				}));
 

@@ -1,7 +1,8 @@
-ZoomVis = function(_parentElement, _data, _metaData){
+ZoomVis = function(_parentElement, _data, _metaData, _eventHandler2){
 	this.parentElement = _parentElement;
 	this.data = _data;
 	this.metaData = _metaData;
+	this.eventHandler_2 = _eventHandler2;	
 
 	//Margin, width, and height definitions for scatter plot svg
 	this.margin = {top: 20, right: 50, bottom: 100, left: 70, padding:10},
@@ -176,8 +177,6 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 		})
 
 
-
-
 	stops
 		.attr("cx", function(d){
 			return that.x(d.ll[1])
@@ -206,7 +205,7 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 	var stops_exit = stops.exit().remove();
 
 
-
+	$(that.eventHandler_2).trigger("brushChanged", that.plotData, that.plotStops);
 
 
 
