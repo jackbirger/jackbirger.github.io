@@ -14,7 +14,7 @@
 	{"stop_id":113, "stop_count": 1, "stop_reviews": 1, "station":"JFK/UMass Station", "line":["red"], "x":1398, "y":1225, "ll":[42.320895, -71.052177]},
 	{"stop_id":114, "stop_count": 1, "stop_reviews": 1, "station":"North Quincy Station", "line":["red"], "x":1540, "y":1500, "ll":[42.275376, -71.029561]},
 	{"stop_id":115, "stop_count": 1, "stop_reviews": 1, "station":"Wollaston Station", "line":["red"], "x":1600, "y":1556, "ll":[42.266675, -71.020420]},
-	{"stop_id":116, "stop_count": 1, "stop_reviews": 1, "station":"Qunicy Center Station", "line":["red"], "x":1660, "y":1615, "ll":[42.251905, -71.005185]},
+	{"stop_id":116, "stop_count": 1, "stop_reviews": 1, "station":"Quincy Center Station", "line":["red"], "x":1660, "y":1615, "ll":[42.251905, -71.005185]},
 	{"stop_id":117, "stop_count": 1, "stop_reviews": 1, "station":"Quincy Adams Station", "line":["red"], "x":1698, "y":1678, "ll":[42.233447, -71.007159]},
 	{"stop_id":118, "stop_count": 1, "stop_reviews": 1, "station":"Braintree Station", "line":["red"], "x":1699, "y":1766, "ll":[42.207895, -71.002095]},
 	{"stop_id":119, "stop_count": 1, "stop_reviews": 1, "station":"Savin Hill Station", "line":["red"], "x":1317, "y":1455, "ll":[42.311343, -71.053293]},

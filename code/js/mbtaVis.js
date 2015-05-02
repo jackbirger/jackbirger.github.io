@@ -1,20 +1,23 @@
 	
-mbtaVis = function(_parentElement, _data, _metaData, _stopList){
+mbtaVis = function(_parentElement, _data, _metaData, _stopList, _eventHandler){
     this.parentElement  = _parentElement;
     this.data           = _data;
     this.metaData       = _metaData;
     this.stop_list      = _stopList;
+    this.eventHander    = _eventHandler;
 	this.radius_scale   = d3.scale.linear().range([7,75]);
 	this.review_scale   = d3.scale.linear().range([7,75]);
 	var encode_category ='all_cat'; // set this to all categories to start
 
+//$(this.eventHandler).trigger("mouseover", ['this']);
+
 	// create a tooltip for each node
-	tip = d3.tip()
-		.attr('class', 'd3-tip')
-		.offset([-10, 0])
-		.html(function(d) { return d.station + "<div class='tip-details'>Restaurants: " + d.stop_count + "<br/>Reviews: " + d.stop_reviews + "</div>" });
-	var svg = d3.select('#mbta_svg');
-	svg.call(tip); 
+	// tip = d3.tip()
+	// 	.attr('class', 'd3-tip')
+	// 	.offset([-10, 0])
+	// 	.html(function(d) { return d.station + "<div class='tip-details'>Restaurants: " + d.stop_count + "<br/>Reviews: " + d.stop_reviews + "</div>" });
+	// var svg = d3.select('#mbta_svg');
+	// svg.call(tip); 
 
 	// draw the initial circles
 	metaData.forEach(function(stop){
@@ -34,8 +37,8 @@ mbtaVis = function(_parentElement, _data, _metaData, _stopList){
 	    .attr("class", "review-circle")
 	    .attr("id", stop["station"])
 	    .datum(stop)
-	    .on('mouseover', tip.show )
-	    .on('mouseout', tip.hide)	      
+	    // .on('mouseover', tip.show )
+	    // .on('mouseout', tip.hide)	      
 	 })
 
     this.update();
@@ -166,8 +169,6 @@ mbtaVis.prototype.update = function(){
     var max = Math.max.apply(Math, rev_a);
     d3.select('#reviews-total').text(rev_r);
     d3.select('#reviews-max').text(max);
-
-
 
 
 }

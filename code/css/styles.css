@@ -11,18 +11,6 @@
 	stroke-opacity: 1;
 	fill-opacity: .1;
 }
-#circles .red {
-	stroke: red;
-}
-#circles .blue {
-	stroke: blue;
-}
-#circles .orange {
-	stroke: orange;
-}
-#circles .green {
-	stroke: green;
-}
 #mbta {
 	opacity: .1;
 }
@@ -189,10 +177,14 @@ text {
 .heat-rect {
   fill: #337AB7;
 }
-.container_2 { position:relative; }
-.imgA1 { position:absolute; top: 1000px; left: 150px; z-index: 1; } 
-.imgB1 { position:absolute; top: 1000px; left: 165px; z-index: 2; } 
-.container_2 { position:absolute; top}
+#anchor {
+  position: relative;
+}
+#scatter-zoom {
+  position: absolute;
+  left: 30px;
+  top: 0px;
+}
 .border{
   fill-opacity: 0;
   stroke: black;

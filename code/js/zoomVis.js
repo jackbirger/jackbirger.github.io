@@ -5,9 +5,9 @@ ZoomVis = function(_parentElement, _data, _metaData, _eventHandler2){
 	this.eventHandler_2 = _eventHandler2;	
 
 	//Margin, width, and height definitions for scatter plot svg
-	this.margin = {top: 20, right: 50, bottom: 100, left: 70, padding:10},
-	this.width = 350 - this.margin.left - this.margin.right,
-	this.height = 350 - this.margin.top - this.margin.bottom;
+	this.margin = {top: 20, right: 10, bottom: 10, left: 70, padding:10},
+	this.width = 300 - this.margin.left - this.margin.right,
+	this.height = 250 - this.margin.top - this.margin.bottom;
 
 	//Initialize the scatter plot visualization
 	this.initVis();

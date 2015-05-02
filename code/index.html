@@ -46,75 +46,76 @@
         <h3 class="text-muted">Exploring Boston Food by MBTA</h3>
       </div>
 
-  <div class="row">
-      <div class="col-lg-9">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque gravida, massa sed consequat tincidunt, dolor lacus pharetra felis, in aliquam leo turpis ornare mi. Nullam a commodo elit. Suspendisse elementum, turpis quis lacinia sollicitudin, purus nibh cursus nulla, condimentum facilisis enim sapien elementum est. Praesent tempor tortor consequat, tincidunt mauris sed, gravida lacus. Ut a lectus pharetra, accumsan ex pharetra, ultrices elit. Nunc pharetra risus felis, eget eleifend ipsum ultrices ac. Quisque volutpat ante ac magna laoreet mollis. In dolor mauris, fringilla vitae eros at, elementum posuere magna. Etiam lobortis a augue id volutpat. In justo purus, ornare pretium porta non, placerat vel massa.
-</div>
-<div class="col-lg-3"><img src="images/yelp-attr.gif"/>
-</div>
-</div>
-
-    <div class="row">
-      <div class="col-lg-9">
-        <div id="map">
-          <svg id="mbta_svg"
-             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 2050 1850"
-             enable-background="new 0 0 2050 1850" xml:space="preserve">
-             <script>document.write(mbta_svg)</script>
-             <g id="cat-circles"></g>
-             <g id="review-circles"></g> 
-             <g id="legend" transform="translate(10, 1400)">
-               <text class="legend" x="0" y="40">Largest circle represents: </text>
-
-               <circle class="mbta-circle-legend" cx="70" cy="150" r="75"/>
-               <text class="legend-em" id="total-max" x="70" y="162" text-anchor="middle"></text> 
-               <text class="legend-em" x="180" y="140">Restaurants</text>
-
-               <text class="legend-sm" x="180" y="180">Total: </text>
-               <text class="legend-sm" id="total-restaurants" x="280" y="180"></text> 
-
-               <circle class="review-circle-legend" cx="70" cy="320" r="75"/>
-               <text class="legend-em" id="reviews-max" x="70" y="332" text-anchor="middle"></text>   
-               <text class="legend-em" x="180" y="312">Reviews</text>  
-
-               <text class="legend-sm" x="180" y="352">Total: </text>            
-               <text class="legend-sm" id="reviews-total" x="280" y="352"></text>                 
-             </g>                  
-
-          </svg>
-        </div>
+      <div class="row">
+          <div class="col-lg-9">
+            <p>Since living in Boston, we’ve noticed the stark diversity between neighborhoods. Entering the North End is very apparent by the sheer number of Italian restaurants, and Allston can be easily identified by the increase of Korean restaurants and stores. We were curious about and wanted to explore the seemingly diverse neighborhoods and cultures across Boston. </p>
+            <p>We thought that the Massachusetts Bay Transit Authority (MBTA) was a good indicator of neighborhoods in and around the city as more than 37 million ride the subway each month. Additionally, we utilized Yelp data as it has become a ubiquitous household name. However, we didn’t want to replicate Yelp functionality as it already provides specific restaurants, reviews, and ratings in a neighborhood. Rather, we wanted to identify and discern trends of diversity by aggregating Yelp restaurant data within 500 meters of any given T stop.</p>
+            <p>This visualization allows us to understand and compare the social and cultural anthropology of Boston restaurant-goers by visually compare restaurant density, review count, and rankings around Boston neighborhoods defined by the MBTA.</p>
+          </div>
+          <div class="col-lg-3"><img src="images/yelp-attr.gif"/></div>
       </div>
 
-      <div class="col-lg-3" id="rightRail">
-        <div id="visOptions">
-          <label> Category: </label>
-          <select class="chosen" id="mySelectCat" onchange="mbtaUpdate()"> <!-- select_cat() -->
-          <script>document.write(cat_options)</script>
-          </select>
+      <div class="row">
+        <div class="col-lg-9">
+          <div id="map">
+            <svg id="mbta_svg"
+               xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 2050 1850"
+               enable-background="new 0 0 2050 1850" xml:space="preserve">
+               <script>document.write(mbta_svg)</script>
+               <g id="cat-circles"></g>
+               <g id="review-circles"></g> 
+               <g id="legend" transform="translate(10, 1400)">
+                 <text class="legend" x="0" y="40">Largest circle represents: </text>
+
+                 <circle class="mbta-circle-legend" cx="70" cy="150" r="75"/>
+                 <text class="legend-em" id="total-max" x="70" y="162" text-anchor="middle"></text> 
+                 <text class="legend-em" x="180" y="140">Restaurants</text>
+
+                 <text class="legend-sm" x="180" y="180">Total: </text>
+                 <text class="legend-sm" id="total-restaurants" x="280" y="180"></text> 
+
+                 <circle class="review-circle-legend" cx="70" cy="320" r="75"/>
+                 <text class="legend-em" id="reviews-max" x="70" y="332" text-anchor="middle"></text>   
+                 <text class="legend-em" x="180" y="312">Reviews</text>  
+
+                 <text class="legend-sm" x="180" y="352">Total: </text>            
+                 <text class="legend-sm" id="reviews-total" x="280" y="352"></text>                 
+               </g>                  
+
+            </svg>
+          </div>
         </div>
-        <div id="heatmapVis"></div>
-    </div> <!-- end row -->
-  </div>
+
+        <div class="col-lg-3" id="rightRail">
+          <div id="visOptions">
+            <label> Category: </label>
+            <select class="chosen" id="mySelectCat" onchange="mbtaUpdate()"> <!-- select_cat() -->
+            <script>document.write(cat_options)</script>
+            </select>
+          </div>
+          <div id="heatmapVis"></div>
+        </div> 
+      </div> <!-- end row -->
 
     <div class="row">
-      <div class="col-lg-6">
-      <h3>Scatterplot Vis</h3>
+      <div class="col-lg-12">
+        <h3>Scatterplot Vis</h3>
       </div>    
     </div>
 
     <div class="row">
-      <div class="container" class="col-lg-9">
-        <div class="imgA1">
-          <div id="scatter"></div>
-        </div>
-        <div class="imgB1" id="scatterRail">
-          <div id="scatter-zoom"></div>
-        </div>
+      <div class="col-lg-9">
+          <div id="anchor">
+            <div id="scatter"></div>
+            <div id="scatter-zoom"></div>
+          </div>
       </div>  
+
       <div class="col-lg-3" id="scatterDetails">
-        <div id="zoomStats"></div>
-      </div>        
-    </div>
+          <div id="zoomStats"></div>
+      </div>  
+    </div>      
+</div>
 
    
 
@@ -153,20 +154,28 @@
          var stop_list = createStopList();  
          var MyEventHandler = new Object();
          var MyEventHandler_2 = new Object();
+         var mbta_ev = new Object();
 
-         mv = new mbtaVis('#mbtaVis', allData, metaData, stop_list);
+         mv = new mbtaVis('#mbtaVis', allData, metaData, stop_list, mbta_ev);
          ds = new ScatterVis('#scatter', plotData, metaData, MyEventHandler);
          hv = new heatmapVis('#heatmapVis', metaData, stop_list, heatData);
          zv = new ZoomVis('#scatter-zoom', plotData, metaData, MyEventHandler_2);
          lv = new ZoomStat('#zoomStats', plotData, metaData)
 
-        $(MyEventHandler).bind("selectionChanged", function(event, selectionStart, selectionEnd){
-            zv.onSelectionChange(selectionStart, selectionEnd)
-        });
+         $(MyEventHandler).bind("selectionChanged", function(event, selectionStart, selectionEnd){
+             zv.onSelectionChange(selectionStart, selectionEnd)
+         });
+ 
+         $(MyEventHandler_2).bind("brushChanged", function(event, zoomData, zoomStops){
+             lv.onSelectionChange(zoomData, zoomStops)
+         })
 
-        $(MyEventHandler_2).bind("brushChanged", function(event, zoomData, zoomStops){
-            lv.onSelectionChange(zoomData, zoomStops)
-        })
+         // event handlers
+         $(".review-circle").on("mouseover", function(event){
+             console.log(foo);
+         });
+ 
+
       }
 
    }

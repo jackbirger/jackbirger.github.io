@@ -7,9 +7,9 @@ ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
 		// console.log(this.plotData)
 
 		//Margin, width, and height definitions for scatter plot svg
-		this.margin = {top: 20, right: 50, bottom: 100, left: 70},
-		this.width = 873 - this.margin.left - this.margin.right,
-		this.height = 750 - this.margin.top - this.margin.bottom;
+		this.margin = {top: 20, right: 50, bottom: 100, left: 70};
+		this.width = 800 - this.margin.left - this.margin.right;
+		this.height = 687 - this.margin.top - this.margin.bottom;
 		//Width x Height: 780x650
 
 		//Initialize the scatter plot visualization
