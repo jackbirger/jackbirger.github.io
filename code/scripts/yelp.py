@@ -269,7 +269,7 @@ def main(argv):
     print "parsing data for {}m".format(argv[0])
     DISTANCE_R = argv[0]
 
-    category  = 'Restaurants'
+    category  = 'Coffee'
 
     for stop in stops:
         try:
@@ -348,7 +348,7 @@ def query_api(category, stop, radius):
         # print "radius: {0}, stop {1}".format(radius, stop)
         # print "total queries: {0}".format(query_cnt)
 
-    out_fname = 'data-{}m.json'.format(radius)
+    out_fname = 'data-coffee-{}m.json'.format(radius)
     print "writing output to {}".format(out_fname)
 
     with open(out_fname, 'w') as outfile:
