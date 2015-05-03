@@ -23,7 +23,7 @@ ZoomStat.prototype.initVis = function(){
 
 	//define svg
 	this.svg = d3.select('#zoomStats').append("svg")
-		.attr("width", this.width + this.margin.left + this.margin.right)
+		.attr("width", 150)
 		.attr("height", this.height + this.margin.top + this.margin.bottom)
 	  .append("g")
 	  	.attr("id", "zoom-legend")
@@ -43,7 +43,7 @@ this.pack = d3.layout.pack()
     .size([this.diameter - 4, this.diameter - 4])
     .value(function(d) { return d.size; });
 
-this.packing_svg = d3.select('#zoomStats').append("svg")
+this.packing_svg = d3.select('#circleStats').append("svg")
     .attr("width", this.diameter)
     .attr("height", this.diameter)
   .append("g")

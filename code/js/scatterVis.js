@@ -35,7 +35,7 @@ ScatterVis.prototype.initVis = function(){
 	//Define Axis and Scales
 
 	this.x = d3.scale.linear()
-		.range([100, this.width]);
+		.range([0, this.width]);
 
 	this.y = d3.scale.linear()
 		.range([this.height, 0]);
@@ -148,7 +148,7 @@ ScatterVis.prototype.updateVis = function(){
 
 	// this.x.domain(d3.extent(this.data, function(d){return d.latitude}))
 
-	this.x.domain([-71.3, -70.9])
+	this.x.domain([-71.35, -70.95])
 	//(-71.3, -80.9)
 
 	// this.y.domain(d3.extent(this.data, function(d){return d.longitude}))

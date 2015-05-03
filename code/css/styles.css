@@ -100,18 +100,11 @@
   fill: orangered;
   fill-opacity: .25;  
 }
-.leaf circle {
-  fill: #ff7f0e;
-  fill-opacity: 1;
-}
 
-text {
-  font: 10px sans-serif;
-}
-.node {
+/*.node {
   stroke: #fff;
   stroke-width: 1.5px;
-}
+}*/
 
 .link {
   stroke: #999;
@@ -182,13 +175,23 @@ text {
 .heat-rect {
   fill: #337AB7;
 }
-#anchor {
+.anchor {
   position: relative;
 }
 #scatter-zoom {
   position: absolute;
-  left: 30px;
+  left: 800px;
   top: 0px;
+}
+#circleStats {
+  position: absolute;
+  left: 853px;
+  top: 273px;
+}
+#zoomStats {
+  position: absolute;
+  left: 80px;
+  top: 10px;
 }
 .border{
   fill-opacity: 0;
@@ -227,16 +230,15 @@ text {
 }
 .packing-circle {
   fill: rgb(31, 119, 180);
-  fill-opacity: .25;
+  fill-opacity: 0;
   stroke: rgb(31, 119, 180);
   stroke-width: 1px;
 }
 
 .leaf circle {
-  fill: orangered;
+  fill: rgb(31, 119, 180);
   fill-opacity: .25;
 }
-
 text {
   font-size: 9px;
   font-family: 'Inconsolata';
