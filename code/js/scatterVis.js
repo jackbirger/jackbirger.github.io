@@ -4,7 +4,7 @@ ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
 		this.metaData = _metaData;
 		this.eventHandler = _eventHandler;
 
-		// console.log(this.plotData)
+		//console.log(this.plotData)
 
 		//Margin, width, and height definitions for scatter plot svg
 		this.margin = {top: 20, right: 50, bottom: 100, left: 70};
@@ -245,12 +245,71 @@ ScatterVis.prototype.drawTrainStops = function(){
 
 //Hides the train stops on the scatterplot and the current zoom view
 ScatterVis.prototype.hideStops = function(){
-
+	
 		d3.selectAll(".scatter-stops").classed("toggle", true)
-		d3.selectAll(".brush-stops").classed("toggle", true)
+		d3.selectAll(".scatter-common").classed("toggle", true)
 
 } 
 
+//Draws the Starbucks on the ScatterPlot
+ScatterVis.prototype.drawCommonRestaurant = function(){
+
+	this.wrangleCommonRestaurant();
+
+	var that = this;
+
+	var stops = this.svg
+					.selectAll("scatter-common")
+					.data(this.commonRestaurants)
+					.enter()
+					.append("circle")
+					.attr("class", function(d){
+						if(d.name == "Chipotle Mexican Grill"){
+							return "scatter-common " + "Chipotle";
+						} else if(d.name == "Dunkin' Donuts"){
+							return "scatter-common " + "Dunkin";
+						} else if(d.name == "Starbucks"){
+							return "scatter-common " + "Starbucks";
+						} else if(d.name == "Au Bon Pain"){
+							return "scatter-common " + "AuBonPain";
+						}
+					})
+					.attr("cx", function(d){
+						return that.x(d.longitude)
+					})
+					.attr("cy", function(d){
+						return that.y(d.latitude)
+					})
+					.attr("r", function(d){return 3})
+
+}
+
+//Draws the Starbucks on the ScatterPlot
+ScatterVis.prototype.wrangleCommonRestaurant = function(){
+
+	var that = this;
+	this.commonRestaurants = [];
+
+
+	this.plotData.forEach(function(d){
+
+		if(d.name == "Chipotle Mexican Grill"){
+			//that.Chipotle_Data.push(d);
+			that.commonRestaurants.push(d);
+		} else if(d.name == "Dunkin' Donuts"){
+			//that.Dunkin_Data.push(d);
+			that.commonRestaurants.push(d);
+		} else if(d.name == "Starbucks"){
+			//that.Starbucks_Data.push(d);
+			that.commonRestaurants.push(d);
+		} else if(d.name == "Au Bon Pain"){
+			//that.AuBonPain_Data.push(d)
+			that.commonRestaurants.push(d);
+		}
+	})
+
+
+}
 
 
 

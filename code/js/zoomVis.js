@@ -65,19 +65,32 @@ ZoomVis.prototype.wrangleData = function(x_extents, y_extents){
 
 	var that = this;
 
-
-	//Filter restaurant data and store in this.plotData
+	//Data within the zoom extents
 	this.plotData = [];
+
+	//Common Restaurants within the zoom extents
+	this.commonRestaurants = [];
+
 
 	this.data.forEach(function(d){
 
 		if( x_extents[0] < d.longitude && d.longitude < x_extents[1]
 				&& y_extents[0] > d.latitude && d.latitude > y_extents[1]){
-			
+
 			that.plotData.push(d)
+
+			if(d.name == "Chipotle Mexican Grill"){
+				that.commonRestaurants.push(d);
+			} else if(d.name == "Dunkin' Donuts"){
+				that.commonRestaurants.push(d);
+			} else if(d.name == "Starbucks"){
+				that.commonRestaurants.push(d);
+			} else if(d.name == "Au Bon Pain"){
+				that.commonRestaurants.push(d);
+			}
+
 		}
 	})
-
 
 
 	//Filter train stops and store in this.plotStops
@@ -91,7 +104,8 @@ ZoomVis.prototype.wrangleData = function(x_extents, y_extents){
 		}
 	})
 
-	//console.log("plotted stops", this.plotStops)
+	//console.log("plotted stops", this.plotData)
+	console.log("commonRestaurants", this.commonRestaurants)
 
 }
 
@@ -150,13 +164,31 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 	
 
 	if (this.showOption == 'stops') {
-			console.log("hereherehere")
-			that.drawZoomStops();	  	
- 	}
-    else if (this.showOption == 'none') {
-    	console.log('not');
-    }
+			console.log("hereherehere");
+
+		// 	that.drawZoomStops();	  	
+ 	// }
+  //   else if (this.showOption == 'none') {
+  //   	console.log('not');
+  //   }
 	    
+
+			that.drawZoomStops();	
+		 	
+	    }
+	    
+	  });
+
+	  d3.selectAll("input").each(function(d) { 
+	    if (d3.select(this).attr("type") == "radio" && d3.select(this).attr("name") == "common" && d3.select(this).node().checked) {
+			//console.log("hereherehere")
+			//that.drawZoomStops();	
+			that.drawZoomCommon();  	
+	    }
+	    
+	  });
+
+
 
 
 
@@ -176,9 +208,9 @@ ZoomVis.prototype.drawZoomStops = function(){
 	var stops = this.svg
 		.selectAll(".brush-stops")
 		.data(this.plotStops)
-		.attr("class", function(d){
-			return "brush-stops " + d.line[0];
-		})
+		// .attr("class", function(d){
+		// 	return "brush-stops " + d.line[0];
+		// })
 
 
 	stops
@@ -209,7 +241,65 @@ ZoomVis.prototype.drawZoomStops = function(){
 	var stops_exit = stops.exit().remove();
 
 
+
 }
 
+
+ZoomVis.prototype.drawZoomCommon = function(){
+
+	console.log("here")
+
+
+	var that = this;
+
+	var stops = this.svg
+		.selectAll(".brush-common")
+		.data(this.commonRestaurants)
+		.attr("class", function(d){
+			if(d.name == "Chipotle Mexican Grill"){
+				return "brush-common " + "Chipotle";
+			} else if(d.name == "Dunkin' Donuts"){
+				return "brush-common " + "Dunkin";
+			} else if(d.name == "Starbucks"){
+				return "brush-common " + "Starbucks";
+			} else if(d.name == "Au Bon Pain"){
+				return "brush-common " + "AuBonPain";
+			}
+		});
+
+	stops
+		.attr("cx", function(d){
+			return that.x(d.longitude)
+		})
+		.attr("cy", function(d){
+			return that.y(d.latitude)
+		})
+		.attr("r", function(d){return 3})
+
+	var stops_enter = stops
+		.enter()
+		.append("circle")
+		.attr("class", function(d){
+			if(d.name == "Chipotle Mexican Grill"){
+				return "brush-common " + "Chipotle";
+			} else if(d.name == "Dunkin' Donuts"){
+				return "brush-common " + "Dunkin";
+			} else if(d.name == "Starbucks"){
+				return "brush-common " + "Starbucks";
+			} else if(d.name == "Au Bon Pain"){
+				return "brush-common " + "AuBonPain";
+			}
+		})
+		.attr("cx", function(d){
+			return that.x(d.longitude)
+		})
+		.attr("cy", function(d){
+			return that.y(d.latitude)
+		})
+		.attr("r", function(d){return 3})
+
+
+	var stops_exit = stops.exit().remove();
+}
 
 

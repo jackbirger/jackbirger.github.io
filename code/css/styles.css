@@ -239,7 +239,34 @@
   fill: rgb(31, 119, 180);
   fill-opacity: .25;
 }
+.Chipotle {
+  fill: red;
+  fill-opacity: .5;
+  stroke: red;
+  stroke-width: .6px;
+}
+.Dunkin {
+  fill: orange;
+  fill-opacity: .5;
+  stroke: orange;
+  stroke-width: .6px;
+}
+.Starbucks {
+  fill: green;
+  fill-opacity: .5;
+  stroke: green;
+  stroke-width: .6px;
+}
+.AuBonPain {
+  fill: purple;
+  fill-opacity: .5;
+  stroke: purple;
+  stroke-width: .6px;
+}
 .toggle {
   fill-opacity: 0;
   stroke-width: 0;
 }
+
+
+
