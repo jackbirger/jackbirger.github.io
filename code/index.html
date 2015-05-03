@@ -114,7 +114,7 @@
             <input type="radio" name="stops" id="option2" autocomplete="off" onchange="stopsUpdate()"> Train Stops
           </label>
           <label class="btn btn-primary">
-            <input type="radio" name="none" id="option3" autocomplete="off"> Universities
+            <input type="radio" name="common" id="option3" autocomplete="off" onchange="commonRestaurantUpdate()"> Common Restaurants
           </label>
         </div>
       </div>    
@@ -165,6 +165,10 @@
 
    var hideMarkers = function(){
       ds.hideStops();
+   }
+
+   var commonRestaurantUpdate = function(){
+      ds.drawCommonRestaurant();
    }
 
 

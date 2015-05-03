@@ -74,7 +74,7 @@ mbtaVis.prototype.update = function(){
     tot_r = 0; // total number of restaurants to display in the legend
     tot_a = [];  // all of the individual data to determine max and min
 
-    d3.selectAll('.mbta-circle').transition().duration(500).attr("r", function(d){
+    d3.selectAll('.mbta-circle').transition().duration(1000).attr("r", function(d){
 
       var plot_r; //value of plotted radius
       var cnt;
