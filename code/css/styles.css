@@ -239,8 +239,7 @@
   fill: rgb(31, 119, 180);
   fill-opacity: .25;
 }
-text {
-  font-size: 9px;
-  font-family: 'Inconsolata';
-  font-weight: 10;
+.toggle {
+  fill-opacity: 0;
+  stroke-width: 0;
 }

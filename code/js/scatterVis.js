@@ -182,25 +182,7 @@ ScatterVis.prototype.updateVis = function(){
 										 return 2;
 							 })
 
-
-
-	var stops = this.svg
-							.selectAll("scatter-stops")
-							.data(this.metaData)
-							.enter()
-							.append("circle")
-							.attr("class", function(d){
-								return "scatter-stops " + d.line[0];
-							})
-							.attr("cx", function(d){
-								return that.x(d.ll[1])
-							})
-							.attr("cy", function(d){
-								return that.y(d.ll[0])
-							})
-							.attr("r", function(d){return 3})
-
-
+	//this.drawTrainStops()
 
 
 	var brush = this.svg.append("g")
@@ -229,7 +211,7 @@ ScatterVis.prototype.updateVis = function(){
 													[that.y.invert(extent[0][1]), that.y.invert(extent[1][1])]
 												]
 
-
+					//console.log(extent_invert)
 					$(that.eventHandler).trigger("selectionChanged", extent_invert)
 
 
@@ -238,10 +220,36 @@ ScatterVis.prototype.updateVis = function(){
 				
 }
 
+//Draws the train stops on the scatterplot
+ScatterVis.prototype.drawTrainStops = function(){
 
+	var that = this;
 
+	var stops = this.svg
+					.selectAll("scatter-stops")
+					.data(this.metaData)
+					.enter()
+					.append("circle")
+					.attr("class", function(d){
+						return "scatter-stops " + d.line[0];
+					})
+					.attr("cx", function(d){
+						return that.x(d.ll[1])
+					})
+					.attr("cy", function(d){
+						return that.y(d.ll[0])
+					})
+					.attr("r", function(d){return 3})
 
+}
 
+//Hides the train stops on the scatterplot and the current zoom view
+ScatterVis.prototype.hideStops = function(){
+
+		d3.selectAll(".scatter-stops").classed("toggle", true)
+		d3.selectAll(".brush-stops").classed("toggle", true)
+
+} 
 
 
 

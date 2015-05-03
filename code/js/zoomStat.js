@@ -105,7 +105,6 @@ ZoomStat.prototype.wrangleData = function(){
     d3.select('#zoom-restaurants').text(stats.count);
     d3.select('#zoom-totalReviews').text(stats.review);
 
-    this.makeCirclePack()
 
 
 }
@@ -119,6 +118,64 @@ ZoomStat.prototype.onSelectionChange = function (plotData, plotStops){
 	this.plotData = plotData;		//List of restaurants contained in the extents
 	this.plotStops = plotStops;		//List of Stops contianed in the extents
 
+
+	//If the Train Stops button is selected, call function to display trainstop legend
+  d3.selectAll("input").each(function(d) { 
+    if (d3.select(this).attr("type") == "radio" && d3.select(this).attr("name") == "stops" && d3.select(this).node().checked) {
+			that.makeLegendStops();  	
+    }
+  });
+
+
+	//wrangle stops data to find basic stats of zoom region
+	this.wrangleData()
+
+	//Create Circle Packing view based on the zoom extents region
+  this.makeCirclePack()
+
+}
+
+//Function to create circle packing layout
+ZoomStat.prototype.makeCirclePack = function (){
+
+  var that = this
+
+    var nodeStringLenth = d3.selectAll("g.node").toString().length; 
+    if ( nodeStringLenth > 0) {
+        d3.selectAll("g.node")
+            .remove();
+    }
+
+  var node = this.packing_svg.datum(this.packingData).selectAll(".node")
+      .data(this.pack.nodes)
+
+	var node_enter = 	node.enter().append("g")
+	  .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
+	  .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+  node_enter.append("title")
+      .text(function(d) { return d.name + (d.children ? "" : ": " + that.format(d.size)); });
+
+  node_enter.append("circle").attr("class", "packing-circle")
+      .attr("r", function(d) { return d.r; });
+
+  node_enter.filter(function(d) { return !d.children; }).append("text")
+      .attr("dy", ".3em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return d.name.substring(0, d.r / 3); });
+
+
+
+d3.select(self.frameElement).style("height", this.diameter + "px");
+
+
+}
+
+
+//Function to create the list of stops that are within the zoomed extents
+ZoomStat.prototype.makeLegendStops = function (){
+
+	var that = this;
 
 	// create an ordinal scale for the station names
 	var yScale = d3.scale.ordinal().rangeRoundBands([0, this.plotStops.length*15], .5, 0)
@@ -165,50 +222,7 @@ ZoomStat.prototype.onSelectionChange = function (plotData, plotStops){
 	//Remove extra elements
 	circle.exit().remove()
 
-	//wrangle stops data to find basic stats of zoom region
-	this.wrangleData()
-
-
-
 }
-
-ZoomStat.prototype.makeCirclePack = function (){
-
-  var that = this
-
-    var nodeStringLenth = d3.selectAll("g.node").toString().length; 
-    if ( nodeStringLenth > 0) {
-        d3.selectAll("g.node")
-            .remove();
-    }
-
-  var node = this.packing_svg.datum(this.packingData).selectAll(".node")
-      .data(this.pack.nodes)
-
-	var node_enter = 	node.enter().append("g")
-	  .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
-	  .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-
-  node_enter.append("title")
-      .text(function(d) { return d.name + (d.children ? "" : ": " + that.format(d.size)); });
-
-  node_enter.append("circle").attr("class", "packing-circle")
-      .attr("r", function(d) { return d.r; });
-
-  node_enter.filter(function(d) { return !d.children; }).append("text")
-      .attr("dy", ".3em")
-      .style("text-anchor", "middle")
-      .text(function(d) { return d.name.substring(0, d.r / 3); });
-
-
-
-d3.select(self.frameElement).style("height", this.diameter + "px");
-
-
-
-
-}
-
 
 
 

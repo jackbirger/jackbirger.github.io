@@ -108,13 +108,13 @@
         <h3>Scatterplot Vis</h3>
         <div class="btn-group" data-toggle="buttons">
           <label class="btn btn-primary active">
-            <input type="radio" name="options" id="option1" autocomplete="off" > None
+            <input type="radio" name="none" id="option1" autocomplete="off" onchange="hideMarkers()" checked> None
           </label>
           <label class="btn btn-primary">
-            <input type="radio" name="options" id="option2" autocomplete="off"> Train Stops
+            <input type="radio" name="stops" id="option2" autocomplete="off" onchange="stopsUpdate()"> Train Stops
           </label>
           <label class="btn btn-primary">
-            <input type="radio" name="options" id="option3" autocomplete="off"> Universities
+            <input type="radio" name="none" id="option3" autocomplete="off"> Universities
           </label>
         </div>
       </div>    
@@ -156,7 +156,17 @@
       mv.update();
       hv.update();
    }
- 
+
+   //If the 
+   var stopsUpdate = function(){
+      ds.drawTrainStops();
+      zv.drawZoomStops();
+   }
+
+   var hideMarkers = function(){
+      ds.hideStops();
+   }
+
 
    //check if there is an error, store data in global variables
    var dataLoaded = function (error, _metaData, _allData, _plotData, _heatData) {
@@ -189,9 +199,8 @@
 
          // event handlers
          $(".review-circle").on("mouseover", function(event){
-             console.log(foo);
+             // console.log(foo);
          });
-
  
 
       }

@@ -12,6 +12,7 @@ ZoomVis = function(_parentElement, _data, _metaData, _eventHandler2){
 	//Initialize the scatter plot visualization
 	this.initVis();
 
+
 }
 
 /**
@@ -20,6 +21,7 @@ ZoomVis = function(_parentElement, _data, _metaData, _eventHandler2){
 ZoomVis.prototype.initVis = function(){
 
 	var that = this;
+
 
 	//define svg
 	this.svg = d3.select('#scatter-zoom').append("svg")
@@ -98,13 +100,13 @@ ZoomVis.prototype.wrangleData = function(x_extents, y_extents){
 
 ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
-
-
 	var that = this;
 
 	// filter, aggregate, modify data
 	this.wrangleData(x_extents, y_extents);
 
+	//might want to move following stuff into new function to neaten up
+	if(this.plotData.length > 0){
 
 	this.x.domain([x_extents[0], x_extents[1]])
 	this.y.domain([y_extents[1], y_extents[0]])
@@ -146,6 +148,34 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 	this.circle_exit = this.circle.exit().remove();
 	
 
+	  d3.selectAll("input").each(function(d) { 
+	    if (d3.select(this).attr("type") == "radio" && d3.select(this).attr("name") == "stops" && d3.select(this).node().checked) {
+			console.log("hereherehere")
+			that.drawZoomStops();	  	
+	    }
+	    
+	    // if(d3.select("#option2").node().checked == true){
+	    // 	that.drawZoomStops();
+	    // 	console.log("not here")
+	    // }
+	  });
+
+
+
+
+	$(that.eventHandler_2).trigger("brushChanged", [that.plotData, that.plotStops]);
+
+
+	} // close to if statement
+
+}
+
+
+
+ZoomVis.prototype.drawZoomStops = function(){
+
+	var that = this;
+
 	var stops = this.svg
 		.selectAll(".brush-stops")
 		.data(this.plotStops)
@@ -176,19 +206,13 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 			return that.y(d.ll[0])
 		})
 		.attr("r", function(d){return 3})
-		.style("stroke-width", 2);
+		//.style("stroke-width", 2);
 
 
 	var stops_exit = stops.exit().remove();
 
 
-	$(that.eventHandler_2).trigger("brushChanged", [that.plotData, that.plotStops]);
-
-
 }
-
-
-
 
 
 
