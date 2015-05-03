@@ -233,8 +233,8 @@ text {
 }
 
 .leaf circle {
-  fill: #ff7f0e;
-  fill-opacity: 1;
+  fill: orangered;
+  fill-opacity: .25;
 }
 
 text {

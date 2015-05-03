@@ -235,9 +235,9 @@ ScatterVis.prototype.updateVis = function(){
 
 				}));
 
-
-					
+				
 }
+
 
 
 
