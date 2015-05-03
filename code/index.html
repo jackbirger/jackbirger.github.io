@@ -108,13 +108,13 @@
         <h3>Scatterplot Vis</h3>
         <div class="btn-group" data-toggle="buttons">
           <label class="btn btn-primary active">
-            <input type="radio" name="none" id="option1" autocomplete="off" onchange="hideMarkers()" checked> None
+            <input type="radio" name="clear" id="option1" autocomplete="off" onchange="hideMarkers()" checked> None
           </label>
           <label class="btn btn-primary">
             <input type="radio" name="stops" id="option2" autocomplete="off" onchange="stopsUpdate()"> Train Stops
           </label>
           <label class="btn btn-primary">
-            <input type="radio" name="none" id="option3" autocomplete="off"> Universities
+            <input type="radio" name="university" id="option3" autocomplete="off"> Universities
           </label>
         </div>
       </div>    
@@ -159,12 +159,17 @@
 
    //If the 
    var stopsUpdate = function(){
+      console.log('stopsUpdate');
+
       ds.drawTrainStops();
+      zv.showOption('stops');
       zv.drawZoomStops();
    }
 
    var hideMarkers = function(){
+      console.log('hideMarkers');
       ds.hideStops();
+      zv.showOption('none');
    }
 
 
@@ -212,7 +217,7 @@
 
        queue()
            .defer(d3.json, '../data/mbta_metadata.json') // AllData
-           .defer(d3.json, '../data/data-500m.json') // Contains meta-information about AllData.
+           .defer(d3.json, '../data/data-coffee-500m.json') // Contains meta-information about AllData.
            .defer(d3.json, '../data/data-3km-scatterplot.json') // Contains plot data (no duplicates).           
            .defer(d3.json, '../data/data-heatmap-rating-500m.json') // Contains plot data (no duplicates).           
            .await(dataLoaded); // Call dataLoaded function

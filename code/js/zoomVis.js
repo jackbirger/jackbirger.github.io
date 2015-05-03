@@ -11,8 +11,7 @@ ZoomVis = function(_parentElement, _data, _metaData, _eventHandler2){
 
 	//Initialize the scatter plot visualization
 	this.initVis();
-
-
+	this.showOption = 'none';
 }
 
 /**
@@ -96,7 +95,9 @@ ZoomVis.prototype.wrangleData = function(x_extents, y_extents){
 
 }
 
-
+ZoomVis.prototype.showOption = function(select_options) {
+	this.showOption = select_options;
+}
 
 ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 
@@ -148,18 +149,14 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 	this.circle_exit = this.circle.exit().remove();
 	
 
-	  d3.selectAll("input").each(function(d) { 
-	    if (d3.select(this).attr("type") == "radio" && d3.select(this).attr("name") == "stops" && d3.select(this).node().checked) {
+	if (this.showOption == 'stops') {
 			console.log("hereherehere")
 			that.drawZoomStops();	  	
-	    }
+ 	}
+    else if (this.showOption == 'none') {
+    	console.log('not');
+    }
 	    
-	    // if(d3.select("#option2").node().checked == true){
-	    // 	that.drawZoomStops();
-	    // 	console.log("not here")
-	    // }
-	  });
-
 
 
 
