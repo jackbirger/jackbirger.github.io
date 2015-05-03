@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="http://d3js.org/queue.v1.min.js"></script>
     <script src="js/chosen.jquery.min.js"></script>
@@ -29,6 +29,7 @@
     <script src="js/scatterVis.js"></script>
     <script src="js/zoomVis.js"></script>
     <script src="js/zoomStat.js"></script>
+    <script src="js/d3-tip.js"></script>
 
   </head>
 
@@ -43,17 +44,10 @@
             <li role="presentation"><a href="#">Contact</a></li>
           </ul>
         </nav>
-        <h3 class="text-muted">Exploring Boston Food by MBTA</h3>
+        <h3 class="text-muted">Visualizing Yelp data clustered around MBTA stops</h3>
       </div>
 
-      <div class="row">
-          <div class="col-lg-9">
-            <p>Since living in Boston, we’ve noticed the stark diversity between neighborhoods. Entering the North End is very apparent by the sheer number of Italian restaurants, and Allston can be easily identified by the increase of Korean restaurants and stores. We were curious about and wanted to explore the seemingly diverse neighborhoods and cultures across Boston. </p>
-            <p>We thought that the Massachusetts Bay Transit Authority (MBTA) was a good indicator of neighborhoods in and around the city as more than 37 million ride the subway each month. Additionally, we utilized Yelp data as it has become a ubiquitous household name. However, we didn’t want to replicate Yelp functionality as it already provides specific restaurants, reviews, and ratings in a neighborhood. Rather, we wanted to identify and discern trends of diversity by aggregating Yelp restaurant data within 500 meters of any given T stop.</p>
-            <p>This visualization allows us to understand and compare the social and cultural anthropology of Boston restaurant-goers by visually compare restaurant density, review count, and rankings around Boston neighborhoods defined by the MBTA.</p>
-          </div>
-          <div class="col-lg-3"><img src="images/yelp-attr.gif"/></div>
-      </div>
+      <!-- mbtaVis -->
 
       <div class="row">
         <div class="col-lg-9">
@@ -96,6 +90,18 @@
           <div id="heatmapVis"></div>
         </div> 
       </div> <!-- end row -->
+
+
+      <div class="row">
+          <div class="col-lg-9">
+            <p>Since living in Boston, we’ve noticed the stark diversity between neighborhoods. Entering the North End is very apparent by the sheer number of Italian restaurants, and Allston can be easily identified by the increase of Korean restaurants and stores. We were curious about and wanted to explore the seemingly diverse neighborhoods and cultures across Boston. </p>
+            <p>For the visualization above we thought that the Massachusetts Bay Transit Authority (MBTA) was a good indicator of neighborhoods in and around the city as more than 37 million ride the subway each month. We utilized Yelp data as it is heavily used in the area (3387 restaurants and 392k reviews in the data set). However, we didn’t want to replicate Yelp functionality as it already provides specific restaurants, reviews, and ratings in a neighborhood. Rather, we wanted to identify and discern trends of diversity by aggregating Yelp restaurant data within 500 meters of any given T stop and representing it on a streamlined topological map.</p>
+            <p>This visualization allows us to understand and compare the social and cultural anthropology of Boston restaurant-goers by visually compare restaurant density, review count, and rankings around Boston neighborhoods defined by the MBTA.</p>
+          </div>
+          <div class="col-lg-3"><img src="images/yelp-attr.gif"/></div>
+      </div>
+
+      <!-- scatterVis -->
 
     <div class="row">
       <div class="col-lg-12">

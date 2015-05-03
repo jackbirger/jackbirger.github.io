@@ -11,13 +11,13 @@ mbtaVis = function(_parentElement, _data, _metaData, _stopList, _eventHandler){
 
 //$(this.eventHandler).trigger("mouseover", ['this']);
 
-	// create a tooltip for each node
-	// tip = d3.tip()
-	// 	.attr('class', 'd3-tip')
-	// 	.offset([-10, 0])
-	// 	.html(function(d) { return d.station + "<div class='tip-details'>Restaurants: " + d.stop_count + "<br/>Reviews: " + d.stop_reviews + "</div>" });
-	// var svg = d3.select('#mbta_svg');
-	// svg.call(tip); 
+	//create a tooltip for each node
+	tip = d3.tip()
+		.attr('class', 'd3-tip')
+		.offset([-10, 0])
+		.html(function(d) { return d.station + "<div class='tip-details'>Restaurants: " + d.stop_count + "<br/>Reviews: " + d.stop_reviews + "</div>" });
+	var svg = d3.select('#mbta_svg');
+	svg.call(tip); 
 
 	// draw the initial circles
 	metaData.forEach(function(stop){
@@ -37,8 +37,8 @@ mbtaVis = function(_parentElement, _data, _metaData, _stopList, _eventHandler){
 	    .attr("class", "review-circle")
 	    .attr("id", stop["station"])
 	    .datum(stop)
-	    // .on('mouseover', tip.show )
-	    // .on('mouseout', tip.hide)	      
+	    .on('mouseover', tip.show )
+	    .on('mouseout', tip.hide)	      
 	 })
 
     this.update();
