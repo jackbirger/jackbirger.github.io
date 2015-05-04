@@ -162,6 +162,7 @@ ZoomStat.prototype.makeCirclePack = function (){
   node_enter.filter(function(d) { return !d.children; }).append("text")
       .attr("dy", ".3em")
       .style("text-anchor", "middle")
+      .attr('class', 'packing-text')
       .text(function(d) { return d.name.substring(0, d.r / 3); });
 
 

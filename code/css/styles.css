@@ -237,7 +237,9 @@
   stroke: rgb(31, 119, 180);
   stroke-width: 1px;
 }
-
+.packing-text {
+  font-size: .7em;
+}
 .leaf circle {
   fill: rgb(31, 119, 180);
   fill-opacity: .25;
