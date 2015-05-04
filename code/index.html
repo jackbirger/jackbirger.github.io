@@ -225,9 +225,9 @@
 
        queue()
            .defer(d3.json, '../data/mbta_metadata.json') // AllData
-           .defer(d3.json, '../data/data-500m-merged.json') // Contains meta-information about AllData.
+           .defer(d3.json, '../data/data-500m.json') // Contains meta-information about AllData.
            .defer(d3.json, '../data/data-3km-scatterplot.json') // Contains plot data (no duplicates).           
-           .defer(d3.json, '../data/data-heatmap-rating-500m-merged.json') // Contains plot data (no duplicates).           
+           .defer(d3.json, '../data/data-500m-heatmap.json') // Contains plot data (no duplicates).           
            .await(dataLoaded); // Call dataLoaded function
 
    }
