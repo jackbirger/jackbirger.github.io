@@ -150,6 +150,11 @@
   font-family: 'Inconsolata';
 /*  font-family: 'Open Sans', sans-serif;*/
 }
+.scatter-coffee-legend {
+  font-size: 14px;
+  font-family: 'Inconsolata';
+  font-weight: 700;
+}
 .axis path,
 .axis line {
     fill: none;

@@ -68,6 +68,9 @@ ScatterVis.prototype.initVis = function(){
 	this.svg.append("g")
 			.attr("id", "g-scatter-stops")
 
+	this.svg.append("g")
+			.attr("id", "g-coffee-labels")
+
 	this.svg.append("g").append("text")
 		.attr("text-anchor", "middle") 
 		.attr("transform", "translate("+ -this.margin.left/1.5 +","+(this.height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
@@ -268,8 +271,44 @@ ScatterVis.prototype.filter = function() {
 	if (stops) { this.resize('.scatter-stops', 3) }
     else       { this.resize('.scatter-stops', 0) }
 
-	if (coffee) { this.resize('.scatter-coffee', 3) }
-	else        { this.resize('.scatter-coffee', 0) }
+	if (coffee) { 
+		this.resize('.scatter-coffee', 3) 
+		legend = d3.select('#g-coffee-labels');
+		legend.attr("transform", "translate(10,480)")
+		    .append('text')
+		    .attr('class', 'scatter-coffee-legend')
+			.attr("x", 5)	
+		    .attr("y", 4)  
+		    .text("Starbucks");
+
+		legend
+		    .append('circle')
+		    .attr('class', 'scatter-coffee-legend')
+		    .attr('cx', 0)
+		    .attr('cy', 0)
+		    .attr('r', 3)
+		    .attr('fill', 'green');
+
+		 legend
+		    .append('text')
+		    .attr('class', 'scatter-coffee-legend')
+			.attr("x", 5)	
+		    .attr("y", 19)  
+		    .text("Dunkin Donuts");
+
+		legend
+		    .append('circle')
+		    .attr('class', 'scatter-coffee-legend')
+		    .attr('cx', 0)
+		    .attr('cy', 15)
+		    .attr('r', 3)
+		    .attr('fill', 'orange')
+
+	}
+	else { 
+		d3.selectAll(".scatter-coffee-legend").remove();
+		this.resize('.scatter-coffee', 0) 
+	}
 }
 
 
