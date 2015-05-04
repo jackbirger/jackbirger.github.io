@@ -153,7 +153,7 @@
 .axis path,
 .axis line {
     fill: none;
-    stroke: black;
+    stroke: white;
     shape-rendering: crispEdges;
 }
 .axis text {
@@ -201,7 +201,7 @@
 .border{
   fill-opacity: 0;
   stroke: black;
-  stroke-width: 2px;
+  stroke-width: 1px;
 }
 .red {
   fill: red;

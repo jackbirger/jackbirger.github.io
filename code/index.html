@@ -38,7 +38,7 @@
     <div class="container">
       <div class="header clearfix">
 
-        <h3 class="text-muted">Visualizing Yelp data clustered around MBTA stops</h3>
+        <h3>Visualizing Yelp data clustered around MBTA stops</h3>
       </div>
 
       <!-- mbtaVis -->
@@ -108,18 +108,21 @@
 
     <div class="row">
       <div class="col-lg-12">
-        <h3>Scatterplot Vis</h3>
-        <div class="btn-group" data-toggle="buttons">
-          <label class="btn btn-primary active">
-            <input type="radio" name="clear" id="option1" autocomplete="off" onchange="hideMarkers()" checked> None
+        <h3>Geographical Visualization of Restaurant Clustering</h3>
+
+          <label class="checkbox-inline">
+            <input type="checkbox" name="all" onchange="scatterFilter()" checked> All Restaurants
           </label>
-          <label class="btn btn-primary">
-            <input type="radio" name="stops" id="option2" autocomplete="off" onchange="stopsUpdate()"> Train Stops
+          <label class="checkbox-inline">
+            <input type="checkbox" name="stops" onchange="scatterFilter()" > MBTA Train Stops
           </label>
-          <label class="btn btn-primary">
-            <input type="radio" name="common" id="option3" autocomplete="off" onchange="commonRestaurantUpdate()"> Common Restaurants
+          <label class="checkbox-inline">
+            <input type="checkbox" name="coffee" onchange="scatterFilter()"> Coffee
           </label>
-        </div>
+          <label class="checkbox-inline">
+            <input type="checkbox" name="universities" onchange="scatterFilter()"> Universities
+          </label>
+
       </div>    
     </div>
 
@@ -160,25 +163,10 @@
       hv.update();
    }
 
-   //If the 
-   var stopsUpdate = function(){
-      console.log('stopsUpdate');
-
-      ds.drawTrainStops();
-      zv.setOption('stops');
-      zv.drawZoomStops();
+   var scatterFilter = function() {
+      ds.filter();
    }
 
-   var hideMarkers = function(){
-      console.log('hideMarkers');
-      ds.hideStops();
-      zv.setOption('none');
-   }
-
-   var commonRestaurantUpdate = function(){
-      ds.drawCommonRestaurant();
-      zv.setOption('common');
-   }
 
 
    //check if there is an error, store data in global variables
@@ -201,6 +189,9 @@
          hv = new heatmapVis('#heatmapVis', metaData, stop_list, heatData);
          zv = new ZoomVis('#scatter-zoom', plotData, metaData, MyEventHandler_2);
          lv = new ZoomStat('#zoomStats', plotData, metaData)
+
+         // draw initial scatterVis filters
+         ds.filter();
 
          $(MyEventHandler).bind("selectionChanged", function(event, selectionStart, selectionEnd){
              zv.onSelectionChange(selectionStart, selectionEnd)

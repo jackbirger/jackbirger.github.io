@@ -105,7 +105,7 @@ ZoomVis.prototype.wrangleData = function(x_extents, y_extents){
 	})
 
 	//console.log("plotted stops", this.plotData)
-	console.log("commonRestaurants", this.commonRestaurants)
+	//console.log("commonRestaurants", this.commonRestaurants)
 
 }
 
@@ -169,7 +169,7 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 			that.drawZoomStops();	  	
  	}
     else if (this.showOption == 'none') {
-    	console.log('not');
+    	// console.log('not');
     }
     else if (this.showOption == 'common') {
     	console.log('common');

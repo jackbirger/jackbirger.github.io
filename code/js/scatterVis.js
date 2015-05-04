@@ -4,7 +4,8 @@ ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
 		this.metaData = _metaData;
 		this.eventHandler = _eventHandler;
 
-		//console.log(this.plotData)
+		this.coffeeRestaurants = [];
+
 
 		//Margin, width, and height definitions for scatter plot svg
 		this.margin = {top: 20, right: 50, bottom: 100, left: 70};
@@ -58,6 +59,15 @@ ScatterVis.prototype.initVis = function(){
 			.attr("class", "y axis")
 			.attr("transform", "translate(0,0)") 
 
+	this.svg.append("g")
+			.attr("id", "g-scatter-circles")
+
+	this.svg.append("g")
+			.attr("id", "g-scatter-coffee")
+
+	this.svg.append("g")
+			.attr("id", "g-scatter-stops")
+
 	this.svg.append("g").append("text")
 		.attr("text-anchor", "middle") 
 		.attr("transform", "translate("+ -this.margin.left/1.5 +","+(this.height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
@@ -85,15 +95,6 @@ ScatterVis.prototype.initVis = function(){
 		.attr("x", this.height/8)
 		.attr("y", 505)
 		.text("Total Reviews");
-
-	this.legend
-		.append("rect")
-		.attr("class", "border")
-		.attr("x",0)
-		.attr("y", this.height*(3/4) )
-		.attr("width", this.height/4 +1)
-		.attr("height", this.height/4 +1)
-		.style("stroke-width", 1);
 
 
 	//To be populated in ZoomVis.js	
@@ -123,7 +124,7 @@ ScatterVis.prototype.initVis = function(){
 ScatterVis.prototype.wrangleData = function(){
 
 	//Filter out outlier values (believe they are erroneous values)
-
+	that = this;
 	var filter_Data = []
 
 	this.plotData.forEach(function(d){
@@ -132,10 +133,12 @@ ScatterVis.prototype.wrangleData = function(){
 			filter_Data.push(d);
 		}
 
+		if(d.name == "Dunkin' Donuts"){ that.coffeeRestaurants.push(d) }
+		else if(d.name == "Starbucks"){ that.coffeeRestaurants.push(d) }
+
 	})
 
 	this.filterData = filter_Data
-
 
 }
 
@@ -163,26 +166,48 @@ ScatterVis.prototype.updateVis = function(){
 		.call(this.yAxis);
 
 
-	//Plot circles for scatter plot
-	this.circle = this.svg
-							.selectAll("scatter-circle")
-							.data(this.filterData)
+	//Plot restaurant data
+	g = d3.select('#g-scatter-circles');
+	this.circle = g.selectAll("scatter-circle")
+				   .data(this.filterData)
 
-	this.circle_enter = this.circle
-							.enter()
-							.append("circle")
-							.attr("class", "scatter-circle")
-							 .attr("cx", function(d) {
-										return that.x(d.longitude);
-							 })
-							 .attr("cy", function(d) {
-										 return that.y(d.latitude);
-							 })
-							 .attr("r", function(d) {
-										 return 2;
-							 })
+	this.circle_enter = this.circle.enter().append("circle")
+							 .attr("class", "scatter-circle")
+							 .attr("cx", function(d) { return that.x(d.longitude) })
+							 .attr("cy", function(d) { return that.y(d.latitude) })
+							 .attr("r", function(d) { return 2 });
 
-	//this.drawTrainStops()
+
+    // draw T stops							
+	g = d3.select('#g-scatter-stops');					 
+	var stops = g.selectAll("scatter-stops")
+				.data(this.metaData)
+				.enter()
+				.append("circle")
+				.attr("cy", function(d){ return that.y(d.ll[0]) })
+				.attr("cx", function(d){ return that.x(d.ll[1]) })
+				.attr("class", function(d){ return "scatter-stops " + d.line[0] })
+				.attr("r", function(d){ return 3 });							 
+
+
+	// draw coffee stops
+	g = d3.select('#g-scatter-coffee');			
+	var coffee = g.selectAll("scatter-coffee")
+  				 .data(this.coffeeRestaurants)
+  				 .enter()
+  				 .append("circle")
+  				 .attr("class", function(d){
+  				 	if(d.name == "Dunkin' Donuts"){ return "scatter-coffee " + "Starbucks" }
+  				 	else if(d.name == "Starbucks"){ return "scatter-coffee " + "Dunkin" }
+  				 })
+  				 .attr("cx", function(d){
+  				 	return that.x(d.longitude)
+  				 })
+  				 .attr("cy", function(d){
+  				 	return that.y(d.latitude)
+  				 })
+  				 .attr("r", function(d){return 3})
+
 
 
 	var brush = this.svg.append("g")
@@ -220,96 +245,47 @@ ScatterVis.prototype.updateVis = function(){
 				
 }
 
-//Draws the train stops on the scatterplot
-ScatterVis.prototype.drawTrainStops = function(){
 
-	var that = this;
+ScatterVis.prototype.filter = function() {
 
-	var stops = this.svg
-					.selectAll("scatter-stops")
-					.data(this.metaData)
-					.enter()
-					.append("circle")
-					.attr("class", function(d){
-						return "scatter-stops " + d.line[0];
-					})
-					.attr("cx", function(d){
-						return that.x(d.ll[1])
-					})
-					.attr("cy", function(d){
-						return that.y(d.ll[0])
-					})
-					.attr("r", function(d){return 3})
+	// set initial variable state to false
+	stops = coffee = universities = all = false;
 
+	// build a state machine
+	d3.selectAll("input").each(function(d) { 
+        if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "stops" && d3.select(this).node().checked) {
+        	stops = true;
+        }
+        else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "coffee" && d3.select(this).node().checked) {
+        	coffee = true;
+        }
+        else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "universities" && d3.select(this).node().checked) {
+        	universities = true;
+        }
+        else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "all" && d3.select(this).node().checked) {
+        	all = true;
+        }
+    });
+
+	// update circles accordingly
+	if (all) { this.resize('.scatter-circle', 2) }
+	else     { this.resize('.scatter-circle', 0) }
+
+	if (stops) { this.resize('.scatter-stops', 3) }
+    else       { this.resize('.scatter-stops', 0) }
+
+	if (coffee) { this.resize('.scatter-coffee', 3) }
+	else        { this.resize('.scatter-coffee', 0) }
 }
 
-//Hides the train stops on the scatterplot and the current zoom view
-ScatterVis.prototype.hideStops = function(){
-	
-		d3.selectAll(".scatter-stops").classed("toggle", true)
-		d3.selectAll(".scatter-common").classed("toggle", true)
 
-} 
-
-//Draws the Starbucks on the ScatterPlot
-ScatterVis.prototype.drawCommonRestaurant = function(){
-
-	this.wrangleCommonRestaurant();
-
-	var that = this;
-
-	var stops = this.svg
-					.selectAll("scatter-common")
-					.data(this.commonRestaurants)
-					.enter()
-					.append("circle")
-					.attr("class", function(d){
-						if(d.name == "Chipotle Mexican Grill"){
-							return "scatter-common " + "Chipotle";
-						} else if(d.name == "Dunkin' Donuts"){
-							return "scatter-common " + "Dunkin";
-						} else if(d.name == "Starbucks"){
-							return "scatter-common " + "Starbucks";
-						} else if(d.name == "Au Bon Pain"){
-							return "scatter-common " + "AuBonPain";
-						}
-					})
-					.attr("cx", function(d){
-						return that.x(d.longitude)
-					})
-					.attr("cy", function(d){
-						return that.y(d.latitude)
-					})
-					.attr("r", function(d){return 3})
-
+ScatterVis.prototype.resize = function(selector, radius) {
+	    d3.selectAll(selector)							 
+	        .transition()
+	        .duration(0)
+			.attr("r", function(d) {return radius });	
 }
 
-//Draws the Starbucks on the ScatterPlot
-ScatterVis.prototype.wrangleCommonRestaurant = function(){
-
-	var that = this;
-	this.commonRestaurants = [];
-
-
-	this.plotData.forEach(function(d){
-
-		if(d.name == "Chipotle Mexican Grill"){
-			//that.Chipotle_Data.push(d);
-			that.commonRestaurants.push(d);
-		} else if(d.name == "Dunkin' Donuts"){
-			//that.Dunkin_Data.push(d);
-			that.commonRestaurants.push(d);
-		} else if(d.name == "Starbucks"){
-			//that.Starbucks_Data.push(d);
-			that.commonRestaurants.push(d);
-		} else if(d.name == "Au Bon Pain"){
-			//that.AuBonPain_Data.push(d)
-			that.commonRestaurants.push(d);
-		}
-	})
-
-
-}
 
 
 

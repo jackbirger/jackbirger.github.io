@@ -70,7 +70,7 @@ ZoomStat.prototype.wrangleData = function(){
 		d.categories.forEach(function(cat){
 			if(all_categories.indexOf(cat) < 0){
 				all_categories.push(cat)
-				var temp = {cat, count:1}
+				var temp = {'cat': cat, count:1} // This line was throwing an error so i changed it. needs to be revisited
 				all_cat_stats.push(temp)
 			} else {all_cat_stats[all_categories.indexOf(cat)].count++}
 		})	
