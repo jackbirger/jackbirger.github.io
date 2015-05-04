@@ -139,7 +139,7 @@ ScatterVis.prototype.wrangleData = function(){
 
 		if(d.name == "Dunkin' Donuts"){ that.coffeeRestaurants.push(d) }
 		else if(d.name == "Starbucks"){ that.coffeeRestaurants.push(d) }
-
+		console.log(that.coffeeRestaurants);
 	})
 
 	this.filterData = filter_Data
