@@ -36,7 +36,7 @@ ZoomStat.prototype.initVis = function(){
 
 
 
-this.diameter = 250
+this.diameter = 300
 this.format = d3.format(",d");
 
 this.pack = d3.layout.pack()
@@ -89,8 +89,8 @@ ZoomStat.prototype.wrangleData = function(){
 	})
 
 	//Populate topCat with a list of the top 5 categories
-	if(all_cat_stats.length >= 5){	
-		for (i = 0; i < 5; i++) {
+	if(all_cat_stats.length >= 10){	
+		for (i = 0; i < 10; i++) {
 	    	topCat[i] = {name: all_cat_stats[i].cat, size: all_cat_stats[i].count}
 		}
 	} else{
