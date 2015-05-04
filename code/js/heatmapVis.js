@@ -11,6 +11,8 @@ heatmapVis = function(_parentElement, _metaData, _stopList, _heatData){
        .append('g')
         .attr('id', 'heat-text');
 
+    // this.svg = d3.select('#svg-heatmap');
+
     this.update();
 }
 

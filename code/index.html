@@ -37,13 +37,7 @@
 
     <div class="container">
       <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">About</a></li>
-            <li role="presentation"><a href="#">Contact</a></li>
-          </ul>
-        </nav>
+
         <h3 class="text-muted">Visualizing Yelp data clustered around MBTA stops</h3>
       </div>
 
@@ -87,7 +81,16 @@
             <script>document.write(cat_options)</script>
             </select>
           </div>
-          <div id="heatmapVis"></div>
+          <div>
+            <svg id="svg-heatmap-legend" width="300" height="23">
+            <g id="heat-legend">
+              <text class="legend-heat" x="10" y="20">Station</text>
+              <text class="legend-heat" x="202" y="20">1</text>
+              <text class="legend-heat" x="282" y="20">5</text>
+              <text class="legend-heat" x="230" y="20">Rating</text>
+            </g>
+            <div id="heatmapVis"></div>
+          </div>
         </div> 
       </div> <!-- end row -->
 
@@ -162,18 +165,19 @@
       console.log('stopsUpdate');
 
       ds.drawTrainStops();
-      zv.showOption('stops');
+      zv.setOption('stops');
       zv.drawZoomStops();
    }
 
    var hideMarkers = function(){
       console.log('hideMarkers');
       ds.hideStops();
-      zv.showOption('none');
+      zv.setOption('none');
    }
 
    var commonRestaurantUpdate = function(){
       ds.drawCommonRestaurant();
+      zv.setOption('common');
    }
 
 
@@ -221,9 +225,9 @@
 
        queue()
            .defer(d3.json, '../data/mbta_metadata.json') // AllData
-           .defer(d3.json, '../data/data-coffee-500m.json') // Contains meta-information about AllData.
+           .defer(d3.json, '../data/data-500m-merged.json') // Contains meta-information about AllData.
            .defer(d3.json, '../data/data-3km-scatterplot.json') // Contains plot data (no duplicates).           
-           .defer(d3.json, '../data/data-heatmap-rating-500m.json') // Contains plot data (no duplicates).           
+           .defer(d3.json, '../data/data-heatmap-rating-500m-merged.json') // Contains plot data (no duplicates).           
            .await(dataLoaded); // Call dataLoaded function
 
    }

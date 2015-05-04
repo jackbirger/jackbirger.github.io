@@ -145,6 +145,11 @@
   font-weight: 700;
 /*  font-family: 'Open Sans', sans-serif;*/
 }
+.legend-heat{
+  font-size: 10px;
+  font-family: 'Inconsolata';
+/*  font-family: 'Open Sans', sans-serif;*/
+}
 .axis path,
 .axis line {
     fill: none;

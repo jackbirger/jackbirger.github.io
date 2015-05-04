@@ -9,7 +9,7 @@ category_list = ["American (New)","Asian Fusion","Barbeque","Brazilian","Breakfa
                  "Pizza","Salad","Sandwiches","Seafood","Soup","Southern","Spanish","Steakhouses","Sushi Bars","Taiwanese","Tapas Bars",
                  "Tapas/Small Plates","Tex-Mex","Thai","Turkish","Vegan","Vegetarian","Vietnamese"]
 
-data = json.loads(open("../data/data-500m.json").read())
+data = json.loads(open("../../data/data-500m-merged.json").read())
 
 for i in range(101,228):    
     # {"stop_id":101, "station":"Alewife Station", "line":["red"], "x":640, "y": 196, "ll":[42.395781, -71.142059]},
@@ -49,12 +49,16 @@ for i in range(101,228):
         # [{"rating": 4.0, "stop_id": 101, "categories": ["Sushi Bars", "Japanese"]}
         if i == d['stop_id']:
 
+
             for c in d['categories']:
                 try:
                     category_list.index(c)
                 except:
-                    print "ignored category: {}".format(c)
+                    # print "ignored category: {}".format(c)
                     continue
+
+                if i == 140 and c == 'Barbeque':
+                    pprint.pprint(d);
 
                 #print "cat {}".format(c)
                 if d['rating'] == 1:
@@ -80,6 +84,6 @@ for i in range(101,228):
 
 
 # write json to file
-out_file = open("../data/data-heatmap-rating-500m.json","w")
+out_file = open("../../data/data-heatmap-rating-500m-merged.json","w")
 json.dump(storage,out_file)                                    
 out_file.close()

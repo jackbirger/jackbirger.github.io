@@ -109,7 +109,7 @@ ZoomVis.prototype.wrangleData = function(x_extents, y_extents){
 
 }
 
-ZoomVis.prototype.showOption = function(select_options) {
+ZoomVis.prototype.setOption = function(select_options) {
 	this.showOption = select_options;
 }
 
@@ -166,27 +166,20 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 	if (this.showOption == 'stops') {
 			console.log("hereherehere");
 
-		// 	that.drawZoomStops();	  	
- 	// }
-  //   else if (this.showOption == 'none') {
-  //   	console.log('not');
-  //   }
+			that.drawZoomStops();	  	
+ 	}
+    else if (this.showOption == 'none') {
+    	console.log('not');
+    }
+    else if (this.showOption == 'common') {
+    	console.log('common');
+    	that.drawZoomCommon();
+    }
+
 	    
 
-			that.drawZoomStops();	
-		 	
-	    }
-	    
-	  });
 
-	  d3.selectAll("input").each(function(d) { 
-	    if (d3.select(this).attr("type") == "radio" && d3.select(this).attr("name") == "common" && d3.select(this).node().checked) {
-			//console.log("hereherehere")
-			//that.drawZoomStops();	
-			that.drawZoomCommon();  	
-	    }
-	    
-	  });
+
 
 
 
