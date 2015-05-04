@@ -203,29 +203,22 @@
   stroke: black;
   stroke-width: 1px;
 }
+.scatter-stops {
+  fill-opacity: 1;
+  stroke: white;
+  stroke-width: .5px;  
+}
 .red {
   fill: red;
-  fill-opacity: .5;
-  stroke: red;
-  stroke-width: .6px;
 }
 .blue {
   fill: blue;
-  fill-opacity: .5;
-  stroke: blue;
-  stroke-width: .6px;
 }
 .orange {
   fill: orange;
-  fill-opacity: .5;
-  stroke: orange;
-  stroke-width: .6px;
 }
 .green {
   fill: green;
-  fill-opacity: .5;
-  stroke: green;
-  stroke-width: .6px;
 }
 .brush-selected {
   fill: rgb(252, 197, 192);

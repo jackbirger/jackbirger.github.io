@@ -4,8 +4,8 @@ ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
 		this.metaData = _metaData;
 		this.eventHandler = _eventHandler;
 
-		this.coffeeRestaurants = [];
 
+		this.coffeeRestaurants = [];
 
 		//Margin, width, and height definitions for scatter plot svg
 		this.margin = {top: 20, right: 50, bottom: 100, left: 70};
@@ -149,15 +149,8 @@ ScatterVis.prototype.updateVis = function(){
 
 	var that = this;
 
-
-	// this.x.domain(d3.extent(this.data, function(d){return d.latitude}))
-
-	this.x.domain([-71.35, -70.95])
-	//(-71.3, -80.9)
-
-	// this.y.domain(d3.extent(this.data, function(d){return d.longitude}))
-	this.y.domain([42.18, 42.5])
-
+	this.x.domain([-71.3, -70.97])
+	this.y.domain([42.18, 42.47])
 
 	//update axis
 	this.svg.select(".x.axis")
@@ -176,7 +169,7 @@ ScatterVis.prototype.updateVis = function(){
 							 .attr("class", "scatter-circle")
 							 .attr("cx", function(d) { return that.x(d.longitude) })
 							 .attr("cy", function(d) { return that.y(d.latitude) })
-							 .attr("r", function(d) { return 2 });
+							 .attr("r", function(d) { return 1 });
 
 
     // draw T stops							
@@ -269,7 +262,7 @@ ScatterVis.prototype.filter = function() {
     });
 
 	// update circles accordingly
-	if (all) { this.resize('.scatter-circle', 2) }
+	if (all) { this.resize('.scatter-circle', 1.5) }
 	else     { this.resize('.scatter-circle', 0) }
 
 	if (stops) { this.resize('.scatter-stops', 3) }
