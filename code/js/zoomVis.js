@@ -293,4 +293,43 @@ ZoomVis.prototype.drawZoomRestaurants = function(){
 
 }
 
+ZoomVis.prototype.filter = function() {
+
+	// set initial variable state to false
+	stops = coffee = universities = all = false;
+
+	// build a state machine
+	d3.selectAll("input").each(function(d) { 
+        if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "stops" && d3.select(this).node().checked) {
+        	stops = true;
+        }
+        else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "coffee" && d3.select(this).node().checked) {
+        	coffee = true;
+        }
+        else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "universities" && d3.select(this).node().checked) {
+        	universities = true;
+        }
+        else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "all" && d3.select(this).node().checked) {
+        	all = true;
+        }
+    });
+
+	// update circles accordingly
+	if (all) { this.resize('.brush-circles', 1.5) }
+	else     { this.resize('.brush-circles', 0) }
+
+	if (stops) { this.resize('.brush-stops', 3) }
+    else       { this.resize('.brush-stops', 0) }
+
+	if (coffee) { this.resize('.brush-coffee', 3) }
+	else { this.resize('.brush-coffee', 0) }
+}
+
+
+ZoomVis.prototype.resize = function(selector, radius) {
+	    d3.selectAll(selector)							 
+	        .transition()
+	        .duration(0)
+			.attr("r", function(d) {return radius });	
+}
 
