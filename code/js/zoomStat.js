@@ -36,18 +36,26 @@ ZoomStat.prototype.initVis = function(){
 
 
 
-this.diameter = 300
+this.diameter = 330
 this.format = d3.format(",d");
 
 this.pack = d3.layout.pack()
     .size([this.diameter - 4, this.diameter - 4])
     .value(function(d) { return d.size; });
 
-this.packing_svg = d3.select('#circleStats').append("svg")
+var test = d3.select('#circleStats').append("svg");
+
+this.packing_svg = test
     .attr("width", this.diameter)
     .attr("height", this.diameter)
   .append("g")
     .attr("transform", "translate(2,2)");
+
+test.append("rect").attr("class", "border")
+	.attr("x", 0)
+	.attr("y", 0)
+	.attr("width", this.diameter)
+	.attr("height", this.diameter)
 
 
 
@@ -136,6 +144,7 @@ ZoomStat.prototype.onSelectionChange = function (plotData, plotStops){
 }
 
 //Function to create circle packing layout
+//Circle packing code based on mbostock (http://bl.ocks.org/mbostock/4063530)
 ZoomStat.prototype.makeCirclePack = function (){
 
   var that = this
@@ -149,22 +158,23 @@ ZoomStat.prototype.makeCirclePack = function (){
   var node = this.packing_svg.datum(this.packingData).selectAll(".node")
       .data(this.pack.nodes)
 
-	var node_enter = 	node.enter().append("g")
+	var node_enter = node.enter().append("g")
 	  .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
 	  .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
   node_enter.append("title")
       .text(function(d) { return d.name + (d.children ? "" : ": " + that.format(d.size)); });
 
+
   node_enter.append("circle").attr("class", "packing-circle")
-      .attr("r", function(d) { return d.r; });
+      .attr("r", function(d) { return d.r; })
+
 
   node_enter.filter(function(d) { return !d.children; }).append("text")
       .attr("dy", ".3em")
       .style("text-anchor", "middle")
       .attr('class', 'packing-text')
-      .text(function(d) { return d.name.substring(0, d.r / 3); });
-
+      .text(function(d) { return d.name.substring(0, d.r / 3); })
 
 
 d3.select(self.frameElement).style("height", this.diameter + "px");
