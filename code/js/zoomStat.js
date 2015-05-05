@@ -12,6 +12,10 @@ ZoomStat = function(_parentElement, _data, _metaData){
 	//Initialize the scatter plot visualization
 	this.initVis();
 
+	//Make circle pack for all the data to start
+	this.plotData = this.data
+	this.wrangleData();
+	this.makeCirclePack();
 }
 
 /**
