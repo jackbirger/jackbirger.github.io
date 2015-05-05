@@ -183,6 +183,9 @@ ZoomVis.prototype.drawZoomStops = function(){
 			return that.y(d.ll[0])
 		})
 		.attr("r", function(d){return 3})
+		.attr("class", function(d){
+			return "brush-stops " + d.line[0];
+		})
 
 	var stops_enter = stops
 		.enter()
@@ -197,7 +200,6 @@ ZoomVis.prototype.drawZoomStops = function(){
 			return that.y(d.ll[0])
 		})
 		.attr("r", function(d){return 3})
-		//.style("stroke-width", 2);
 
 
 	var stops_exit = stops.exit().remove();

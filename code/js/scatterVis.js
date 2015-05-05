@@ -160,7 +160,7 @@ ScatterVis.prototype.wrangleData = function(){
 
 		if(d.name == "Dunkin' Donuts"){ that.coffeeRestaurants.push(d) }
 		else if(d.name == "Starbucks"){ that.coffeeRestaurants.push(d) }
-		//console.log(that.coffeeRestaurants);
+
 	})
 
 	this.filterData = filter_Data
@@ -285,9 +285,11 @@ ScatterVis.prototype.filter = function() {
 	d3.selectAll("input").each(function(d) { 
         if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "stops" && d3.select(this).node().checked) {
         	stops = true;
+        	zv.drawZoomStops();
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "coffee" && d3.select(this).node().checked) {
         	coffee = true;
+        	zv.drawZoomCoffee();
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "universities" && d3.select(this).node().checked) {
         	universities = true;
@@ -298,6 +300,8 @@ ScatterVis.prototype.filter = function() {
     });
 
 	// update circles accordingly
+
+
 	if (all) { this.resize('.scatter-circle', 1.5) }
 	else     { this.resize('.scatter-circle', 0) }
 
