@@ -213,11 +213,13 @@ ScatterVis.prototype.updateVis = function(){
 	var universities = g.selectAll("scatter-university")
 				.data(this.university_list)
 				.enter()
-				.append("circle")
-				.attr("cy", function(d){ console.log(d.longitude); return that.y(d.latitude) })
-				.attr("cx", function(d){ return that.x(d.longitude) })
-				.attr("class", 'scatter-university')
-				.attr("r", function(d){ return 3 });
+				.append("rect")
+				.attr("y", function(d){ return that.y(d.latitude) })
+				.attr("x", function(d){ return that.x(d.longitude) })
+				.attr("height", 4)
+				.attr("width", 4)
+				.attr("class", 'scatter-university');
+
 
 
 	// draw coffee stops
@@ -308,8 +310,20 @@ ScatterVis.prototype.filter = function() {
 	if (stops) { this.resize('.scatter-stops', 3) }
     else       { this.resize('.scatter-stops', 0) }
 
-	if (universities) { this.resize('.scatter-university', 4) }
-    else              { this.resize('.scatter-university', 0) }
+	if (universities) { 
+		d3.selectAll('.scatter-university')							 
+	        .transition()
+	        .duration(0)
+			.attr("height", 6)
+			.attr("width", 6);
+	}
+    else { 
+        d3.selectAll('.scatter-university')							 
+	        .transition()
+	        .duration(0)
+			.attr("height", 0)
+			.attr("width", 0);
+	}
 
 	if (coffee) { 
 		this.resize('.scatter-coffee', 3) 
