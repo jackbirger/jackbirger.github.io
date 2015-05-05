@@ -6,7 +6,7 @@ A Final Project for CS171. Spring Term 2015.
 
 __web__: http://gaslight.grav.io/final/code/
 
-__youTube__: 
+__youTube__: https://www.youtube.com/watch?v=oM7Mi2KyIzE
 
 
 ### Usage

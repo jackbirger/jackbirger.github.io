@@ -222,10 +222,9 @@ ScatterVis.prototype.updateVis = function(){
 				.append("rect")
 				.attr("y", function(d){ return that.y(d.latitude) })
 				.attr("x", function(d){ return that.x(d.longitude) })
-				.attr("height", 4)
-				.attr("width", 4)
+				.attr("height", 6)
+				.attr("width", 6)
 				.attr("class", 'scatter-university');
-
 
 
 	// draw coffee stops
@@ -337,6 +336,7 @@ ScatterVis.prototype.filter = function() {
 	}
 
 	if (coffee) { 
+
 		// clear old legend
 		d3.selectAll(".scatter-coffee-legend").remove();
 
@@ -386,7 +386,6 @@ ScatterVis.prototype.filter = function() {
 		    .attr('r', 3)
 		    .attr('fill', 'orange')
 	    
-
 	}
 	else { 
 		d3.selectAll(".scatter-coffee-legend").remove();

@@ -427,4 +427,3 @@ ZoomVis.prototype.resize = function(selector, radius) {
 	        .duration(0)
 			.attr("r", function(d) {return radius });	
 }
-

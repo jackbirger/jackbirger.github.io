@@ -199,7 +199,7 @@
   left: 800px;
   top: 0px;
 }
-#circleStats {          
+#circleStats {
   position: absolute;
   left: 815px;
   top: 283px;
@@ -234,7 +234,7 @@
 .scatter-university {
   fill-opacity: 1;
   stroke: red;
-  fill: yellow;
+  fill: #ffeda0;
   stroke-width: .5px;  
 }
 .brush-selected {
