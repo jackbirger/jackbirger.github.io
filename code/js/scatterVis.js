@@ -346,7 +346,7 @@ ScatterVis.prototype.filter = function() {
 		legend.attr("transform", "translate(10,480)")
 		    .append('text')
 		    .attr('class', 'scatter-coffee-legend')
-			.attr("x", 5)	
+			.attr("x", 8)	
 		    .attr("y", 4)  
 		    .text("Starbucks");
 
@@ -361,7 +361,7 @@ ScatterVis.prototype.filter = function() {
 		 legend
 		    .append('text')
 		    .attr('class', 'scatter-coffee-legend')
-			.attr("x", 5)	
+			.attr("x", 8)	
 		    .attr("y", 19)  
 		    .text("Dunkin Donuts");
 
