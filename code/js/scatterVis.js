@@ -249,6 +249,8 @@ ScatterVis.prototype.updateVis = function(){
 				.y(d3.scale.identity().domain([0, this.height]))
 				.on("brush", function() {
 				
+
+
 					var extent = d3.event.target.extent();
 					that.circle_enter.classed("brush-selected", function(d) {
 
@@ -296,6 +298,7 @@ ScatterVis.prototype.filter = function() {
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "universities" && d3.select(this).node().checked) {
         	universities = true;
+        	zv.drawZoomUniversities();
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "all" && d3.select(this).node().checked) {
         	all = true;

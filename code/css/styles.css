@@ -179,6 +179,12 @@
   stroke-width: .3px;
 
 }
+.brush-university {
+  fill-opacity: 1;
+  stroke: red;
+  fill: yellow;
+  stroke-width: .5px;  
+}
 .rank-rect {
   fill: #eee; /*#c6dcec;*/
 }
@@ -257,9 +263,9 @@
   stroke-width: .6px;
 }
 .Dunkin {
-  fill: orange;
+  fill: rgb(254, 153, 41);
   fill-opacity: .5;
-  stroke: orange;
+  stroke: rgb(254, 153, 41);
   stroke-width: .6px;
 }
 .Starbucks {

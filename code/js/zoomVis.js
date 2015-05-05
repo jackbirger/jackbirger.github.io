@@ -14,6 +14,24 @@ ZoomVis = function(_parentElement, _data, _metaData, _eventHandler2){
 	this.initVis();
 	this.showOption = 'none';
 
+	this.university_list = [
+		{ name : "Berklee College of Music", "latitude": 42.346587, "longitude": -71.089388 },
+		{ name : "Boston College", "latitude": 42.335553, "longitude": -71.168490 },
+		{ name : "Boston University", "latitude": 42.350496, "longitude": -71.105394 },
+		{ name : "Bunker Hill Community College", "latitude": 42.375074, "longitude": -71.069829 },
+		{ name : "Emerson College", "latitude": 42.352075, "longitude": -71.065722 },
+		{ name : "Harvard University", "latitude": 42.376983, "longitude": -71.116644 },
+		{ name : "Massachusetts College of Art and Design", "latitude": 42.336824, "longitude": -71.099096 },
+		{ name : "Massachusetts Institute of Technology", "latitude": 42.360079, "longitude": -71.094144 },
+		{ name : "Northeastern University", "latitude": 42.339803, "longitude": -71.089167 },
+		{ name : "Simmons College", "latitude": 42.339039, "longitude": -71.100654 },
+		{ name : "Suffolk University", "latitude": 42.358887, "longitude": -71.061770 },
+		{ name : "Tufts University", "latitude": 42.407488, "longitude": -71.119028 },
+		{ name : "University of Massachusetts Boston", "latitude": 42.312413, "longitude": -71.035900 },
+		{ name : "Wentworth Institute of Technology", "latitude": 42.337477, "longitude": -71.095358 },
+		{ name : "Wheelock College", "latitude": 42.342192, "longitude": -71.106038 }
+	];
+
 }
 
 /**
@@ -63,6 +81,9 @@ ZoomVis.prototype.initVis = function(){
 
 	this.svg.append("g")
 			.attr("id", "g-brush-stops")
+
+	this.svg.append("g")
+		.attr("id", "g-brush-university")
 }
 
 
@@ -82,6 +103,9 @@ ZoomVis.prototype.wrangleData = function(x_extents, y_extents){
 	//Train stops within the brush extents
 	this.plotStops = [];
 
+	//Universities within the brush extents
+	this.universityData = [];
+
 
 	this.data.forEach(function(d){
 
@@ -96,6 +120,16 @@ ZoomVis.prototype.wrangleData = function(x_extents, y_extents){
 			else if(d.name == "Starbucks"){ that.coffeeRestaurants.push(d) }	
 
 		}
+	})
+
+
+	this.university_list.forEach(function(d){
+
+		if( x_extents[0] < d.longitude && d.longitude < x_extents[1]
+				&& y_extents[0] > d.latitude && d.latitude > y_extents[1]){
+			that.universityData.push(d)
+		}		
+
 	})
 
 
@@ -147,7 +181,7 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
         	that.drawZoomCoffee();
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "universities" && d3.select(this).node().checked) {
-        	console.log("Implement universities")
+        	that.drawZoomUniversities();
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "all" && d3.select(this).node().checked) {
         	that.drawZoomRestaurants();
@@ -295,6 +329,47 @@ ZoomVis.prototype.drawZoomRestaurants = function(){
 
 }
 
+//Draws and updates the Universities in the zoom layout
+ZoomVis.prototype.drawZoomUniversities = function(){
+
+	var that = this;
+
+	g = d3.select('#g-brush-university');
+
+	//Plot circles for scatter plot
+	this.rect = g.selectAll(".brush-university")
+		.data(this.universityData)
+
+	this.rect
+		.attr("x", function(d) {
+			return that.x(d.longitude);
+		})
+		.attr("y", function(d) {
+			return that.y(d.latitude);
+		})
+		.attr("height", 4)
+		.attr("width", 4)
+
+
+
+	this.rect_enter = this.rect
+		.enter()
+		.append("rect")	
+		.attr("class", "brush-university")
+		.attr("x", function(d) {
+			return that.x(d.longitude);
+		})
+		.attr("y", function(d) {
+			return that.y(d.latitude);
+		})
+		.attr("height", 4)
+		.attr("width", 4)
+
+
+	this.rect_exit = this.rect.exit().remove();
+
+}
+
 ZoomVis.prototype.filter = function() {
 
 	// set initial variable state to false
@@ -319,6 +394,24 @@ ZoomVis.prototype.filter = function() {
 	// update circles accordingly
 	if (all) { this.resize('.brush-circles', 1.5) }
 	else     { this.resize('.brush-circles', 0) }
+
+	// if (all) { this.resize('.brush-university', 1.5) }
+	// else     { this.resize('.brush-university', 0) }
+
+	if (universities) { 
+		d3.selectAll('.scatter-university')							 
+	        .transition()
+	        .duration(0)
+			.attr("height", 6)
+			.attr("width", 6);
+	}
+    else { 
+        d3.selectAll('.scatter-university')							 
+	        .transition()
+	        .duration(0)
+			.attr("height", 0)
+			.attr("width", 0);
+	}
 
 	if (stops) { this.resize('.brush-stops', 3) }
     else       { this.resize('.brush-stops', 0) }
