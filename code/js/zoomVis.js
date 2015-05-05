@@ -345,8 +345,8 @@ ZoomVis.prototype.drawZoomUniversities = function(){
 		.attr("y", function(d) {
 			return that.y(d.latitude);
 		})
-		.attr("height", 4)
-		.attr("width", 4)
+		.attr("height", 10)
+		.attr("width", 10)
 
 
 
@@ -360,8 +360,8 @@ ZoomVis.prototype.drawZoomUniversities = function(){
 		.attr("y", function(d) {
 			return that.y(d.latitude);
 		})
-		.attr("height", 4)
-		.attr("width", 4)
+		.attr("height", 10)
+		.attr("width", 10)
 
 
 	this.rect_exit = this.rect.exit().remove();

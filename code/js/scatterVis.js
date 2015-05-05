@@ -97,12 +97,14 @@ ScatterVis.prototype.initVis = function(){
 
 	this.svg.append("g").append("text")
 		.attr("text-anchor", "middle") 
+		.attr("class", "zoom-legend-sm-em")
 		.attr("transform", "translate("+ -this.margin.left/1.5 +","+(this.height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
 		.text("longitude");
 
 
 	this.svg.append("g").append("text")
 		.attr("text-anchor", "middle") 
+		.attr("class", "zoom-legend-sm-em")
 		.attr("transform", "translate("+ (this.width/2) +","+(this.height + this.margin.bottom/2)+")")  // centre below axis
 		.text("latitude");
 
@@ -333,7 +335,13 @@ ScatterVis.prototype.filter = function() {
 	}
 
 	if (coffee) { 
+		// clear old legend
+		d3.selectAll(".scatter-coffee-legend").remove();
+
+		// resize coffee circles
 		this.resize('.scatter-coffee', 3) 
+
+		// compose legend
 		legend = d3.select('#g-coffee-labels');
 		legend.attr("transform", "translate(10,480)")
 		    .append('text')
