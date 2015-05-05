@@ -74,11 +74,16 @@ ZoomStat.prototype.wrangleData = function(){
 		stats["count"]++;
 		stats["review"] += d.review_count;
 		d.categories.forEach(function(cat){
-			if(all_categories.indexOf(cat) < 0){
-				all_categories.push(cat)
-				var temp = {'cat': cat, count:1} // This line was throwing an error so i changed it. needs to be revisited
-				all_cat_stats.push(temp)
-			} else {all_cat_stats[all_categories.indexOf(cat)].count++}
+
+			if( cat != "American"){	//Remove category American because it double encodes and skews the results inaccurately
+				if(all_categories.indexOf(cat) < 0){
+						all_categories.push(cat)
+						var temp = {'cat': cat, count:1} // This line was throwing an error so i changed it. needs to be revisited
+						all_cat_stats.push(temp)
+					} else {all_cat_stats[all_categories.indexOf(cat)].count++}
+
+			}
+
 		})	
 
 	})

@@ -3,6 +3,7 @@ ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
 		this.plotData = _data;
 		this.metaData = _metaData;
 		this.eventHandler = _eventHandler;
+		this.isFirst = "false"
 
 
 		this.coffeeRestaurants = [];
@@ -296,15 +297,16 @@ ScatterVis.prototype.filter = function() {
 	d3.selectAll("input").each(function(d) { 
         if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "stops" && d3.select(this).node().checked) {
         	stops = true;
-        	//zv.drawZoomStops();
+        	zv.drawZoomStops()
+        	
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "coffee" && d3.select(this).node().checked) {
         	coffee = true;
-        	//zv.drawZoomCoffee();
+        	zv.drawZoomCoffee();
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "universities" && d3.select(this).node().checked) {
         	universities = true;
-        	//zv.drawZoomUniversities();
+        	zv.drawZoomUniversities();
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "all" && d3.select(this).node().checked) {
         	all = true;
