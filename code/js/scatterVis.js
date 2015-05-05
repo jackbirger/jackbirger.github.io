@@ -3,7 +3,6 @@ ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
 		this.plotData = _data;
 		this.metaData = _metaData;
 		this.eventHandler = _eventHandler;
-		this.isFirst = "false"
 
 
 		this.coffeeRestaurants = [];
