@@ -2,6 +2,18 @@
 
 A Final Project for CS171. Spring Term 2015.
 
+### URLs
+
+__web__: http://gaslight.grav.io/final/code/
+
+__youTube__: 
+
+
+### Usage
+
+The first graphic can be moused over to bring up tooltips showing the names, number of restaurants, and number of reviews for restaurants near any given MBTA train stop. To the right a drop down menu lets users choose between categories of cuisine to be visualized. In the right column a heatmap shows the number of ratings, from one to five stars, for the restaurants at that stop.
+
+The second graphic is a canvas that can be brushed to create subselections that are magnified in the zoom box on the right. Additionally, the categories of restaurants withing a given selection are displayed in the circle packing on the lower right. Check boxes at the top of the graphic give users a way to filter certain types of information. 
 
 ### Folder Structure
 
@@ -9,7 +21,7 @@ A Final Project for CS171. Spring Term 2015.
 
 	* __css__     : Stylesheets and glyphs for Chosen.js
 	* __images__  : contains the Yelp attribution gif
-	* __js__      : All of our JS objects reside here. Also, some includes such as D3 and Chosen.js
+	* __js__      : All of our JS objects reside here. Also, some 3rd-party includes such as D3 and Chosen.js
 	* __scripts__ : Contains our utility scripts for working with the Yelp API and transforming data
 
 - __data__
