@@ -34,6 +34,9 @@ ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
 		//Initialize the scatter plot visualization
 		this.initVis();
 
+
+
+
 }
 
 
@@ -142,6 +145,7 @@ ScatterVis.prototype.initVis = function(){
 	// call the update method
 	this.updateVis();
 
+
 }
 
 
@@ -207,8 +211,7 @@ ScatterVis.prototype.updateVis = function(){
 				.attr("class", function(d){ return "scatter-stops " + d.line[0] })
 				.attr("r", function(d){ return 3 });							 
 
-
- console.log('here');						
+					
 	g = d3.select('#g-universities');					 
 	var universities = g.selectAll("scatter-university")
 				.data(this.university_list)
@@ -283,6 +286,7 @@ ScatterVis.prototype.updateVis = function(){
 
 ScatterVis.prototype.filter = function() {
 
+
 	// set initial variable state to false
 	stops = coffee = universities = all = false;
 
@@ -290,15 +294,15 @@ ScatterVis.prototype.filter = function() {
 	d3.selectAll("input").each(function(d) { 
         if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "stops" && d3.select(this).node().checked) {
         	stops = true;
-        	zv.drawZoomStops();
+        	//zv.drawZoomStops();
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "coffee" && d3.select(this).node().checked) {
         	coffee = true;
-        	zv.drawZoomCoffee();
+        	//zv.drawZoomCoffee();
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "universities" && d3.select(this).node().checked) {
         	universities = true;
-        	zv.drawZoomUniversities();
+        	//zv.drawZoomUniversities();
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "all" && d3.select(this).node().checked) {
         	all = true;

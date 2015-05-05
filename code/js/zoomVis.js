@@ -91,7 +91,8 @@ ZoomVis.prototype.initVis = function(){
 //so that only consists of the subset of data that is within
 //The bounds of the brush select
 ZoomVis.prototype.wrangleData = function(x_extents, y_extents){
-
+	
+	
 	var that = this;
 
 	//Data within the brush extents
@@ -166,31 +167,25 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 		this.x.domain([x_extents[0], x_extents[1]])
 		this.y.domain([y_extents[1], y_extents[0]])
 
-
-		// this.drawZoomRestaurants();
-		// this.drawZoomStops();
-		// this.drawZoomCoffee();
-
-
 	
-	d3.selectAll("input").each(function(d) { 
-        if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "stops" && d3.select(this).node().checked) {
-        	that.drawZoomStops();
-        }
-        else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "coffee" && d3.select(this).node().checked) {
-        	that.drawZoomCoffee();
-        }
-        else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "universities" && d3.select(this).node().checked) {
-        	that.drawZoomUniversities();
-        }
-        else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "all" && d3.select(this).node().checked) {
-        	that.drawZoomRestaurants();
-        }
-    });
-	    
+		d3.selectAll("input").each(function(d) { 
+	        if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "stops" && d3.select(this).node().checked) {
+	        	that.drawZoomStops();
+	        }
+	        else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "coffee" && d3.select(this).node().checked) {
+	        	that.drawZoomCoffee();
+	        }
+	        else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "universities" && d3.select(this).node().checked) {
+	        	that.drawZoomUniversities();
+	        }
+	        else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "all" && d3.select(this).node().checked) {
+	        	that.drawZoomRestaurants();
+	        }
+	    });
+		    
 
 
-	$(that.eventHandler_2).trigger("brushChanged", [that.plotData, that.plotStops]);
+		$(that.eventHandler_2).trigger("brushChanged", [that.plotData, that.plotStops]);
 
 
 	} // close to if statement
@@ -245,7 +240,6 @@ ZoomVis.prototype.drawZoomStops = function(){
 
 //Draws and updates the coffee shops in the zoom layout
 ZoomVis.prototype.drawZoomCoffee = function(){
-
 
 	var that = this;
 
