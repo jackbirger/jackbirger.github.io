@@ -307,7 +307,6 @@ ScatterVis.prototype.filter = function() {
 
 	// update circles accordingly
 
-
 	if (all) { this.resize('.scatter-circle', 1.5) }
 	else     { this.resize('.scatter-circle', 0) }
 

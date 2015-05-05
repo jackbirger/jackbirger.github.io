@@ -332,13 +332,17 @@ ZoomVis.prototype.drawZoomRestaurants = function(){
 //Draws and updates the Universities in the zoom layout
 ZoomVis.prototype.drawZoomUniversities = function(){
 
+
 	var that = this;
 
 	g = d3.select('#g-brush-university');
 
+
+
 	//Plot circles for scatter plot
 	this.rect = g.selectAll(".brush-university")
 		.data(this.universityData)
+
 
 	this.rect
 		.attr("x", function(d) {
@@ -367,6 +371,8 @@ ZoomVis.prototype.drawZoomUniversities = function(){
 
 
 	this.rect_exit = this.rect.exit().remove();
+
+
 
 }
 
@@ -399,14 +405,14 @@ ZoomVis.prototype.filter = function() {
 	// else     { this.resize('.brush-university', 0) }
 
 	if (universities) { 
-		d3.selectAll('.scatter-university')							 
+		d3.selectAll('.brush-university')							 
 	        .transition()
 	        .duration(0)
 			.attr("height", 6)
 			.attr("width", 6);
 	}
     else { 
-        d3.selectAll('.scatter-university')							 
+        d3.selectAll('.brush-university')							 
 	        .transition()
 	        .duration(0)
 			.attr("height", 0)
