@@ -56,7 +56,6 @@ ScatterVis.prototype.initVis = function(){
 
 
 	//Define Axis and Scales
-
 	this.x = d3.scale.linear()
 		.range([0, this.width]);
 
@@ -133,7 +132,7 @@ ScatterVis.prototype.initVis = function(){
 		.attr("text-anchor", "middle")
 		.attr("x", 115)
 		.attr("y", 0)
-		.text("4590");
+		.text("4597");
 
 	this.legend.append("text").attr("id", "zoom-totalReviews")
 		.attr("class", "legend-sm-sm")
@@ -246,7 +245,6 @@ ScatterVis.prototype.updateVis = function(){
   				 .attr("r", function(d){return 3})
 
 
-
 	var brush = this.svg.append("g")
 			.attr("class", "brush")
 			.call(d3.svg.brush()
@@ -257,6 +255,13 @@ ScatterVis.prototype.updateVis = function(){
 
 
 					var extent = d3.event.target.extent();
+					var empty = d3.event.target.empty();
+					
+					if (empty == true) {
+						d3.select('#zoom-restaurants').text("4597");
+						d3.select('#zoom-totalReviews').text("459294");						
+					}
+
 					that.circle_enter.classed("brush-selected", function(d) {
 
 						if( extent[0][0] <= that.x(d.longitude) && that.x(d.longitude) < extent[1][0]
