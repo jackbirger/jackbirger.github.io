@@ -225,6 +225,12 @@
 .green {
   fill: green;
 }
+.scatter-university {
+  fill-opacity: 1;
+  stroke: red;
+  fill: yellow;
+  stroke-width: .5px;  
+}
 .brush-selected {
   fill: rgb(252, 197, 192);
   fill-opacity: 1;

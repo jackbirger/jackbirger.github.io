@@ -13,6 +13,24 @@ ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
 		this.height = 687 - this.margin.top - this.margin.bottom;
 		//Width x Height: 780x650
 
+		this.university_list = [
+			{ name : "Berklee College of Music", "latitude": 42.346587, "longitude": -71.089388 },
+			{ name : "Boston College", "latitude": 42.335553, "longitude": -71.168490 },
+			{ name : "Boston University", "latitude": 42.350496, "longitude": -71.105394 },
+			{ name : "Bunker Hill Community College", "latitude": 42.375074, "longitude": -71.069829 },
+			{ name : "Emerson College", "latitude": 42.352075, "longitude": -71.065722 },
+			{ name : "Harvard University", "latitude": 42.376983, "longitude": -71.116644 },
+			{ name : "Massachusetts College of Art and Design", "latitude": 42.336824, "longitude": -71.099096 },
+			{ name : "Massachusetts Institute of Technology", "latitude": 42.360079, "longitude": -71.094144 },
+			{ name : "Northeastern University", "latitude": 42.339803, "longitude": -71.089167 },
+			{ name : "Simmons College", "latitude": 42.339039, "longitude": -71.100654 },
+			{ name : "Suffolk University", "latitude": 42.358887, "longitude": -71.061770 },
+			{ name : "Tufts University", "latitude": 42.407488, "longitude": -71.119028 },
+			{ name : "University of Massachusetts Boston", "latitude": 42.312413, "longitude": -71.035900 },
+			{ name : "Wentworth Institute of Technology", "latitude": 42.337477, "longitude": -71.095358 },
+			{ name : "Wheelock College", "latitude": 42.342192, "longitude": -71.106038 }
+		];
+
 		//Initialize the scatter plot visualization
 		this.initVis();
 
@@ -70,6 +88,9 @@ ScatterVis.prototype.initVis = function(){
 
 	this.svg.append("g")
 			.attr("id", "g-coffee-labels")
+
+	this.svg.append("g")
+			.attr("id", "g-universities")
 
 	this.svg.append("g").append("text")
 		.attr("text-anchor", "middle") 
@@ -139,7 +160,7 @@ ScatterVis.prototype.wrangleData = function(){
 
 		if(d.name == "Dunkin' Donuts"){ that.coffeeRestaurants.push(d) }
 		else if(d.name == "Starbucks"){ that.coffeeRestaurants.push(d) }
-		console.log(that.coffeeRestaurants);
+		//console.log(that.coffeeRestaurants);
 	})
 
 	this.filterData = filter_Data
@@ -185,6 +206,18 @@ ScatterVis.prototype.updateVis = function(){
 				.attr("cx", function(d){ return that.x(d.ll[1]) })
 				.attr("class", function(d){ return "scatter-stops " + d.line[0] })
 				.attr("r", function(d){ return 3 });							 
+
+
+ console.log('here');						
+	g = d3.select('#g-universities');					 
+	var universities = g.selectAll("scatter-university")
+				.data(this.university_list)
+				.enter()
+				.append("circle")
+				.attr("cy", function(d){ console.log(d.longitude); return that.y(d.latitude) })
+				.attr("cx", function(d){ return that.x(d.longitude) })
+				.attr("class", 'scatter-university')
+				.attr("r", function(d){ return 3 });
 
 
 	// draw coffee stops
@@ -270,6 +303,9 @@ ScatterVis.prototype.filter = function() {
 
 	if (stops) { this.resize('.scatter-stops', 3) }
     else       { this.resize('.scatter-stops', 0) }
+
+	if (universities) { this.resize('.scatter-university', 4) }
+    else              { this.resize('.scatter-university', 0) }
 
 	if (coffee) { 
 		this.resize('.scatter-coffee', 3) 
