@@ -296,16 +296,32 @@ ScatterVis.prototype.filter = function() {
 	d3.selectAll("input").each(function(d) { 
         if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "stops" && d3.select(this).node().checked) {
         	stops = true;
-        	zv.drawZoomStops()
+        	try {
+        		zv.drawZoomStops();
+        	}
+        	catch (err) {
+        		console.log('not drawing blank zoom');
+        	}
         	
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "coffee" && d3.select(this).node().checked) {
-        	coffee = true;
-        	zv.drawZoomCoffee();
+        	coffee = true;        
+        	try {
+        		zv.drawZoomCoffee();
+        	}
+        	catch (err) {
+        		console.log('not drawing blank zoom');
+        	}        	
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "universities" && d3.select(this).node().checked) {
         	universities = true;
-        	zv.drawZoomUniversities();
+        	try {
+        		zv.drawZoomUniversities();
+        	}
+        	catch (err) {
+        		console.log('not drawing blank zoom');
+        	}         	
+        	
         }
         else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "all" && d3.select(this).node().checked) {
         	all = true;
