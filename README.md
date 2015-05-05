@@ -16,7 +16,24 @@ A Final Project for CS171. Spring Term 2015.
 	
 	* __data-3km-scatterplot.json__ : data file for the scatterplot graphic containing data points within a 3km radius of each MBTA train stop with no duplicates
 	* __data-500m.json__ : data file for the MBTA graphic containing data points within a 500m radius of each MBTA stop with duplicates (because some restaurants can be within 500m of more than one stop, especially downtown)
+
+	```javascript
+	{
+		"rating": 3.0
+		, "review_count": 294
+		, "name": "Summer Shack"
+		, "longitude": -71.1410794906298
+		, "stop_id": 101
+		, "latitude": 42.393659192464
+		, "line": ["red"]
+		, "categories": ["Seafood", "Burgers", "American (Traditional)"]
+	}
+	```
+
 	* __data-500m-heatmap.json__ : data file for the MBTA heatmap graphic containing Yelp ranking data for each category per stop
+
+
+
 	* __mbta_metadata.json__ : data file containing information about each MBTA train stop
 
 	```javascript
@@ -28,7 +45,8 @@ A Final Project for CS171. Spring Term 2015.
     	 "station":"Alewife Station",
     	 "line":["red"],
     	 "x":640,
-    	 "y": 196, "ll":[42.395781, -71.142059]
+    	 "y": 196,
+    	 "ll":[42.395781, -71.142059]
     },
 	```
 

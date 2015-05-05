@@ -2,12 +2,13 @@ import json
 import pprint
 
 storage = []
-category_list = ["American (New)","Asian Fusion","Barbeque","Bars","Brazilian","Breakfast & Brunch","Buffets","Burgers",
-                 "Cafes","Cantonese","Chicken Wings","Chinese","Coffee & Tea","Colombian","Comfort Food","Delis","Dim Sum","Diners","Donuts",
-                 "Falafel","Fast Food","Food Stands","French","Gastropubs","German","Gluten-Free","Greek","Halal","Hot Dogs",
+
+category_list = ["American (New)","Asian Fusion","Barbeque","Bars","Breakfast & Brunch","Burgers",
+                 "Cafes","Cantonese","Chicken Wings","Chinese","Coffee & Tea","Delis","Dim Sum","Diners","Donuts",
+                 "Falafel","Fast Food","Food Stands","French","Gluten-Free","Greek","Halal","Hot Dogs",
                  "Indian","Irish","Italian","Japanese","Korean","Kosher","Latin American","Mediterranean","Mexican","Middle Eastern",
-                 "Pizza","Salad","Sandwiches","Seafood","Soup","Southern","Spanish","Steakhouses","Sushi Bars","Taiwanese","Tapas Bars",
-                 "Tapas/Small Plates","Tex-Mex","Thai","Turkish","Vegan","Vegetarian","Vietnamese"]
+                 "Pizza","Salad","Sandwiches","Seafood","Soup","Steakhouses","Sushi Bars","Taiwanese","Tapas Bars",
+                 "Tapas/Small Plates","Thai","Turkish","Vegan","Vegetarian","Vietnamese"]
 
 data = json.loads(open("../../data/data-500m.json").read())
 
