@@ -1,6 +1,7 @@
 import json
 import pprint
 
+# merge coffee data with the general data set
 
 all_data = json.loads(open("../../data/data-500m.json").read())
 coffee_data = json.loads(open("../../data/data-coffee-500m.json").read())

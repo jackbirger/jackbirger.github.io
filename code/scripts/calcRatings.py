@@ -1,6 +1,8 @@
 import json
 import pprint
 
+# calculate the heatmap data as a positional list for each stop
+
 storage = []
 
 category_list = ["American (New)","Asian Fusion","Barbeque","Bars","Breakfast & Brunch","Burgers",

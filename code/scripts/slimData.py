@@ -1,6 +1,8 @@
 import json
 import pprint
 
+# remove extra keys from the data objects
+
 storage = []
 category_list = ["American (New)","American (Traditional)","Asian Fusion","Barbeque","Bars","Breakfast & Brunch","Burgers",
                  "Cafes","Cantonese","Chicken Wings","Chinese","Coffee & Tea","Delis","Dim Sum","Diners","Donuts",

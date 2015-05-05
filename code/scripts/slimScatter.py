@@ -1,6 +1,8 @@
 import json
 import pprint
 
+# remove extra attributes from the data objects
+
 storage = []
 '''
 {"rating": 5.0,

@@ -33,42 +33,31 @@ ZoomStat.prototype.initVis = function(){
 	  	.attr("id", "zoom-legend")
 		.attr("transform", "translate(" + this.margin.left+ "," + this.margin.top + ")");
 
-//////////////////////////
-//Trial init for circle packing
-//////////////////////////
+	this.diameter = 330
+	this.format = d3.format(",d");
 
+	this.pack = d3.layout.pack()
+	    .size([this.diameter - 4, this.diameter - 4])
+	    .value(function(d) { return d.size; });
 
+	var test = d3.select('#circleStats').append("svg");
 
-
-this.diameter = 330
-this.format = d3.format(",d");
-
-this.pack = d3.layout.pack()
-    .size([this.diameter - 4, this.diameter - 4])
-    .value(function(d) { return d.size; });
-
-var test = d3.select('#circleStats').append("svg");
-
-this.packing_svg = test
-    .attr("width", this.diameter)
-    .attr("height", this.diameter)
-  .append("g")
-    .attr("transform", "translate(2,2)");
-
-
+	this.packing_svg = test
+	    .attr("width", this.diameter)
+	    .attr("height", this.diameter)
+	  .append("g")
+	    .attr("transform", "translate(2,2)");
 
 }
 
 
-
-//Wrangle data to find statistics based on the selected extents
 ZoomStat.prototype.wrangleData = function(){
-
-	var stats = {count:0, review:0};		// Number of restaurants in the zoomed region
-	var all_categories = [];	// Total list of categories contained in zoomed region
-	var all_cat_stats = [];		// List of restaurant categories and correlating number of restaurants
-								// in each categry in zoomed region
-	var topCat = [];	// Top 5 categories in zoomed region
+	//Wrangle data to find statistics based on the selected extents
+	var stats = {count:0, review:0}; // Number of restaurants in the zoomed region
+	var all_categories = [];	     // Total list of categories contained in zoomed region
+	var all_cat_stats = [];		     // List of restaurant categories and correlating number of restaurants
+								     // in each categry in zoomed region
+	var topCat = [];	             // Top 5 categories in zoomed region
 
 	this.plotData.forEach(function(d){
 		stats["count"]++;
@@ -116,10 +105,7 @@ ZoomStat.prototype.wrangleData = function(){
     d3.select('#zoom-restaurants').text(stats.count);
     d3.select('#zoom-totalReviews').text(stats.review);
 
-
-
 }
-
 
 
 ZoomStat.prototype.onSelectionChange = function (plotData, plotStops){
@@ -237,8 +223,3 @@ ZoomStat.prototype.makeLegendStops = function (){
 	circle.exit().remove()
 
 }
-
-
-
-
-

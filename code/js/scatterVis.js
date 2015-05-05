@@ -1,9 +1,15 @@
+/*
+	ScatterVis
+
+	Draws the scatterplot visualization
+	Handles interactive elements: brushing, checkbox selections 
+
+*/
 ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
 		this.parentElement = _parentElement;
 		this.plotData = _data;
 		this.metaData = _metaData;
 		this.eventHandler = _eventHandler;
-
 
 		this.coffeeRestaurants = [];
 
@@ -11,7 +17,6 @@ ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
 		this.margin = {top: 20, right: 50, bottom: 100, left: 70};
 		this.width = 800 - this.margin.left - this.margin.right;
 		this.height = 687 - this.margin.top - this.margin.bottom;
-		//Width x Height: 780x650
 
 		this.university_list = [
 			{ name : "Berklee College of Music", "latitude": 42.346587, "longitude": -71.089388 },
@@ -33,10 +38,6 @@ ScatterVis = function(_parentElement, _data, _metaData, _eventHandler){
 
 		//Initialize the scatter plot visualization
 		this.initVis();
-
-
-
-
 }
 
 
@@ -400,13 +401,3 @@ ScatterVis.prototype.resize = function(selector, radius) {
 	        .duration(0)
 			.attr("r", function(d) {return radius });	
 }
-
-
-
-
-
-
-
-
-
-
