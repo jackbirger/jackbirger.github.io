@@ -22,7 +22,18 @@ The second graphic is a canvas that can be brushed to create subselections that 
 	* __css__     : Stylesheets and glyphs for Chosen.js
 	* __images__  : contains the Yelp attribution gif
 	* __js__      : All of our JS objects reside here. Also, some 3rd-party includes such as D3 and Chosen.js
+		* mbtaVis.js : code for the first graphic
+		* heatmapVis.js : code for the heatmap to the right of the MBTA graphic
+		* scatterVis.js : code for the scatterplot graphic
+		* zoomVis.js : code for the zoom window to the right of the scatterplot graphic
+		* zoomStats.js : code for the circle packing graphic
+		* mbta-svg.js : SVG code that draws the stylized MBTA graphic 
 	* __scripts__ : Contains our utility scripts for working with the Yelp API and transforming data
+		* calcRatings.py : python script that derives heatmap data from the main data set
+		* mergeCoffee.py : python script that combines data from 'restaurant' and 'coffee' calls against the Yelp API
+		* slimData.py : python script that slims the data set by removing extraneous information from each object
+		* slimScatter.py : python script that slims the data set by removing extraneous information from each object
+		* yelp.py : python script that fetches data from the Yelp API
 
 - __data__
 	

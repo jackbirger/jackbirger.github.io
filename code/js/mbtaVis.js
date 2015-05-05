@@ -172,29 +172,3 @@ mbtaVis.prototype.update = function(){
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
