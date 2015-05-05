@@ -15,6 +15,17 @@ A Final Project for CS171. Spring Term 2015.
 - __data__
 	
 	* __data-3km-scatterplot.json__ : data file for the scatterplot graphic containing data points within a 3km radius of each MBTA train stop with no duplicates
+
+	```javascript
+	{
+		 "categories": ["American", "Breakfast & Brunch"],
+		 "review_count": 13,
+		 "name": "The Table At Season To Taste",
+		 "latitude": 42.3983409,
+		 "longitude": -71.1310318
+	}
+	```
+
 	* __data-500m.json__ : data file for the MBTA graphic containing data points within a 500m radius of each MBTA stop with duplicates (because some restaurants can be within 500m of more than one stop, especially downtown)
 
 	```javascript
@@ -106,3 +117,5 @@ A Final Project for CS171. Spring Term 2015.
 	```
 
 - __design__
+ 	* __Process Book__
+ 	* __Initial Proposal__
