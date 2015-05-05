@@ -272,6 +272,6 @@
   fill-opacity: 0;
   stroke-width: 0;
 }
-
-
-
+.spacer-bottom {
+  margin-top: 50px;
+}

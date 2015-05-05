@@ -2,14 +2,14 @@ import json
 import pprint
 
 storage = []
-category_list = ["American (New)","Asian Fusion","Barbeque","Brazilian","Breakfast & Brunch","Buffets","Burgers",
-                 "Cafes","Cantonese","Chicken Wings","Chinese","Coffee & Tea","Colombian","Comfort Food","Delis","Dim Sum","Diners",
+category_list = ["American (New)","Asian Fusion","Barbeque","Bars","Brazilian","Breakfast & Brunch","Buffets","Burgers",
+                 "Cafes","Cantonese","Chicken Wings","Chinese","Coffee & Tea","Colombian","Comfort Food","Delis","Dim Sum","Diners","Donuts",
                  "Falafel","Fast Food","Food Stands","French","Gastropubs","German","Gluten-Free","Greek","Halal","Hot Dogs",
                  "Indian","Irish","Italian","Japanese","Korean","Kosher","Latin American","Mediterranean","Mexican","Middle Eastern",
                  "Pizza","Salad","Sandwiches","Seafood","Soup","Southern","Spanish","Steakhouses","Sushi Bars","Taiwanese","Tapas Bars",
                  "Tapas/Small Plates","Tex-Mex","Thai","Turkish","Vegan","Vegetarian","Vietnamese"]
 
-data = json.loads(open("../../data/data-500m-merged.json").read())
+data = json.loads(open("../../data/data-500m.json").read())
 
 for i in range(101,228):    
     # {"stop_id":101, "station":"Alewife Station", "line":["red"], "x":640, "y": 196, "ll":[42.395781, -71.142059]},
@@ -84,6 +84,6 @@ for i in range(101,228):
 
 
 # write json to file
-out_file = open("../../data/data-heatmap-rating-500m-merged.json","w")
+out_file = open("../../data/data-500m-heatmap.json","w")
 json.dump(storage,out_file)                                    
 out_file.close()
