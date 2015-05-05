@@ -323,8 +323,8 @@ ScatterVis.prototype.filter = function() {
 		d3.selectAll('.scatter-university')							 
 	        .transition()
 	        .duration(0)
-			.attr("height", 6)
-			.attr("width", 6);
+			.attr("height", 9)
+			.attr("width", 9);
 	}
     else { 
         d3.selectAll('.scatter-university')							 
@@ -343,7 +343,18 @@ ScatterVis.prototype.filter = function() {
 
 		// compose legend
 		legend = d3.select('#g-coffee-labels');
-		legend.attr("transform", "translate(10,480)")
+		legend.attr("transform", "translate(40,30)")
+		    .append('rect')
+		    .attr('class', 'scatter-coffee-legend')
+		    .attr('x', -15)
+		    .attr('y', -18)		    
+		    .attr('rx', 10)		    
+		    .attr('ry', 10)		    
+		    .attr('height', 50)
+		    .attr('width', 130)
+		    .attr('fill', '#efefef')	
+
+		legend
 		    .append('text')
 		    .attr('class', 'scatter-coffee-legend')
 			.attr("x", 8)	
@@ -372,6 +383,7 @@ ScatterVis.prototype.filter = function() {
 		    .attr('cy', 15)
 		    .attr('r', 3)
 		    .attr('fill', 'orange')
+	    
 
 	}
 	else { 
