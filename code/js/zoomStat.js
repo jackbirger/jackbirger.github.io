@@ -55,12 +55,6 @@ this.packing_svg = test
   .append("g")
     .attr("transform", "translate(2,2)");
 
-test.append("rect").attr("class", "border")
-	.attr("x", 0)
-	.attr("y", 0)
-	.attr("width", this.diameter)
-	.attr("height", this.diameter)
-
 
 
 }
