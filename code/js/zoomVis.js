@@ -392,7 +392,7 @@ ZoomVis.prototype.filter = function() {
     });
 
 	// update circles accordingly
-	if (all) { this.resize('.brush-circles', 1.5) }
+	if (all) { this.resize('.brush-circles', 2) }
 	else     { this.resize('.brush-circles', 0) }
 
 	// if (all) { this.resize('.brush-university', 1.5) }
