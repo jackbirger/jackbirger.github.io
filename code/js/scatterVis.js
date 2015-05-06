@@ -221,8 +221,8 @@ ScatterVis.prototype.updateVis = function(){
 				.append("rect")
 				.attr("y", function(d){ return that.y(d.latitude) })
 				.attr("x", function(d){ return that.x(d.longitude) })
-				.attr("height", 6)
-				.attr("width", 6)
+				.attr("height", 9)
+				.attr("width", 9)
 				.attr("class", 'scatter-university');
 
 
