@@ -8,7 +8,7 @@ ZoomVis = function(_parentElement, _data, _metaData, _eventHandler2){
 	this.margin = {top: 20, right: 10, bottom: 10, left: 70, padding:10},
 	this.width = 300 - this.margin.left - this.margin.right,
 	this.height = 250 - this.margin.top - this.margin.bottom;
-	this.padding = 2;
+	this.padding = 7;
 
 	//Initialize the scatter plot visualization
 	this.initVis();
