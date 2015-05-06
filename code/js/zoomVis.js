@@ -253,28 +253,31 @@ ZoomVis.prototype.drawZoomCoffee = function(){
 		})
 
 	stops
-		.attr("cx", function(d){
+		.attr("x", function(d){
 			return that.x(d.longitude)
 		})
-		.attr("cy", function(d){
+		.attr("y", function(d){
 			return that.y(d.latitude)
 		})
-		.attr("r", function(d){return 3})
+		.attr("height", 4)
+		.attr("width", 4)
 
 	var stops_enter = stops
 		.enter()
-		.append("circle")
+		.append("rect")
 		.attr("class", function(d){
 			if(d.name == "Dunkin' Donuts"){ return "brush-coffee " + "Starbucks" }
 			else if(d.name == "Starbucks"){ return "brush-coffee " + "Dunkin" }
 		})
-		.attr("cx", function(d){
+		.attr("x", function(d){
 			return that.x(d.longitude)
 		})
-		.attr("cy", function(d){
+		.attr("y", function(d){
 			return that.y(d.latitude)
 		})
-		.attr("r", function(d){return 3})
+		.attr("height", 4)
+		.attr("width", 4)
+
 
 
 	var stops_exit = stops.exit().remove();
@@ -416,8 +419,21 @@ ZoomVis.prototype.filter = function() {
 	if (stops) { this.resize('.brush-stops', 3) }
     else       { this.resize('.brush-stops', 0) }
 
-	if (coffee) { this.resize('.brush-coffee', 3) }
-	else { this.resize('.brush-coffee', 0) }
+	if (coffee) { 
+		d3.selectAll('.brush-coffee')							 
+	        .transition()
+	        .duration(0)
+			.attr("height", 4)
+			.attr("width", 4);
+	}
+    else { 
+        d3.selectAll('.brush-coffee')							 
+	        .transition()
+	        .duration(0)
+			.attr("height", 0)
+			.attr("width", 0);
+	}
+
 }
 
 

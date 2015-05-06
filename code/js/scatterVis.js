@@ -261,7 +261,8 @@ ScatterVis.prototype.updateVis = function(){
 					
 					if (empty == true) {
 						d3.select('#zoom-restaurants').text("4597");
-						d3.select('#zoom-totalReviews').text("459294");						
+						d3.select('#zoom-totalReviews').text("459294");
+							
 					}
 
 					that.circle_enter.classed("brush-selected", function(d) {
