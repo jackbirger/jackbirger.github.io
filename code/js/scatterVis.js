@@ -242,8 +242,8 @@ ScatterVis.prototype.updateVis = function(){
   				 .attr("y", function(d){
   				 	return that.y(d.latitude)
   				 })
-				.attr("height", 6)
-				.attr("width", 6)
+				.attr("height", 4)
+				.attr("width", 4)
 
 
 
