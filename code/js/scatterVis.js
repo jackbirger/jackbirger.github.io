@@ -284,11 +284,8 @@ ScatterVis.prototype.updateVis = function(){
 
 					//console.log(extent_invert)
 					$(that.eventHandler).trigger("selectionChanged", extent_invert)
-
-					
-
+				
 				}));
-
 				
 }
 

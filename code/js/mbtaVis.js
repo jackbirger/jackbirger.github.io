@@ -1,4 +1,10 @@
-	
+/*
+	mbtaVis
+
+	Draws the MBTA visualization
+	Handles interactive elements: mouseover, select 
+
+*/	
 mbtaVis = function(_parentElement, _data, _metaData, _stopList, _eventHandler){
     this.parentElement  = _parentElement;
     this.data           = _data;
@@ -8,8 +14,6 @@ mbtaVis = function(_parentElement, _data, _metaData, _stopList, _eventHandler){
 	this.radius_scale   = d3.scale.linear().range([7,75]);
 	this.review_scale   = d3.scale.linear().range([7,75]);
 	var encode_category ='all_cat'; // set this to all categories to start
-
-//$(this.eventHandler).trigger("mouseover", ['this']);
 
 	//create a tooltip for each node
 	tip = d3.tip()
@@ -108,19 +112,16 @@ mbtaVis.prototype.update = function(){
 
     })
 
-
     // update the legend
-
     var max = Math.max.apply(Math, tot_a);
     d3.select('#total-restaurants').text(tot_r);
     d3.select('#total-max').text(max);
 
 
 	/*
-		Change circle size to reflect total number of restaurants
+		Change circle size to reflect total number of reviews
 		for the given type selected (or all if default selection)
 	*/
-
 
     rev_r = 0; // total number of restaurants to display in the legend
     rev_a = [];  // all of the individual data to determine max and min
