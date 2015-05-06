@@ -231,18 +231,20 @@ ScatterVis.prototype.updateVis = function(){
 	var coffee = g.selectAll("scatter-coffee")
   				 .data(this.coffeeRestaurants)
   				 .enter()
-  				 .append("circle")
+  				 .append("rect")
   				 .attr("class", function(d){
   				 	if(d.name == "Dunkin' Donuts"){ return "scatter-coffee " + "Starbucks" }
   				 	else if(d.name == "Starbucks"){ return "scatter-coffee " + "Dunkin" }
   				 })
-  				 .attr("cx", function(d){
+  				 .attr("x", function(d){
   				 	return that.x(d.longitude)
   				 })
-  				 .attr("cy", function(d){
+  				 .attr("y", function(d){
   				 	return that.y(d.latitude)
   				 })
-  				 .attr("r", function(d){return 3})
+				.attr("height", 6)
+				.attr("width", 6)
+
 
 
 	var brush = this.svg.append("g")
@@ -335,26 +337,14 @@ ScatterVis.prototype.filter = function() {
 
 	// update circles accordingly
 
-	if (all) { this.resize('.scatter-circle', 1.5) }
-	else     { this.resize('.scatter-circle', 0) }
+	if (all) { this.resize('.scatter-circle', 'circle', 1.5) }
+	else     { this.resize('.scatter-circle', 'circle', 0) }
 
-	if (stops) { this.resize('.scatter-stops', 3) }
-    else       { this.resize('.scatter-stops', 0) }
+	if (stops) { this.resize('.scatter-stops', 'circle', 3) }
+    else       { this.resize('.scatter-stops', 'circle', 0) }
 
-	if (universities) { 
-		d3.selectAll('.scatter-university')							 
-	        .transition()
-	        .duration(0)
-			.attr("height", 9)
-			.attr("width", 9);
-	}
-    else { 
-        d3.selectAll('.scatter-university')							 
-	        .transition()
-	        .duration(0)
-			.attr("height", 0)
-			.attr("width", 0);
-	}
+	if (universities) { this.resize('.scatter-university', 'rect', 9) }
+    else              { this.resize('.scatter-university', 'rect', 0) }
 
 	if (coffee) { 
 
@@ -362,7 +352,7 @@ ScatterVis.prototype.filter = function() {
 		d3.selectAll(".scatter-coffee-legend").remove();
 
 		// resize coffee circles
-		this.resize('.scatter-coffee', 3) 
+		this.resize('.scatter-coffee', 'rect', 4) 
 
 		// compose legend
 		legend = d3.select('#g-coffee-labels');
@@ -410,14 +400,23 @@ ScatterVis.prototype.filter = function() {
 	}
 	else { 
 		d3.selectAll(".scatter-coffee-legend").remove();
-		this.resize('.scatter-coffee', 0) 
+		this.resize('.scatter-coffee', 'rect', 0) 
 	}
 }
 
 
-ScatterVis.prototype.resize = function(selector, radius) {
+ScatterVis.prototype.resize = function(selector, type, radius) {
+	if (type == 'circle') {
 	    d3.selectAll(selector)							 
 	        .transition()
 	        .duration(0)
 			.attr("r", function(d) {return radius });	
+	}
+	else if (type == 'rect') {
+        d3.selectAll(selector)							 
+	        .transition()
+	        .duration(0)
+			.attr("height", radius)
+			.attr("width", radius);		
+	}
 }
