@@ -8,6 +8,8 @@ __web__: http://gaslight.grav.io/final/code/
 
 __youTube__: https://www.youtube.com/watch?v=oM7Mi2KyIzE
 
+__process book__ : https://github.com/sbemagx/CS171-Metro-Boston-Food-Exploration/blob/master/design/CS171%20Process%20Book.pdf
+
 
 ### Usage
 
