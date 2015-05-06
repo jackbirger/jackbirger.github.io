@@ -1,3 +1,10 @@
+/*
+    heatmapVis
+
+    Draws the heatmap visualization
+    Displays a series of colored boxes to indicate Yelp ratings for a MBTA stop 
+
+*/
 heatmapVis = function(_parentElement, _metaData, _stopList, _heatData){
     this.parentElement = _parentElement;
     this.metaData = _metaData;
@@ -10,8 +17,6 @@ heatmapVis = function(_parentElement, _metaData, _stopList, _heatData){
         .attr('id', 'svg-heatmap')
        .append('g')
         .attr('id', 'heat-text');
-
-    // this.svg = d3.select('#svg-heatmap');
 
     this.update();
 }
