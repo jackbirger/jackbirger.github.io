@@ -180,7 +180,7 @@ ZoomVis.prototype.onSelectionChange = function (x_extents, y_extents){
 	        }
 	        else if (d3.select(this).attr("type") == "checkbox" && d3.select(this).attr("name") == "all" && d3.select(this).node().checked) {
 	        	that.drawZoomRestaurants();
-	        }
+	        }	
 	    });
 		    
 
@@ -345,8 +345,8 @@ ZoomVis.prototype.drawZoomUniversities = function(){
 		.attr("y", function(d) {
 			return that.y(d.latitude);
 		})
-		.attr("height", 10)
-		.attr("width", 10)
+		.attr("height", 9)
+		.attr("width", 9)
 
 
 
@@ -360,8 +360,8 @@ ZoomVis.prototype.drawZoomUniversities = function(){
 		.attr("y", function(d) {
 			return that.y(d.latitude);
 		})
-		.attr("height", 10)
-		.attr("width", 10)
+		.attr("height", 9)
+		.attr("width", 9)
 
 
 	this.rect_exit = this.rect.exit().remove();
@@ -402,8 +402,8 @@ ZoomVis.prototype.filter = function() {
 		d3.selectAll('.brush-university')							 
 	        .transition()
 	        .duration(0)
-			.attr("height", 6)
-			.attr("width", 6);
+			.attr("height", 9)
+			.attr("width", 9);
 	}
     else { 
         d3.selectAll('.brush-university')							 

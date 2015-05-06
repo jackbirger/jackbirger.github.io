@@ -147,6 +147,7 @@ ZoomStat.prototype.makeCirclePack = function (){
   var node = this.packing_svg.datum(this.packingData).selectAll(".node")
       .data(this.pack.nodes)
 
+
 	var node_enter = node.enter().append("g")
 	  .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
 	  .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
